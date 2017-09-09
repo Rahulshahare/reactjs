@@ -23,6 +23,10 @@
            
             background-color: rgba(20, 113, 195, 0.07);
         }
+        .form-control {
+           
+            height: 44px
+        }
         </style>
 
     </head>
@@ -69,7 +73,10 @@
 
                 getInitialState:function(){
                     return{AppMode:'home',
-                            name:null}
+                            password:'',
+                            count:0,
+                            disable:'disabled'
+                            }
                 },
                 HomeMode:function(){
                     this.setState({AppMode:'home'})
@@ -77,9 +84,44 @@
                 NextPassMode:function(){
                     this.setState({AppMode:'password'})
                 },
+                
+                PassChange:function(e){
+                    this.setState({password: e.target.value});
+                    this.setState({count: this.state.count+1});
+                    console.log('password: ' +this.state.password);
+                    console.log('Count :'+ this.state.count);
+                    var pin = this.state.password;
+                    //alert(pin);
+                    if(Number.isNaN(pin)){
+                        console.log(pin);
+                    }else{
+                        /*console.log(pin);
+                        alert("You Must enter #Number here");
+                        this.setState({password:''});
+                        this.setState({count:1});
+                        this.setState({disable:'disable'})
+                        */
+                    }
+                    if(this.state.count == 4){
+                        this.setState({disable:''})
+                    }
+                    if(this.state.count>=5){
+                        alert("You can not add more than #FOUR digits");
+                        this.setState({password:''});
+                        this.setState({count:1});
+                        this.setState({disable:'disable'})
+                    }
+                },
                 PasswordAdded:function(){
-                    var pin = this.refs.Pin.value;
-                    alert("you have enter "+ pin);
+                    
+                    var pin = this.state.password;
+                    if(pin === 1234){
+                        this.setState({AppMode:'MainMenu'})
+                    }else{
+                        alert("You have enter #Incorrect Pin");
+                        this.setState({AppMode:'home'})
+                    }
+                    //alert("you have enter NEXT "+ pin);
                 },
                 three:function(){
                     this.setState({AppMode:'setting'})
@@ -92,7 +134,7 @@
                         <div className="container">
                             <div className="row">
                                 <div className="col-md-4 col-md-offset-4 text-center decorate">
-                                    <h4>Welcome to Youngs Bank</h4>
+                                    <h3>Welcome to Youngs Bank</h3>
                                     <br/><br/><br/><br/><br/>
                                     <button type="button" onClick={this.NextPassMode} className="btn btn-primary btn-lg btn-block">Swipe Your Card</button>
                                 </div>
@@ -105,16 +147,20 @@
                         <div className="container">
                             <div className="row">
                                 <div className="col-md-4 col-md-offset-4 text-center decorate">
-                                    <h4>Enter Your Pin</h4>
+                                    <h3>Enter Your Pin</h3>
                                     <br/><br/><br/><br/><br/>
-                                    <input ref="Pin" type="password" autofocus className="form-control" placeholder="Pin"/>
+                                    <input type="password" value={this.state.password} keyUp={this.PassChange}  autofocus className="form-control" placeholder="Pin" autofocus/>
                                     <br/>
-                                    <button type="button" onClick={this.PasswordAdded} className="btn btn-primary btn-lg btn-block">Home</button>
+                                    <button type="button" onClick={this.PasswordAdded} className="btn btn-primary btn-lg btn-block" disabled={this.state.disable}>Submit</button>
                                 </div>
                             </div>
                         </div>
                     )
                 },
+                MainMenu:function(){
+
+                },
+
           
             render:function(){
                 
