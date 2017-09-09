@@ -44,7 +44,8 @@
                 alert("you click #Remove button");
             },
             Save:function(){
-                //alert("you click #save Button");
+                var Text = this.refs.NewText;
+                alert("New text is:" +Text);
                 this.setState({Editing:false})
             },
             Cancel:function(){
@@ -61,7 +62,7 @@
             },
             CommentForm:function(){
               return ( <div className="well">
-                        <input type="text" className="form-control" value={this.props.children} placeholer="Add your comment"/>
+                        <input type="text" ref="NewText" className="form-control" value={this.props.children} placeholer="Add your comment"/>
                         <h4></h4>
                         <br/>
                         <button onClick={this.Save} className="btn btn-success MarginRight">Save</button>
@@ -79,11 +80,28 @@
                      
             }
         });
-        ReactDOM.render(
-                        <div >
-                        <Comment>Hello</Comment>
-                        <Comment>Hellosndajv</Comment>
-                        </div>, document.getElementById('App'));
+        
+
+        var CommentBox = React.createClass({
+            getInitialState:function(){
+                return(
+                    Comments:[
+                        'hey this is wiz',
+                        'hello bitches',
+                        'hey yaaa'
+                    ]
+                )
+            },
+            render:function(){
+                return(
+                       this.state.Comments.map(Text,i){
+
+                       }
+                    <Comment>This is comment from anather component</Comment>
+                )
+            }
+        });
+        ReactDOM.render(<CommentBox/>, document.getElementById('App'));
         </script>
     </body>
     </html>
