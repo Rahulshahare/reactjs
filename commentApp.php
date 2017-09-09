@@ -31,13 +31,23 @@
                                     
         <script type="text/babel">
         var Comment = React.createClass({
+
+            getInitialState:function(){
+                return({editing:false})
+            },
+            Edit:function(){
+                alert("you click #Edit button");
+            },
+            Remove:function(){
+                alert("you click #Remove button");
+            },
             render:function(){
                 return(
                     <div className="well">
                         <h4>{this.props.CommentText}</h4>
                         <br/>
-                        <button className="btn btn-primary MarginRight">Edit</button>
-                        <button className="btn btn-danger">Delet</button>
+                        <button onClick={this.Edit} className="btn btn-primary MarginRight">Edit</button>
+                        <button onClick={this.Remove}className="btn btn-danger">Remove</button>
                     </div>
                 )
             }
