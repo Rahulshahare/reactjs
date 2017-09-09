@@ -1,0 +1,347 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <title>React Learning</title>
+    <link href="css/bootstrap.css" rel="stylesheet">
+    <script src="js/react.min.js"></script>
+    <script src="js/react-dom.min.js"></script>
+    <script src="js/react-with-addons.js"></script>
+    <script src="js/browser.min.js"></script>
+    <style type="text/css">
+    .newFont{
+        font-family: Gabriola;
+        font-size: 24px;
+        color: #000 !important;
+    }
+    .MenuBar a{
+        color: #caced1;
+        cursor: pointer;
+    }
+    .active{
+        color: #2f97e6 !important;
+    }
+    .borderRight{
+        border-right:2px solid #caced1;
+    }
+    .FontColor{
+            font-size: 72px;
+            color: #0c89dc;
+    }
+    .yeahBitch {
+    padding: 25px;
+    border: 1px solid #b2b2b2;
+    background: #fdfdfd;
+}
+    </style>
+  </head>
+  <body>
+        <div id="Navigation"></div>
+        <div id="Menu"></div>
+        <div id="Counter"></div>
+        <div id="Abacus"></div>
+        <div id="OnKeyChange"></div>
+        <div id="comment">
+            <h2 class="text-center">Implimentation of Comment Model in React</h2>
+        </div>
+
+
+
+        
+        
+
+     <script type="text/babel">
+    
+    
+        
+
+        var Nevigation = React.createClass({
+            render:function(){
+                return(
+                    <nav className="navbar navbar-default">
+                        <div className="container-fluid">    
+                            <a className="navbar-brand newFont" href="#">Instagram</a>
+                        </div>
+                    </nav>
+                );
+            }
+        });
+        ReactDOM.render(<Nevigation/>, document.getElementById('Navigation'));
+
+        var Pills = React.createClass({
+            getInitialState:function(){
+                return {Pill1:true}
+            },
+            Pill1:function(){
+                this.setState({Pill1:true})
+                //alert("Menu one");
+               
+            },
+            Pill2:function(){
+                this.setState({Pill1:false})
+                //alert("Menu Two");
+
+            },
+            
+            render:function(){
+                var NewClass1, NewClass2;
+                if(this.state.Pill1){
+                    NewClass1 = "active";
+                    
+                }else{
+                    NewClass2 = "active";
+                }
+                return(
+                    
+                    <div className="NewButtons">
+                    {
+                            <Nevigation/>
+                    }
+                        <div className="container-fluid">
+                            <div className="row MenuBar">
+                                <div className="col-md-6 col-sm-6 col-xs-6 text-center borderRight">
+                                    <a className={NewClass1} onClick={this.Pill1}><span className="glyphicon glyphicon-th-list"></span></a>
+                                </div>
+                                <div className="col-md-6 col-sm-6 col-xs-6 text-center">
+                                    <a className={NewClass2}  onClick={this.Pill2}><span className="glyphicon glyphicon-th-large"></span></a>
+                                </div>
+                            </div>
+                            <div className="clearFix"></div>
+                            <hr/>
+                        </div>
+                    </div>
+                    
+                );
+            }
+        });
+        ReactDOM.render(<Pills/>, document.getElementById('Menu'));
+        
+          
+
+        var Counter = React.createClass({
+
+            getInitialState:function(){
+                return {count:0}
+            },
+            IncreaseCount:function(){
+                this.setState({count: this.state.count+1});
+            },
+            DecreaseCount:function(){
+                this.setState({count: this.state.count-1});
+            },
+            IncreaseByTwo:function(){
+                this.setState({count: this.state.count+2});
+            },
+            DecreaseByTwo:function(){
+                this.setState({count: this.state.count-2});
+            },
+            IncreaseByThree:function(){
+                this.setState({count: this.state.count+3});
+            },
+            DecreaseByThree:function(){
+                this.setState({count: this.state.count-3});
+            },
+            ResetCount:function(){
+                this.setState({count:0});
+            },
+            render:function(){
+                
+               
+                return(
+                    <div className="Counter">
+                      <div className="container-fluid">
+                          <div className="row">
+                                <div className="col-md-6 col-md-offset-3 text-center">
+                                        <h1>Counter</h1>
+                                        <div className="btn-group-lg" role="group" aria-label="...">
+                                        <button onClick={this.IncreaseByThree} type="button" className="btn btn-default">+3</button>
+                                        <button onClick={this.IncreaseByTwo} type="button" className="btn btn-default">+2</button>
+                                        <button onClick={this.IncreaseCount} type="button" className="btn btn-default">+1</button>
+                                        <button onClick={this.ResetCount} type="button" className="btn btn-default">Reset</button>
+                                        <button onClick={this.DecreaseCount} type="button" className="btn btn-default">-1</button>
+                                        <button onClick={this.DecreaseByTwo} type="button" className="btn btn-default">-2</button>
+                                        <button onClick={this.DecreaseByThree} type="button" className="btn btn-default">-3</button>
+                                        </div>
+                                </div>
+                            
+                           </div>
+
+
+                           <div className="row">
+                                <div className="col-md-6 col-md-offset-3 text-center">
+                                    <h1 className="FontColor">{this.state.count}</h1>
+                                </div>
+                           </div>
+
+                           <hr/>
+                      </div>
+                    </div>
+                    
+                );
+            }
+        });
+
+        ReactDOM.render(<Counter/>, document.getElementById('Counter'));
+
+        //abacus
+        var Abacus = React.createClass({
+            getInitialState:function(){
+                return{count:0,
+                       OnesPlace:0,
+                       TensPlace:0,
+                       HundredsPlace:0,
+                       ThounsandsPlace:0}
+            },
+            ResetAll:function(){
+                this.setState({count:0});
+                this.setState({OnesPlace:0});
+                this.setState({TensPlace:0});
+                this.setState({HundredsPlace:0});
+                this.setState({ThounsandsPlace:0});
+            },
+            IncreaseByOne:function(){
+                this.setState({OnesPlace: this.state.OnesPlace+1});
+                this.setState({count: this.state.count+1});
+            },
+            DecreaseByOne:function(){
+                this.setState({OnesPlace: this.state.OnesPlace-1});
+                this.setState({count: this.state.count-1});
+            },
+            IncreaseByTen:function(){
+                this.setState({TensPlace: this.state.TensPlace+1});
+                this.setState({count: this.state.count+10});
+            },
+            DecreaseByTen:function(){
+                this.setState({TensPlace: this.state.TensPlace-1});
+                this.setState({count: this.state.count-10});
+            },
+            IncreaseByHundred:function(){
+                this.setState({HundredsPlace: this.state.HundredsPlace+1});
+                this.setState({count: this.state.count+100});
+            },
+            DecreaseByHundred:function(){
+                this.setState({HundredsPlace: this.state.HundredsPlace-1});
+                this.setState({count: this.state.count-100});
+            },
+            IncreaseByThousand:function(){
+                this.setState({ThounsandsPlace: this.state.ThounsandsPlace+1});
+                this.setState({count: this.state.count+1000});
+            },
+            DecreaseByThousand:function(){
+                this.setState({ThounsandsPlace: this.state.ThounsandsPlace-1});
+                this.setState({count: this.state.count-1000});
+            },
+            
+           
+            render:function(){
+                if(this.state.OnesPlace === 10){
+                   this.setState({OnesPlace: 0});
+                   this.setState({TensPlace: this.state.TensPlace+1});
+
+                }
+                if(this.state.OnesPlace === -10){
+                   this.setState({OnesPlace: 0});
+                   this.setState({TensPlace: this.state.TensPlace-1});
+
+                }
+                if(this.state.TensPlace === 10){
+                   this.setState({TensPlace: 0});
+                   this.setState({HundredsPlace: this.state.HundredsPlace+1});
+
+                }
+                if(this.state.TensPlace === -10){
+                   this.setState({TensPlace: 0});
+                   this.setState({HundredsPlace: this.state.HundredsPlace-1});
+
+                }
+                if(this.state.HundredsPlace === 10){
+                   this.setState({HundredsPlace: 0});
+                   this.setState({ThounsandsPlace: this.state.ThounsandsPlace+1});
+
+                }
+                if(this.state.HundredsPlace === -10){
+                   this.setState({HundredsPlace: 0});
+                   this.setState({ThounsandsPlace: this.state.ThounsandsPlace-1});
+
+                }
+                return(
+                        <div className="Abacus">
+                            <div className="container">
+                            <h1 className="text-center">Abacus</h1>
+                                <div className="row">
+                                    <div className="col-md-6 col-sm-6 col-xs-6 text-right">
+                                        <div className="btn-group-vertical" role="group" aria-label="...">
+                                            <button onClick={this.IncreaseByOne} type="button" className="btn btn-default">+1</button>
+                                            <button onClick={this.IncreaseByTen} type="button" className="btn btn-default">+10</button>
+                                            <button onClick={this.IncreaseByHundred} type="button" className="btn btn-default">+100</button>
+                                            <button onClick={this.IncreaseByThousand} type="button" className="btn btn-default">+1000</button>
+                                            <button type="button" className="btn btn-default">----------</button>
+                                            
+                                        </div>
+                                         <div className="btn-group-vertical" role="group" aria-label="...">
+                                            <button onClick={this.DecreaseByOne} type="button" className="btn btn-default">-1</button>
+                                            <button onClick={this.DecreaseByTen} type="button" className="btn btn-default">-10</button>
+                                            <button onClick={this.DecreaseByHundred} type="button" className="btn btn-default">-100</button>
+                                            <button onClick={this.DecreaseByThousand} type="button" className="btn btn-default">-1000</button>
+                                            <button type="button" className="btn btn-default">----------</button>
+                                        </div>
+                                    </div>
+                                    <div className="col-md-6 col-sm-6 col-xs-6 text-left">
+                                        <div className="btn-group-vertical" role="group" aria-label="...">
+                                            <button type="button" className="btn btn-default">{this.state.OnesPlace}</button>
+                                            <button type="button" className="btn btn-default">{this.state.TensPlace}</button>
+                                            <button type="button" className="btn btn-default">{this.state.HundredsPlace}</button>
+                                            <button type="button" className="btn btn-default">{this.state.ThounsandsPlace}</button>
+                                            <button type="button" className="btn btn-default">Total = {this.state.count}</button>
+                                            
+                                            <hr/>
+                                            <button onClick={this.ResetAll} type="button" className="btn btn-default">Reset All</button>
+                                        </div>
+                                    </div>
+                                </div>
+                                <hr/>
+                            </div>
+                        </div>
+                );
+            }
+        });
+        ReactDOM.render(<Abacus/>, document.getElementById('Abacus'))
+
+       
+       var TextChange =  React.createClass({
+
+           getInitialState:function(){
+            return{TextValue:'type here'}
+           },
+           handleChange(e) {
+                this.setState({TextValue: e.target.value});
+            },
+        render:function(){
+            return(
+                <div className="container">
+                   <div className="col-md-4 col-md-offset-4 yeahBitch">
+                        <textarea onChange={this.handleChange} DefaultValue={this.state.TextValue} placeholder="Type Here"  className="form-control" rows="3">
+                        {this.state.TextValue}
+                        </textarea>
+                        <h3>Output</h3>
+                        <p>{this.state.TextValue}</p>
+                    
+                   </div>
+                   <div className="clearfix"></div>
+                   <hr/>
+                </div>
+            )
+        }
+       });
+
+       ReactDOM.render(<TextChange/>,document.getElementById('OnKeyChange'));
+        
+
+         
+     </script>
+     
+  </body>
+
+</html>

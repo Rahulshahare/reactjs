@@ -1,0 +1,197 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <title>React Learning</title>
+    <link href="css/bootstrap.css" rel="stylesheet">
+    <script src="js/react.min.js"></script>
+    <script src="js/react-dom.min.js"></script>
+    <script src="js/browser.min.js"></script>
+    <style type="text/css">
+    .fancy:hover{
+        background: rgb(5, 61, 98);
+        color: #fff;
+        cursor: pointer;
+    }
+    .fancy{
+        background: rgb(230, 230, 230);
+        border: 1px solid #fff;
+        color: #000;
+        width: 109px;
+        height: 138px;
+    }
+
+    .color{
+        color: #fff;
+    }
+    #jio{
+            background: #2196F3;
+    color: #fff;
+    border-radius: 100px;
+    font-size: 36px;
+    text-align: center;
+    }
+
+    span.text {
+    background: #067edd;
+    border-radius: 100px;
+    padding: 5px;
+}
+    </style>
+  </head>
+  <body>
+
+       
+        <div class="container-fluid">
+            <div id="jio">
+                <span class="text">Jio</span>
+            </div>
+        </div>
+        <div id="page"></div>
+        <div id="icon"></div>
+        <div class="container-fluid">
+            <div id="buttons"></div>
+        </div>
+        
+
+    <script type="text/babel">
+      var ListItem = React.createClass({
+          render:function(){
+            return(<li className="list-group-item">{this.props.text}</li>);
+          }
+      });
+
+      var ListBox = React.createClass({
+          render:function(){
+            return(
+                <div className="col-md-4 col-sm-4 ">
+                    <ul className="list-group">
+                      <ListItem text="this is menu"/>
+                      <ListItem text="this is menu"/>
+                      <ListItem text="this is menu"/>
+                      <ListItem text="this is menu"/>
+                    </ul>
+                </div>
+            );
+          }
+      }) 
+      ReactDOM.render(
+          <div className="container-fluid"> 
+            <ListBox/>
+            <ListBox/>
+            <ListBox/>  
+          </div>, document.getElementById('page'));
+
+    // forIcons
+      var IconGenerator = React.createClass({
+            
+          render:function(){
+              
+              return(
+                    <div className="col-md-1 col-sm-4 col-xs-4 fancy">
+                        <h2 className="text-center">
+                          <span  className={this.props.children}></span>
+                        </h2>
+                        <p className="text-center">{this.props.children}</p>
+                    </div>
+              );
+          }
+      });
+
+      var IconName = React.createClass({
+
+        getInitialState: function(){
+                return{
+                    iconNames:[ 'glyphicon glyphicon-asterisk',
+                                'glyphicon glyphicon-plus', 
+                                'glyphicon glyphicon-euro',
+                                'glyphicon glyphicon-minus',
+                                'glyphicon glyphicon-glass',
+                                'glyphicon glyphicon-music',
+                                'glyphicon glyphicon-cloud',
+                                'glyphicon glyphicon-envelope',
+                                'glyphicon glyphicon-pencil',
+                                'glyphicon glyphicon-search',
+                                'glyphicon glyphicon-heart',
+                                'glyphicon glyphicon-star',
+                                'glyphicon glyphicon-user',
+                                'glyphicon glyphicon-th-large',
+                                'glyphicon glyphicon-th',
+                                'glyphicon glyphicon-th-list',
+                                'glyphicon glyphicon-ok',
+                                'glyphicon glyphicon-remove',
+                                'glyphicon glyphicon-zoom-in',
+                                'glyphicon glyphicon-off'
+                            ],
+                    namesArray:[
+                        'taylorGang',
+                        'young',
+                        'hellYeah',
+                        
+                        
+                    ]
+                }
+        },
+
+        render:function(){
+                    return( 
+                        <div className="container-fluid">
+                        {   
+                            /*this.state.iconNames.map(function(text,i){
+                                return(<IconGenerator key={i}>{text}</IconGenerator>);
+                            })  
+                            i can use both of this*/
+                            
+
+                            this.state.iconNames.map(text =><IconGenerator>{text}</IconGenerator>)
+                        }
+                        </div>
+
+                    );
+        }
+     });
+      ReactDOM.render(<IconName/> ,document.getElementById('icon'));
+
+      var ButtonOption = React.createClass({
+            
+            getInitialState:function(){
+                return{DateSet:false};
+            },
+         
+          
+          dateNow: function(){
+              var today = new Date();
+              //alert("today is "+today);
+              this.setState({DateSet:true})
+              var Msg = ("today is "+today);
+              
+          },
+          render:function(){
+              return(
+                 
+                  <div className="col-md-4">
+                  <button 
+                    type="button" 
+                    onClick={this.dateNow} 
+                    className="btn btn-primary btn-lg btn-block">
+                    {this.props.ButtonName}
+                    </button>
+                  </div>
+                  );
+          }
+      });
+
+      
+      ReactDOM.render(
+          <div>
+          <ButtonOption ButtonName="signIn"/>
+          <ButtonOption ButtonName="signIn"/>
+          <ButtonOption ButtonName="signIn"/>
+          </div>
+          ,document.getElementById('buttons'));
+    </script>
+  </body>
+
+</html>
