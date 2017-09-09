@@ -34,7 +34,7 @@
             render:function(){
                 return(
                     <div className="well">
-                        <h4>this is comment</h4>
+                        <h4>{this.props.CommentText}</h4>
                         <br/>
                         <button className="btn btn-primary MarginRight">Edit</button>
                         <button className="btn btn-danger">Delet</button>
@@ -42,7 +42,7 @@
                 )
             }
         });
-        ReactDOM.render(<Comment />, document.getElementById('App'));
+        ReactDOM.render(<Comment CommentText="Hey this is new text" />, document.getElementById('App'));
         </script>
     </body>
     </html>
