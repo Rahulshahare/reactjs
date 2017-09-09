@@ -74,7 +74,7 @@
                 getInitialState:function(){
                     return{AppMode:'home',
                             password:'',
-                            count:0,
+                            count:1,
                             disable:'disabled'
                             }
                 },
@@ -106,15 +106,16 @@
                         this.setState({disable:''})
                     }
                     if(this.state.count>=5){
-                        alert("You can not add more than #FOUR digits");
-                        this.setState({password:''});
-                        this.setState({count:1});
+                        //alert("You can not add more than #FOUR digits");
+                        //this.setState({password:''});
+                        //this.setState({count:1});
                         this.setState({disable:'disable'})
                     }
                 },
-                PasswordAdded:function(){
-                    
+                PasswordAdded:function(e){
+                    this.setState({password: e.target.value});
                     var pin = this.state.password;
+                    alert(pin);
                     if(pin === 1234){
                         this.setState({AppMode:'MainMenu'})
                     }else{
@@ -128,6 +129,9 @@
                 },
                 four:function(){
                     this.setState({AppMode:'system'})
+                },
+                KnwE:function(e){
+                     alert( event.type );
                 },
                 Home:function(){
                     return(
@@ -149,7 +153,7 @@
                                 <div className="col-md-4 col-md-offset-4 text-center decorate">
                                     <h3>Enter Your Pin</h3>
                                     <br/><br/><br/><br/><br/>
-                                    <input type="password" value={this.state.password} keyUp={this.PassChange}  autofocus className="form-control" placeholder="Pin" autofocus/>
+                                    <input type="password"  value={this.state.password} onChange={this.PassChange}  autofocus className="form-control" placeholder="Pin" autofocus/>
                                     <br/>
                                     <button type="button" onClick={this.PasswordAdded} className="btn btn-primary btn-lg btn-block" disabled={this.state.disable}>Submit</button>
                                 </div>
