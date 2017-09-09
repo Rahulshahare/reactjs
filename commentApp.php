@@ -53,7 +53,7 @@
             },
             CommentNormal:function(){
                 return(<div className="well">
-                            <h4>{this.props.CommentText}</h4>
+                            <h4>{this.props.children}</h4>
                             <br/>
                             <button onClick={this.Edit} className="btn btn-primary MarginRight">Edit</button>
                             <button onClick={this.Remove}className="btn btn-danger">Remove</button>
@@ -61,7 +61,7 @@
             },
             CommentForm:function(){
               return ( <div className="well">
-                        <input type="text" className="form-control" value={this.props.CommentText} placeholer="Add your comment"/>
+                        <input type="text" className="form-control" value={this.props.children} placeholer="Add your comment"/>
                         <h4></h4>
                         <br/>
                         <button onClick={this.Save} className="btn btn-success MarginRight">Save</button>
@@ -81,10 +81,8 @@
         });
         ReactDOM.render(
                         <div >
-                        <Comment CommentText="one thfasdvds" />
-                        <Comment CommentText="dnvadbvajkfvbka" />
-                        <Comment CommentText="fasvdsvsdva" />
-                        <Comment CommentText="Hey this is new text" />
+                        <Comment>Hello</Comment>
+                        <Comment>Hellosndajv</Comment>
                         </div>, document.getElementById('App'));
         </script>
     </body>
