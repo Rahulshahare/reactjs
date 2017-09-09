@@ -84,21 +84,22 @@
 
         var CommentBox = React.createClass({
             getInitialState:function(){
-                return(
+                return{
                     Comments:[
                         'hey this is wiz',
                         'hello bitches',
                         'hey yaaa'
                     ]
-                )
+                }
             },
             render:function(){
-                return(
-                       this.state.Comments.map(Text,i){
-
-                       }
-                    <Comment>This is comment from anather component</Comment>
-                )
+             
+                       this.state.Comments.map(function(Text,i){
+                        return(<Comment key={i}>{Text}</Comment>);
+                       })
+              
+                    
+                
             }
         });
         ReactDOM.render(<CommentBox/>, document.getElementById('App'));
