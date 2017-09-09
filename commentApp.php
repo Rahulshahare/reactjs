@@ -29,10 +29,11 @@
         var Comment = React.createClass({
             render:function(){
                 return(
-                    "Hello World";
+                    <h1>Hello World</h1>
                 )
             }
-        })
+        });
+        ReactDOM.render(<Comment/>, document.getElementById('App'));
         </script>
     </body>
     </html>
