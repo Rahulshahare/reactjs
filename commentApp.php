@@ -12,6 +12,9 @@
         <script src="js/browser.min.js"></script>
 
         <style type="text/css">
+        .MarginRight{
+            margin-right:10px;
+        }
         
         </style>
 
@@ -20,6 +23,7 @@
         <div class="container">
             <div class="row">
                 <div class="col-md-4 col-md-offset-4">
+                    <h1>Comments</h1>
                     <div id="App"></div>
                 </div>
             </div>
@@ -29,11 +33,16 @@
         var Comment = React.createClass({
             render:function(){
                 return(
-                    <h1>Hello World</h1>
+                    <div className="well">
+                        <h4>this is comment</h4>
+                        <br/>
+                        <button className="btn btn-primary MarginRight">Edit</button>
+                        <button className="btn btn-danger">Delet</button>
+                    </div>
                 )
             }
         });
-        ReactDOM.render(<Comment/>, document.getElementById('App'));
+        ReactDOM.render(<Comment />, document.getElementById('App'));
         </script>
     </body>
     </html>
