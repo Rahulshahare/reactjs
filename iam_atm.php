@@ -12,6 +12,17 @@
         <script src="js/browser.min.js"></script>
 
         <style type="text/css">
+        .decorate {
+            background: #fff;
+            margin-top: 50px;
+            padding: 50px;
+            border: 1px solid #dcebfa;
+            border-radius: 100px;
+        }
+        body {
+           
+            background-color: rgba(20, 113, 195, 0.07);
+        }
         </style>
 
     </head>
@@ -27,44 +38,99 @@
         
 
         <script type="text/babel">
+        var Home = React.createClass({
+            render:function(){
+                return(
+                        <div className="container">
+                            <div className="row">
+                                <div className="col-md-4 col-md-offset-4 text-center">
+                                    <h1>Welcome to Youngs Bank</h1>
+                                    <button type="button" className="btn btn-primary btn-lg btn-block">Block level button</button>
+                                </div>
+                            </div>
+                        </div>
+                )
+            }
+        });
+        var Password = React.createClass({
+            render:function(){
+                return(
+                        <div className="container">
+                            <div className="row">
+                                <div className="col-md-4 col-md-offset-4 text-center">
+                                    <h1>Enter Your Password</h1>
+                                </div>
+                            </div>
+                        </div>
+                )
+            }
+        });
            var TestingReact =  React.createClass({
 
                 getInitialState:function(){
-                    return{AppMode:'home'}
+                    return{AppMode:'home',
+                            name:null}
                 },
-                one:function(){
+                HomeMode:function(){
                     this.setState({AppMode:'home'})
                 },
-                two:function(){
-                    this.setState({AppMode:'profile'})
+                NextPassMode:function(){
+                    this.setState({AppMode:'password'})
+                },
+                PasswordAdded:function(){
+                    var pin = this.refs.Pin.value;
+                    alert("you have enter "+ pin);
+                },
+                three:function(){
+                    this.setState({AppMode:'setting'})
+                },
+                four:function(){
+                    this.setState({AppMode:'system'})
+                },
+                Home:function(){
+                    return(
+                        <div className="container">
+                            <div className="row">
+                                <div className="col-md-4 col-md-offset-4 text-center decorate">
+                                    <h4>Welcome to Youngs Bank</h4>
+                                    <br/><br/><br/><br/><br/>
+                                    <button type="button" onClick={this.NextPassMode} className="btn btn-primary btn-lg btn-block">Swipe Your Card</button>
+                                </div>
+                            </div>
+                        </div>
+                    )
+                },
+                Password:function(){
+                    return(
+                        <div className="container">
+                            <div className="row">
+                                <div className="col-md-4 col-md-offset-4 text-center decorate">
+                                    <h4>Enter Your Pin</h4>
+                                    <br/><br/><br/><br/><br/>
+                                    <input ref="Pin" type="password" autofocus className="form-control" placeholder="Pin"/>
+                                    <br/>
+                                    <button type="button" onClick={this.PasswordAdded} className="btn btn-primary btn-lg btn-block">Home</button>
+                                </div>
+                            </div>
+                        </div>
+                    )
                 },
           
             render:function(){
                 
                     var Msg;
                     switch(this.state.AppMode){
-                        case 'home': Msg = "Welcome to Youngs bank";
+                        case 'home': return this.Home();
                         break;
-                        case 'profile': Msg = "this is password baby";
+                        case 'password': return this.Password();
+                        break;
+                        case 'setting': return"Setup your profile here";
+                        break;
+                        case 'system' : return"System is up to date";
+                        break;
+                        default : return this.Home();
                     }
-                    return(
-                    <div className="container">
-                        <div className="row">
-                            <div className="col-md-4 col-md-offset-4">
-                                <h1>PageMode Test</h1>
-                                <button type="button" onClick={this.one} className="btn btn-primary btn-lg btn-block">Home</button>
-                                <button type="button" onClick={this.two} className="btn btn-primary btn-lg btn-block">Profile</button>
-                                <button type="button" onClick={this.three} className="btn btn-primary btn-lg btn-block">Setting</button>
-                                <button type="button" onClick={this.four} className="btn btn-primary btn-lg btn-block">System</button>
-                            </div>
-                        </div>
-                        <div className="row">
-                            <div className="col-md-4 col-md-offset-4 text-center">
-                                <h1>{Msg}</h1>
-                            </div>
-                        </div>
-                    </div>
-                )
+                    
             }
        });
 
