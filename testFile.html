@@ -1,0 +1,93 @@
+<!DOCTYPE html>
+<html lang="en">
+    <head>
+        <meta charset="utf-8">
+        <meta http-equiv="X-UA-Compatible" content="IE=edge">
+        <meta name="viewport" content="width=device-width, initial-scale=1">
+        <title>ATM Machine</title>
+        <link href="css/bootstrap.css" rel="stylesheet">
+        <script src="js/react.min.js"></script>
+        <script src="js/react-dom.min.js"></script>
+        <script src="js/react-with-addons.js"></script>
+        <script src="js/browser.min.js"></script>
+
+        <style type="text/css">
+        </style>
+
+    </head>
+    <body>
+        <div id="App">
+            
+        </div>
+       
+
+
+
+        
+        
+
+        <script type="text/babel">
+            /*
+            var AtmSystem = React.createClass({
+                getInitialState:function(){
+                    return{pageMode:'home'};
+                },
+                GoPassword:function(){
+                    alert("I'hv Been Click");
+                    this.setState({pageMode:'Password'});
+                },
+                Home:function(){
+                     return(
+                        <div id="Home">
+                            <div className="container">
+                                <div className="row">
+                                    <div className="col-md-6 col-md-offset-3">
+                                        <br/><br/><br/><br/><br/>
+                                        <h1 className="text-center">Welcome to Youngs House</h1>
+                                        <br/><br/><br/><br/><br/>
+                                        <button type="button" onClick ={this.GoPassword} className="btn btn-primary btn-lg btn-block">Swipe Your Card</button>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    );
+                },
+                Password:function(){
+                    return"<h1>This is password</h1>";
+                },
+
+                render:function(){
+                    switch(this.state.pageMode){
+                        case 'home' : return this.Home();
+                        break;
+                        case 'Password' :return this.Password();
+                        break;
+                    }
+                    
+                   
+                }
+
+            });
+            ReactDOM.render(<AtmSystem/>,document.getElementById('App'));
+            */
+
+            var Test = React.createClass({
+                render:function(){
+                    return(
+                        'hello'
+                    )
+                }
+
+            });
+            ReactDOM.render(<Test/>, document.getElementById('App'));
+          
+            
+            
+        </script>
+
+
+
+     
+    </body>
+
+</html>
