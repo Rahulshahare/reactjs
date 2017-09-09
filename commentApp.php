@@ -41,13 +41,28 @@
             Remove:function(){
                 alert("you click #Remove button");
             },
-            render:function(){
-                return(
-                    <div className="well">
+            Save:function(){
+                alert("you click #save Button");
+            },
+            Cancel:function(){
+                alert("you click #Cancel Button");
+            },
+            Comment:function(){
+                <div className="well">
                         <h4>{this.props.CommentText}</h4>
                         <br/>
                         <button onClick={this.Edit} className="btn btn-primary MarginRight">Edit</button>
                         <button onClick={this.Remove}className="btn btn-danger">Remove</button>
+                </div>
+            },
+            render:function(){
+                return(
+                    <div className="well">
+                        <input type="text" className="form-control" value={this.props.CommentText} placeholer="Add your comment"/>
+                        <h4></h4>
+                        <br/>
+                        <button onClick={this.Save} className="btn btn-success MarginRight">Save</button>
+                        <button onClick={this.Cancel}className="btn btn-warning">Cancel</button>
                     </div>
                 )
             }
