@@ -33,41 +33,59 @@
         var Comment = React.createClass({
 
             getInitialState:function(){
-                return({editing:false})
+                return({Editing:false})
             },
+
             Edit:function(){
-                alert("you click #Edit button");
+                //alert("you click #Edit button");
+                this.setState({Editing:true})
             },
             Remove:function(){
                 alert("you click #Remove button");
             },
             Save:function(){
-                alert("you click #save Button");
+                //alert("you click #save Button");
+                this.setState({Editing:false})
             },
             Cancel:function(){
-                alert("you click #Cancel Button");
+                //alert("you click #Cancel Button");
+                this.setState({Editing:false})
             },
-            Comment:function(){
-                <div className="well">
-                        <h4>{this.props.CommentText}</h4>
-                        <br/>
-                        <button onClick={this.Edit} className="btn btn-primary MarginRight">Edit</button>
-                        <button onClick={this.Remove}className="btn btn-danger">Remove</button>
-                </div>
+            CommentNormal:function(){
+                return(<div className="well">
+                            <h4>{this.props.CommentText}</h4>
+                            <br/>
+                            <button onClick={this.Edit} className="btn btn-primary MarginRight">Edit</button>
+                            <button onClick={this.Remove}className="btn btn-danger">Remove</button>
+                       </div>)
             },
-            render:function(){
-                return(
-                    <div className="well">
+            CommentForm:function(){
+              return ( <div className="well">
                         <input type="text" className="form-control" value={this.props.CommentText} placeholer="Add your comment"/>
                         <h4></h4>
                         <br/>
                         <button onClick={this.Save} className="btn btn-success MarginRight">Save</button>
                         <button onClick={this.Cancel}className="btn btn-warning">Cancel</button>
-                    </div>
-                )
+                     </div>
+                     )
+            },
+            render:function(){
+                
+                if(this.state.Editing){
+                    return this.CommentForm();
+                }else{
+                    return this.CommentNormal();
+                }
+                     
             }
         });
-        ReactDOM.render(<Comment CommentText="Hey this is new text" />, document.getElementById('App'));
+        ReactDOM.render(
+                        <div >
+                        <Comment CommentText="one thfasdvds" />
+                        <Comment CommentText="dnvadbvajkfvbka" />
+                        <Comment CommentText="fasvdsvsdva" />
+                        <Comment CommentText="Hey this is new text" />
+                        </div>, document.getElementById('App'));
         </script>
     </body>
     </html>
