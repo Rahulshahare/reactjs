@@ -45,10 +45,12 @@
                 this.setState({Editing:true})
             },
             Remove:function(){
-                alert("you click #Remove button");
+                //alert("you click #Remove button");
+                this.props.DeleteComment(this.props.index);
             },
             Save:function(){
-                alert("New text is:" +this.state.NewText);
+                //alert("New text is:" +this.state.NewText);
+                this.props.UpdateComment(this.state.NewText, this.props.index);
                 this.setState({Editing:false})
             },
             Cancel:function(){
@@ -97,15 +99,32 @@
               }
             },
             RemoveComment:function(i){
-                arr = this.state.Comments;
-
+                console.log('Removing Comment'+i);
+                var arr = this.state.Comments;
+                arr.splice(i,1);
+                this.setState({Comments: arr});
+            },
+            UpdatingComment:function(newText,i){
+                console.log('Removing Comment'+i);
+                var arr = this.state.Comments;
+                arr[i] = newText;
+                this.setState({Comments: arr});
+            },
+            AddNew:function(){
+                var arr = this.state.Comments;
+                arr.push('Its new');
+                this.setState({Comments: arr});
             },
             eachComment:function(Text,i){
-                    return(<Comment key={i} index={i}>{Text}</Comment>)
+                    return(
+                        <Comment key={i} index={i} UpdateComment={this.UpdatingComment} DeleteComment={this.RemoveComment}>
+                        {Text}
+                        </Comment>)
             },
             render:function(){
                 return(
                     <div>
+                        <button onClick={this.AddNew} className="btn btn-primary btn-sm">Add Comment</button>
                         { this.state.Comments.map(this.eachComment)}
                     </div>
                 )
