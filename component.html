@@ -1,0 +1,36 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <title>React Learning</title>
+    <link href="css/bootstrap.css" rel="stylesheet">
+    <script src="js/react.min.js"></script>
+    <script src="js/react-dom.min.js"></script>
+    <script src="js/browser.min.js"></script>
+  </head>
+  <body>
+
+        
+        <div id="example2"><h2>hello</h2></div>
+
+     <script type="text/babel">
+     
+    
+    //A small component 
+     //name of variable must be capital in react while creating any component
+        var Wizkumar = React.createClass({
+            render: function(){
+                return(<h3>Hello its Component</h3>);
+            }
+        });
+    
+        ReactDOM.render(<Wizkumar />, document.getElementById('example2'));
+
+         
+     </script>
+     
+  </body>
+
+</html>
