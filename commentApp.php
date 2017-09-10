@@ -44,8 +44,7 @@
                 alert("you click #Remove button");
             },
             Save:function(){
-                var Text = this.refs.NewText;
-                alert("New text is:" +Text);
+                alert("saving here");
                 this.setState({Editing:false})
             },
             Cancel:function(){
@@ -56,17 +55,16 @@
                 return(<div className="well">
                             <h4>{this.props.children}</h4>
                             <br/>
-                            <button onClick={this.Edit} className="btn btn-primary MarginRight">Edit</button>
-                            <button onClick={this.Remove}className="btn btn-danger">Remove</button>
+                            <button onClick={this.Edit} className="btn btn-primary btn-sm MarginRight">Edit</button>
+                            <button onClick={this.Remove}className="btn btn-danger btn-sm">Remove</button>
                        </div>)
             },
             CommentForm:function(){
               return ( <div className="well">
-                        <input type="text" ref="NewText" className="form-control" value={this.props.children} placeholer="Add your comment"/>
-                        <h4></h4>
+                        <textarea ref="newText" className="form-control" defaultValue={this.props.children}/>
                         <br/>
-                        <button onClick={this.Save} className="btn btn-success MarginRight">Save</button>
-                        <button onClick={this.Cancel}className="btn btn-warning">Cancel</button>
+                        <button onClick={this.Save} className="btn btn-success btn-sm MarginRight">Save</button>
+                        <button onClick={this.Cancel}className="btn btn-warning btn-sm">Cancel</button>
                      </div>
                      )
             },
@@ -81,28 +79,12 @@
             }
         });
         
-
-        var CommentBox = React.createClass({
-            getInitialState:function(){
-                return{
-                    Comments:[
-                        'hey this is wiz',
-                        'hello bitches',
-                        'hey yaaa'
-                    ]
-                }
-            },
-            render:function(){
-             
-                       this.state.Comments.map(function(Text,i){
-                        return(<Comment key={i}>{Text}</Comment>);
-                       })
-              
-                    
-                
-            }
-        });
-        ReactDOM.render(<CommentBox/>, document.getElementById('App'));
+        ReactDOM.render(
+                        <div>
+                        <Comment>hello</Comment>
+                        <Comment>wiz kumar</Comment>
+                        </div>, document.getElementById('App'));
+       
         </script>
     </body>
     </html>
