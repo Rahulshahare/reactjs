@@ -87,6 +87,15 @@
         });
 
         var CommentBox = React.createClass({
+            getInitialState:function(){
+                return(
+                    Comments:[
+                        'this is one comment',
+                        'this is second',
+                        'this is third'
+                    ]
+                )
+            },
             render:function(){
                 return(
                     <div>
