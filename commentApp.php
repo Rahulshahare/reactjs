@@ -85,12 +85,20 @@
                      
             }
         });
-        
-        ReactDOM.render(
-                        <div>
+
+        var CommentBox = React.createClass({
+            render:function(){
+                return(
+                    <div>
                         <Comment>hello</Comment>
                         <Comment>wiz kumar</Comment>
-                        </div>, document.getElementById('App'));
+                        </div>
+
+                )
+            }
+        });
+        
+        ReactDOM.render(<CommentBox/>, document.getElementById('App'));
        
         </script>
     </body>
