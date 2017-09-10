@@ -33,7 +33,11 @@
         var Comment = React.createClass({
 
             getInitialState:function(){
-                return({Editing:false})
+                return({Editing:false,
+                        NewText:''})
+            },
+            GetValue:function(e){
+                this.setState({NewText:e.target.value})
             },
 
             Edit:function(){
@@ -44,24 +48,27 @@
                 alert("you click #Remove button");
             },
             Save:function(){
-                alert("saving here");
+                alert("New text is:" +this.state.NewText);
                 this.setState({Editing:false})
             },
             Cancel:function(){
                 //alert("you click #Cancel Button");
                 this.setState({Editing:false})
             },
+            
             CommentNormal:function(){
                 return(<div className="well">
-                            <h4>{this.props.children}</h4>
-                            <br/>
+                            <p>{this.props.children}</p>
                             <button onClick={this.Edit} className="btn btn-primary btn-sm MarginRight">Edit</button>
                             <button onClick={this.Remove}className="btn btn-danger btn-sm">Remove</button>
                        </div>)
             },
             CommentForm:function(){
               return ( <div className="well">
-                        <textarea ref="newText" className="form-control" defaultValue={this.props.children}/>
+                        <p><small>Editing Comment</small></p>
+                        <textarea onChange={this.GetValue}  className="form-control" >
+                        {this.props.children}
+                        </textarea>
                         <br/>
                         <button onClick={this.Save} className="btn btn-success btn-sm MarginRight">Save</button>
                         <button onClick={this.Cancel}className="btn btn-warning btn-sm">Cancel</button>
