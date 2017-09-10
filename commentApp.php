@@ -96,14 +96,17 @@
                     ]
               }
             },
+            RemoveComment:function(i){
+                arr = this.state.Comments;
+
+            },
+            eachComment:function(Text,i){
+                    return(<Comment key={i} index={i}>{Text}</Comment>)
+            },
             render:function(){
                 return(
                     <div>
-                        {
-                            this.state.Comments.map(function(Text,i){
-                                return(<Comment key={i}>{Text}</Comment>)
-                            })
-                        }
+                        { this.state.Comments.map(this.eachComment)}
                     </div>
                 )
                 
