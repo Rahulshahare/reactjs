@@ -88,22 +88,26 @@
 
         var CommentBox = React.createClass({
             getInitialState:function(){
-                return(
+                return{
                     Comments:[
                         'this is one comment',
                         'this is second',
                         'this is third'
                     ]
-                )
+              }
             },
             render:function(){
                 return(
                     <div>
-                        <Comment>hello</Comment>
-                        <Comment>wiz kumar</Comment>
-                        </div>
-
+                        {
+                            this.state.Comments.map(function(Text,i){
+                                return(<Comment key={i}>{Text}</Comment>)
+                            })
+                        }
+                    </div>
                 )
+                
+                
             }
         });
         
