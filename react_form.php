@@ -38,6 +38,9 @@
                         DOB:'',
                         Number:'',
                         Massege:'',
+                        ServerResponce:'',
+                        NewName:'',
+                        NewEmail:'',
                     }
                 },
                 HandleNameChange:function(e){
@@ -70,35 +73,42 @@
                         alert("Mobile number is Incorrect")
                     }
                      // data in the form
-                     var dataString = 'Name ='+ this.state.Name
-                                     +'&Email ='+ this.state.Email
-                                     +'&DOB ='+ this.state.DOB +'&Mobile= '+ this.state.Number;
-                        /*var form_data={
+                     var dataString = 'Name='+ this.state.Name
+                                     +'&Email='+ this.state.Email
+                                     +'&DOB='+ this.state.DOB +'&Mobile= '+ this.state.Number;
+                        var form_data={
                             
                             Name: this.state.Name,
                             Email: this.state.Email,
                             DOB: this.state.DOB,
                             Mobile: this.state.Number,
                             
-                        };*/
+                        };
+                        console.log("DataString = "+ dataString );
                     
                         // submit form data to api
-                        /*$.ajax({
-                            url: "http://localhost/reactjs/api/ReadFormData.php?Name=Taylor,
+                        $.ajax({
+                            url: "http://localhost/reactjs/api/ReadFormData.php",
                             type : "POST",
-                            contentType : 'application/json',
-                            data : JSON.stringify(dataString),
+                            data : dataString,
+                            cache: false,
                             success: function(html)
                                 {
                                     //$('.load-content').html(html);
                                     alert(html);
+                                    this.setState({ServerResponce: html});
                                     
-                                },
-                        });*/
+                                   
+                                    
+                                }.bind(this),
+                        });
+                        /*
                         this.serverRequestProd = $.post("http://localhost/reactjs/api/ReadFormData.php?Name=TGOD",
                             function (html) {
                                 alert(html);
-                            }.bind(this));
+                            }.bind(this));*/
+                            console.log(this.state.ServerResonce);
+                           //console.log(promise['var']);
                 },
                     render:function(){
                         
@@ -106,7 +116,22 @@
                             <div>
                                 <h3>Fill the Form</h3>
                                
-                                        <h4>{this.state.Massege}</h4>
+                                        {  
+                                            
+                                            this.state.ServerResponce == "" ? null: (
+                                                this.state.ServerResponce == "Error"?
+                                            
+                                                <div className='alert alert-danger'>
+                                                    Unable to update product. Please try again.
+                                                </div>
+                                            : <div className='alert alert-danger'>
+                                                  {this.state.ServerResponce}
+                                                  
+                                                </div>
+                                                )
+                                            
+                                        }
+                                        
                                    
                                 <form>
                                     <div className="form-group">
