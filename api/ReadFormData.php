@@ -19,12 +19,12 @@ if(count($_POST)>0){
 ];
     
     //echo"New Array is";
-    /*
-    echo "<Script type=\"text/javascript\">";
-    echo "var NewData = ".json_encode($value).";";
-    echo"</script>";
-    //print_r($value);*/
-    echo json_encode($value);
+    
+   
+    //echo " \"NewData\" :".json_encode($value).";";
+  
+    //print_r($value);
+   echo json_encode((array)$value);
 
 }else{
     echo"Error";
