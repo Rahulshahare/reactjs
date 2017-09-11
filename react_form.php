@@ -6,6 +6,7 @@
         <meta name="viewport" content="width=device-width, initial-scale=1">
         <title>React Form</title>
         <link href="css/bootstrap.css" rel="stylesheet">
+        <script src="js/jquery-2.2.4.min.js"></script>
         <script src="js/react.min.js"></script>
         <script src="js/react-dom.min.js"></script>
         <script src="js/react-with-addons.js"></script>
@@ -32,27 +33,97 @@
             var FormElement = React.createClass({
                 getInitialState:function(){
                     return{
+                        Name:'',
                         Email:'',
+                        DOB:'',
+                        Number:'',
+                        Massege:'',
                     }
+                },
+                HandleNameChange:function(e){
+                    this.setState({Name: e.target.value})
                 },
                 HandleEmailChange:function(e){
                     this.setState({Email: e.target.value})
                 },
+                CheckEmail:function(){
+                    var regex = /^[0-9a-zA-Z]+([0-9a-zA-Z]*[-._+])*[0-9a-zA-Z]+@[0-9a-zA-Z]+([-.][0-9a-zA-Z]+)*([0-9a-zA-Z]*[.])[a-zA-Z]{2,6}$/;
+
+                        if (regex.test(this.state.Email) == false) 
+                        {
+                        alert("Invalid E-mail address!");
+                        }
+                },
+                DOB:function(e){
+                    this.setState({DOB: e.target.value})
+                },
+                Number:function(e){
+                    this.setState({Number: e.target.value});
+                },
                 FormDataShow:function(){
+                    
+                    
                     console.log('Email is :'+this.state.Email);
+                    console.log('DOB is :'+this.state.DOB);
+                    console.log('Numner is :'+this.state.Number);
+                    if(this.state.Number.length > 10 || this.state.Number.length < 10){
+                        alert("Mobile number is Incorrect")
+                    }
+                     // data in the form
+                     var dataString = 'Name ='+ this.state.Name
+                                     +'&Email ='+ this.state.Email
+                                     +'&DOB ='+ this.state.DOB +'&Mobile= '+ this.state.Number;
+                        /*var form_data={
+                            
+                            Name: this.state.Name,
+                            Email: this.state.Email,
+                            DOB: this.state.DOB,
+                            Mobile: this.state.Number,
+                            
+                        };*/
+                    
+                        // submit form data to api
+                        /*$.ajax({
+                            url: "http://localhost/reactjs/api/ReadFormData.php?Name=Taylor,
+                            type : "POST",
+                            contentType : 'application/json',
+                            data : JSON.stringify(dataString),
+                            success: function(html)
+                                {
+                                    //$('.load-content').html(html);
+                                    alert(html);
+                                    
+                                },
+                        });*/
+                        this.serverRequestProd = $.post("http://localhost/reactjs/api/ReadFormData.php?Name=TGOD",
+                            function (html) {
+                                alert(html);
+                            }.bind(this));
                 },
                     render:function(){
+                        
                         return(
                             <div>
                                 <h3>Fill the Form</h3>
+                               
+                                        <h4>{this.state.Massege}</h4>
+                                   
                                 <form>
                                     <div className="form-group">
                                         <label for="exampleInputName2">Name</label>
-                                        <input type="text" className="form-control" id="exampleInputName2" placeholder="Jane Doe"/>
+                                        <input onChange={this.HandleNameChange} type="text" className="form-control" id="exampleInputName2" placeholder="Jane Doe"/>
                                     </div>
                                     <div className="form-group">
                                         <label for="exampleInputEmail1">Email address</label>
                                         <input onChange={this.HandleEmailChange} type="email" className="form-control" id="exampleInputEmail1" placeholder="Enter email"/>
+                                    </div>
+                                    <div className="form-group">
+                                        <label for="exampleInputName2">DOB</label>
+                                        <input onChange={this.DOB} type="date" className="form-control" id="exampleInputName2" placeholder="Jane Doe"/>
+                                    </div>
+                                    <div className="form-group">
+                                        <label for="exampleInputName2">Mobile</label>
+                                        <input onChange={this.Number} type="number" maxlength="10" className="form-control" id="exampleInputName2" placeholder="Jane Doe"/>
                                     </div>
                                     <button onClick={this.FormDataShow} type="button" className="btn btn-primary btn-lg btn-block">Submit</button>
                                 </form>
