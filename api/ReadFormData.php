@@ -1,4 +1,5 @@
 <?php
+
 if(count($_POST)>0){
     $email = $_POST['Email'];
     $name = $_POST['Name'];
@@ -9,7 +10,7 @@ if(count($_POST)>0){
               Email is {$email}, <br/>
               DOB is {$dob},<br/>
               and Mobile Number is {$mobile}.";
-              echo $data;
+              //echo $data;
     $value = [
     "Name" => "{$name}",
     "Email" => "{$email}",
@@ -17,14 +18,15 @@ if(count($_POST)>0){
     "Mobile"=>"{$mobile}"
 ];
     
-    echo"New Array is";
+    //echo"New Array is";
+    /*
     echo "<Script type=\"text/javascript\">";
     echo "var NewData = ".json_encode($value).";";
     echo"</script>";
-    print_r($value);
+    //print_r($value);*/
+    echo json_encode($value);
 
 }else{
-    echo"No data receive";
+    echo"Error";
 }
-
 ?>
