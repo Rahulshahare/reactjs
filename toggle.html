@@ -19,15 +19,33 @@
     </head>
     <body>
             <div id="App"></div>
+            <div id="PBar"></div>
 
             <script type="text/babel">
+                
                 var ToggleButton = React.createClass({
+                    getInitialState:function(){
+                        return{
+                            alert:false,
+                        }
+                    },
+                    componentDidMount(){
+                        setInterval(()=>{
+                            this.setState({alert: !this.state.alert})
+                        },1000);
+                    },
                     showWarning:function(){
+                        if(!this.state.alert){
+                            return null;
+                        }
                         return(
                             <div className="alert alert-warning" role="alert">
-                                This is Alert Bitch
+                                This is Warning Bitch
                             </div>
                         )
+                    },
+                    handleClick:function(){
+                        this.setState({alert: !this.state.alert})
                     },
                     render:function(){
                         return(
@@ -35,15 +53,33 @@
                                 <div className="row">
                                     <div className="col-md-4 col-md-offset-4">
                                         <h3 className="text-center">This is simple Toggle code in #React</h3>
+                                        <button type="button" onClick={this.handleClick} className="btn btn-primary btn-lg btn-block">{this.state.alert?'Hide':'Show'} Warning</button>
                                         {this.showWarning()}
-                                        <button type="button" className="btn btn-primary btn-lg btn-block">Block level button</button>
                                     </div>
                                 </div>
+                                <hr/>
                             </div>
                         )
                     }
                 });
                 ReactDOM.render(<ToggleButton/>, document.getElementById('App'));
+
+                var ProgressBar = React.createClass({
+                    render:function(){
+                        return(
+                            <div className="container">
+                                <div className="row">
+                                    <div className="col-md-4 col-md-offset-4">
+                                        <div className="progress">
+                                           <button>Hello</button>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>       
+                        )
+                    }
+                });
+                ReactDOM.render(<ProgressBar/>, document.getElementById('PBar'));
             </script>
     </body>
 </html>
