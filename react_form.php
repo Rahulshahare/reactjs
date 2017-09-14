@@ -96,9 +96,13 @@
                             success: function(html)
                                 {
                                     //$('.load-content').html(html);
-                                    alert(JSON.stringify(html));
-                                    this.setState({ServerResponce: html});
-                                    console.log(this.state.ServerResponce);
+                                    alert(JSON.parse(html));
+                                    this.setState({ServerResponce: JSON.parse(html)});
+                                    console.log("set state is"+this.state.ServerResponce);
+                                    console.log("length of array is "+ this.state.ServerResponce.length);
+                                   // var iterator = this.state.ServerResponce.values();
+
+                                    
                                     
                                     
                                     
@@ -111,14 +115,17 @@
                             function (html) {
                                 alert(html);
                             }.bind(this));*/
-                            console.log(this.state.ServerResonce);
+                           // console.log(this.state.ServerResonce);
                            //console.log(promise['var']);
 
 
                 
                 },
                     render:function(){
-                        
+                        var arr = this.state.ServerResponce;
+                        var sss = arr.map(function(text,i){
+                            return (<h4 key={i}>{text}</h4>);
+                        })
                         return(
                             <div>
                                 <h3>Fill the Form</h3>
@@ -132,7 +139,7 @@
                                                     Unable to update product. Please try again.
                                                 </div>
                                             : <div className='alert alert-danger'>
-                                                  {this.state.ServerResponce}
+                                                {sss}
                                                   
                                                 </div>
                                                 )
