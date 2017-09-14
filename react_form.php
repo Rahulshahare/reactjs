@@ -38,9 +38,10 @@
                         DOB:'',
                         Number:'',
                         Massege:'',
-                        ServerResponce:'',
+                        ServerResponce:[],
                         NewName:'',
                         NewEmail:'',
+                        locations:''
                     }
                 },
                 HandleNameChange:function(e){
@@ -95,8 +96,11 @@
                             success: function(html)
                                 {
                                     //$('.load-content').html(html);
-                                    alert(html);
+                                    alert(JSON.stringify(html));
                                     this.setState({ServerResponce: html});
+                                    console.log(this.state.ServerResponce);
+                                    
+                                    
                                     
                                    
                                     
@@ -109,6 +113,9 @@
                             }.bind(this));*/
                             console.log(this.state.ServerResonce);
                            //console.log(promise['var']);
+
+
+                
                 },
                     render:function(){
                         
