@@ -13,6 +13,14 @@
         <script src="js/browser.min.js"></script>
 
         <style type="text/css">
+        
+
+            .liked {
+                color: #09f;
+            }
+            .glyphicon-thumbs-up:hover{
+                cursor: pointer;
+            }
         </style>
        
 
@@ -20,6 +28,9 @@
     <body>
             <div id="App"></div>
             <div id="PBar"></div>
+            <div id="SelectBox"></div>
+            <div id="Like"></div>
+            <h1><span class="glyphicon glyphicon-thumbs-up"></span></h1>
 
             <script type="text/babel">
                 
@@ -69,12 +80,13 @@
                         return{
                             width:0,
                             count:0,
-                            pause:true,
+                            pause:false,
                         }
                     },
                     componentDidMount(){
                         if(this.state.pause){
-                            return null;
+                            this.setState({width:this.state.width,
+                                            count:this.state.count})
                         }else{
                         setInterval(()=>{
                             this.setState({width:this.state.width+3.8,
@@ -100,15 +112,180 @@
                                            {this.state.count} %
                                            </div>
                                         </div>
-                                                                                   <button type="button" onClick={this.handleClick} className="btn btn-primary btn-lg btn-block">{this.state.pause?'Start':'Pause'} Warning</button>
-
+                                        <button type="button" onClick={this.handleClick} className="btn btn-primary btn-lg btn-block">{this.state.pause?'Start':'Pause'} Warning</button>
                                     </div>
                                 </div>
+                                <hr/>
                             </div>       
                         )
                     }
                 });
                 ReactDOM.render(<ProgressBar/>, document.getElementById('PBar'));
+
+                var FormOptions = React.createClass({
+                    getInitialState:function(){
+                        return{
+                            Istate: [],
+                            StateId:'',
+                            Idistrict:[],
+
+                        }
+                            
+                        
+                    },
+
+                    componentDidMount(){
+
+                       $.ajax({
+                            url: "http://localhost/oceangreen/admin/api/readState.php",
+                            type : "GET",
+                            cache: false,
+                            success: function(html)
+                                {
+                                    //$('.load-content').html(html);
+                                    alert(html);
+                                    this.setState({Istate:JSON.parse(html)});
+                                    console.log("length="+this.state.Istate.length);
+                                    /*this.setState({ServerResponce: JSON.parse(html)});
+                                    console.log("set state is"+this.state.ServerResponce);
+                                    console.log("length of array is "+ this.state.ServerResponce.length);
+                                    alert(this.state.ServerResponce["Name"]);
+                                    alert(this.state.ServerResponce.Mobile);*/
+                                    
+                                }.bind(this),
+                        });
+
+                       
+                    },
+                    componentWillUnmount: function() {
+                        this.serverRequest.abort();
+                    },
+
+                    SelectBox:function(){
+                        return(
+                            <select className="form-control">
+                            
+                            </select>
+                        )
+                    },
+                    StateSelect:function(e){
+                        this.setState({StateId: e.target.value});
+                       alert("Select value is :"+ e.target.value);
+                       var dataString = 'id='+ e.target.value;
+                       alert(dataString);
+                       $.ajax
+                            ({
+                            type: "POST",
+                            url: "http://localhost/oceangreen/admin/api/readDistrictByState.php",
+                            data: dataString,
+                            cache: false,
+                            success: function(html)
+                            {
+                                alert(html);
+                                this.setState({Idistrict:(html)});
+                            
+                            }.bind(this),
+                            });
+                            alert("jhkj"+this.state.Idistrict);
+                    },
+                    optionvalue:function(text,i){
+                                return(<option  key={i} value={text.id}>{text.location_name}</option>);
+                    },
+                    DistrictResult:function(){
+                        if(this.state.Idistrict==''){
+                            return(
+                            <option  selected= "selected" value="">Select State First</option>
+                        )
+                        }
+                        if(this.state.Idistrict=='No district found'){
+                            return(
+                            <option  selected= "selected" value="">No District Found</option>
+                        )
+                        }
+                        if(this.state.Idistrict){
+                            this.setState({Idistrict: JSON.parse(this.state.Idistrict)});
+                            
+                                var New = <option  selected="selected" value="">Select District</option>;
+                            
+                                        New += this.state.Idistrict.map(this.optionvalue);
+                                    
+                                return{
+                                    New
+                                }
+                            
+                        }
+
+                        
+                    },
+                    render:function(){
+                        return(
+                            <div className="container">
+                                <div className="row">
+                                    <div className="col-md-4">
+                                    <select onChange={this.StateSelect} className="form-control">
+                                    <option  selected="selected" value="">Select State</option>
+                                    {
+                                        this.state.Istate.map(function(text,i){
+                                            return(<option  key={i} value={text.id}>{text.location_name}</option>);
+                                    })
+                                    }
+                                    </select>
+                                    </div>
+                                    <div className="col-md-4">
+                                    <select  className="form-control">
+                                    {this.DistrictResult()}
+                                    </select>
+                                    </div>
+                                    <div className="col-md-4">
+                                    <select className="form-control">
+                                    {this.SelectBox()}
+                                    </select>
+                                    </div>
+                                </div>
+                                <hr/>
+                            </div> 
+                        )
+                    }
+                });
+                ReactDOM.render(<FormOptions/>, document.getElementById('SelectBox'));
+
+                var Like = React.createClass({
+                    getInitialState:function(){
+                        return{Like:false}
+                    },
+                    handleChange:function(){
+                        this.setState({Like: !this.state.Like,})
+                        
+                    },
+                    MouseOver:function(){
+                        alert("hello");
+                    },
+                    render:function(){
+                        var ClassName = '';
+                        var text = '';
+                        if(this.state.Like){
+                            ClassName = "glyphicon glyphicon-thumbs-up liked";
+                            text = "Liked";
+                        }else{
+                            ClassName = "glyphicon glyphicon-thumbs-up";
+                            text = "Like";
+                        }
+                        return(
+                            <div className="container">
+                                <div className="row">
+                                    <div className="col-md-4 col-md-offset-4">
+                                        <h1>Fb Like Toggle: React</h1>
+                                        
+                                            <span onMouseOver={this.MouseOver} onClick={this.handleChange} className={ClassName}></span>
+                                            {text}
+                                           
+                                    </div>
+                                </div>
+                            </div>
+                        )
+                    }
+                });
+                ReactDOM.render(<Like/>,document.getElementById('Like'));
             </script>
     </body>
 </html>
