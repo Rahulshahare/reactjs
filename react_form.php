@@ -100,6 +100,8 @@
                                     this.setState({ServerResponce: JSON.parse(html)});
                                     console.log("set state is"+this.state.ServerResponce);
                                     console.log("length of array is "+ this.state.ServerResponce.length);
+                                    alert(this.state.ServerResponce["Name"]);
+                                    alert(this.state.ServerResponce.Mobile);
                                    // var iterator = this.state.ServerResponce.values();
 
                                     
@@ -122,10 +124,10 @@
                 
                 },
                     render:function(){
-                        var arr = this.state.ServerResponce;
+                       /* var arr = this.state.ServerResponce;
                         var sss = arr.map(function(text,i){
                             return (<h4 key={i}>{text}</h4>);
-                        })
+                        })*/
                         return(
                             <div>
                                 <h3>Fill the Form</h3>
@@ -139,7 +141,14 @@
                                                     Unable to update product. Please try again.
                                                 </div>
                                             : <div className='alert alert-danger'>
-                                                {sss}
+                                                {
+                                                    <div>
+                                                        <h2>Name: {this.state.ServerResponce.Name}</h2>
+                                                        <h2>Email: {this.state.ServerResponce["Email"]}</h2>
+                                                        <h2>Mobile: {this.state.ServerResponce.Mobile}</h2>
+                                                        <h2>Date of birth: {this.state.ServerResponce.dob}</h2>
+                                                    </div>
+                                                }
                                                   
                                                 </div>
                                                 )

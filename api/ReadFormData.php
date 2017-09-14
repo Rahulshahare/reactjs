@@ -6,18 +6,18 @@ if(count($_POST)>0){
     $dob = $_POST['DOB'];
     $mobile = $_POST['Mobile'];
 
-    $value = array();
+   /* $value = array();
     array_push($value,$email);
     array_push($value,$name);
     array_push($value,$dob);
-    array_push($value,$mobile);
+    array_push($value,$mobile);*/
     
-    /*$value = [
+    $value = [
     "Name" => "{$name}",
     "Email" => "{$email}",
     "dob"=> "{$dob}",
     "Mobile"=>"{$mobile}"
-    ];*/
+    ];
     
    echo json_encode((array)$value);
 
