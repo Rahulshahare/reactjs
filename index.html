@@ -1,0 +1,252 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <title>React Learning</title>
+    <link href="css/bootstrap.css" rel="stylesheet">
+    <script src="js/react.min.js"></script>
+    <script src="js/react-dom.min.js"></script>
+    <script src="js/browser.min.js"></script>
+  </head>
+  <body>
+
+        <div id="example1"></div>
+        <div id="example2"><h2>hello</h2></div>
+        <div id="example3"></div>
+        <div id="example4"></div>
+        <div id="example5"></div>
+        <div id="example6"></div>
+        <div id="example7"></div>
+        <div id="example8"></div>
+
+     <script type="text/babel">
+     //Simple render function.
+        ReactDOM.render(
+            <h1>Balaji ANdoba</h1>,
+            document.getElementById('example1')
+        );
+    
+    
+
+    //A small component 
+     //name of variable must be capital in react while creating any component
+        var Wizkumar = React.createClass({
+            render: function(){
+                return(<h3>Hello its Component</h3>);
+            }
+        });
+    
+        ReactDOM.render(<Wizkumar />, document.getElementById('example2'));
+    
+    //Multiple Component:
+    //multiple component needed because a component can only return one element
+
+       var Wizzy = React.createClass({
+           render: function(){
+               return(
+                    <div>
+                        <h1>Hello this is multiple Component</h1>
+                        <p>This is a part of multiple component.</p>
+                    </div>
+               );
+           }
+       });
+
+       ReactDOM.render(<Wizzy/>, document.getElementById('example3'));
+
+    //Now rendering a single component multiple time
+
+        //i am using a Wizkumar component here
+       ReactDOM.render(
+           <div>
+           <Wizkumar/>
+           <Wizkumar/>
+           <Wizkumar/>
+           <Wizkumar/>
+           </div>, 
+           document.getElementById('example4'));
+
+    //Properties using. 
+    //Properties means simple passing the value, so that we can make dynamic component.
+    //Using single component with different values
+
+     var Language = React.createClass({
+         render: function(){
+             return(
+                 <div>
+                  <h2>{this.props.name}</h2>
+                  <h4>{this.props.discription}</h4>
+                 </div>
+             );
+         }
+     });
+     ReactDOM.render(
+         <div>
+         <Language name="PHP" discription="Cool for server"/>
+         <Language name="Css" discription="for designing"/>
+         <Language name="HTML" discription="The base of web"/>
+         
+         </div>,
+         document.getElementById('example5'));
+
+
+    //something new
+    /*first thing was that i was creating this following code for some other purpose
+     but i saw a bootstrap list design with class name.
+     so i wanted to code for that list design, li under ul.
+     so first i create react class , in that i added multiple component i.e. code having
+     li elemnt under ul with class name and props. but output was wrost.
+     every props was perfect but at every time ul class was there so
+     each time it create a new ul and dats fuck i dnt want it.
+     so net idea was to create 2 seperate component. 
+     li with props and ul element as multiple component.
+     ul element gonna add li element with props value. and rendering element will be ul
+     so dats fuck work preety well.
+     
+     Every component can hold one single element.*/
+
+     var Item = React.createClass({
+            render:function(){
+                return(
+                     <li className="list-group-item">{this.props.listItem}</li>
+                );
+            }
+     })
+
+     var Listcall = React.createClass({
+         
+         render:function(){
+            return(
+                <div>
+                 <ul className="list-group">
+                     <Item listItem="wiz kumar"/>
+                     <Item listItem="Menu"/>
+                     <Item listItem="Hence"/>
+                     <Item listItem="wiz kumar"/>
+                 </ul>
+                </div>
+            );
+         }
+     });
+     ReactDOM.render(<Listcall/>, document.getElementById('example6'));
+
+    //the #children Property and a little event handling
+    
+    var Comment = React.createClass({
+
+        getInitialState:function(){
+            return {editing:false}
+        },
+
+        edit:function(){
+            
+            this.setState({editing:true})
+         },
+        delete:function(){
+             alert('Deleting text');
+         },
+        save:function(){
+            var val = this.refs.newText.value;
+            console.log('new comment 2'+ val);
+            this.setState({editing:false})
+         },
+
+        CommentNormal: function(){
+            return(
+                
+                 <div className="col-md-3">
+                  <h1>{this.props.children}</h1>
+                  <button onClick={this.edit} type="button" className="btn btn-primary">Edit</button>
+                  <button onClick={this.delete} type="button" className="btn btn-danger">Delete</button>
+                 </div>
+                
+            );
+        },
+
+        CommentForm: function(){
+            return(
+                
+                <div className="col-md-3">
+                    <h5>EditComment</h5>
+                    <textarea ref="newText" defaultValue={this.props.children}/>
+                    <button onClick={this.save} type="button" className="btn btn-success">Save</button>
+                </div>
+                
+            );
+        },
+
+        render:function(){
+           if(this.state.editing){
+                return this.CommentForm();
+           }else{
+                return this.CommentNormal();
+           }
+           return(<div class="clearfix"></div>);
+        }
+    });
+
+    var Bord = React.createClass({
+
+        getInitialState: function(){
+            return{
+                comments:[
+                            'hey this is wiz',
+                            'yeah we look for good ',
+                            'taylor gang in house'
+                        ]
+            }
+        },
+
+        render:function(){
+            return(
+                <div className="well">
+                    {
+                        this.state.comments.map(function(text,i){
+                            return(<Comment key={i}>{text}</Comment>);
+                        })
+                    }
+                </div>
+            );
+        }
+    });
+
+     ReactDOM.render(
+         <Bord/>, 
+         document.getElementById('example7'));
+
+    //states
+
+        var CheckBox = React.createClass({
+
+            getInitialState:function(){
+                return {checked:true}
+            },
+            handleChange:function(){
+                this.setState({checked: !this.state.checked})
+            },
+
+            render:function(){
+                var msg;
+
+                if(this.state.checked){
+                    msg = 'checked';
+                }else{
+                    msg = 'unchecked';
+                }
+
+                return(
+                    <div>
+                    <input type="checkbox" onChange={this.handleChange} defaultChecked={this.state.checked}/>
+                    <h4>hey this is {msg}</h4>
+                    </div>
+                );
+            }
+        });
+
+        ReactDOM.render(<CheckBox/>,document.getElementById('example8'))
+     </script>
+  </body>
+
+</html>

@@ -86,50 +86,45 @@
                 },
                 
                 PassChange:function(e){
+                    
                     this.setState({password: e.target.value});
+                    //var pin = this.state.password;
+                    //console.log('Password is :'+pin);
                     this.setState({count: this.state.count+1});
-                    console.log('password: ' +this.state.password);
-                    console.log('Count :'+ this.state.count);
-                    var pin = this.state.password;
-                    //alert(pin);
-                    if(Number.isNaN(pin)){
-                        console.log(pin);
-                    }else{
-                        /*console.log(pin);
-                        alert("You Must enter #Number here");
-                        this.setState({password:''});
-                        this.setState({count:1});
-                        this.setState({disable:'disable'})
-                        */
-                    }
+                    //console.log('Count :'+ this.state.count);
                     if(this.state.count == 4){
                         this.setState({disable:''})
                     }
                     if(this.state.count>=5){
-                        //alert("You can not add more than #FOUR digits");
-                        //this.setState({password:''});
-                        //this.setState({count:1});
-                        this.setState({disable:'disable'})
+                        alert("Pin must be #Four digit long");
+                        this.setState({count: 1,
+                                     password:''});
+                        
+                        
                     }
                 },
                 PasswordAdded:function(e){
                     this.setState({password: e.target.value});
                     var pin = this.state.password;
-                    alert(pin);
-                    if(pin === 1234){
+                    //alert(pin);
+                    //console.log('Mozilla is ' + pin.length + ' code units long');
+                    if(pin == 1234){
                         this.setState({AppMode:'MainMenu'})
                     }else{
                         alert("You have enter #Incorrect Pin");
-                        this.setState({AppMode:'home'})
+                        this.setState({AppMode:'home',
+                                        count: 1,
+                                        password:''
+                                     })
+                        
                     }
                     //alert("you have enter NEXT "+ pin);
                 },
-                three:function(){
-                    this.setState({AppMode:'setting'})
+                OptionSelected:function(e){
+                    var option = e.target.value;
+                    alert("You have selected:" +option);
                 },
-                four:function(){
-                    this.setState({AppMode:'system'})
-                },
+                
                 KnwE:function(e){
                      alert( event.type );
                 },
@@ -140,7 +135,7 @@
                                 <div className="col-md-4 col-md-offset-4 text-center decorate">
                                     <h3>Welcome to Youngs Bank</h3>
                                     <br/><br/><br/><br/><br/>
-                                    <button type="button" onClick={this.NextPassMode} className="btn btn-primary btn-lg btn-block">Swipe Your Card</button>
+                                    <button type="button" onClick={this.NextPassMode} className="btn btn-primary btn-lg btn-block">Swipe Your #Balaji here</button>
                                 </div>
                             </div>
                         </div>
@@ -162,8 +157,27 @@
                     )
                 },
                 MainMenu:function(){
-
+                    return(
+                        <div className="container">
+                            <div className="row">
+                                <div className="col-md-4 col-md-offset-4  decorate">
+                                    <h3 className="text-center">Welcome to Youngs Bank</h3>
+                                    <br/><br/>
+                                    <select value="" onChange={this.OptionSelected} className="form-control">
+                                        <option value="">Select Option Here</option>
+                                        <option value="BalanceCheck">Check Balance</option>
+                                        <option value="Withdrow">Withdrow</option>
+                                        <option value="ChangePass">Change Password</option>
+                                        
+                                    </select>
+                                    
+                                    
+                                </div>
+                            </div>
+                        </div>
+                    )
                 },
+                
 
           
             render:function(){
@@ -174,7 +188,7 @@
                         break;
                         case 'password': return this.Password();
                         break;
-                        case 'setting': return"Setup your profile here";
+                        case 'MainMenu': return this.MainMenu();
                         break;
                         case 'system' : return"System is up to date";
                         break;

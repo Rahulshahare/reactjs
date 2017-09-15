@@ -277,9 +277,12 @@
                                 case 'warning': divClassName = "alert alert-warning alert-dismissible";
                                 break;
                                 case 'info'   : divClassName = "alert alert-info alert-dismissible";
+                                break;
+                                case 'success': divClassName = "alert alert-success alert-dismissible";
+                                break;
+                                case 'danger' : divClassName = "alert alert-danger alert-dismissible";
+                                break;
                             
-                                default:
-                                    break;
                             }
                             return(
                                 <div className={divClassName} role="alert">
