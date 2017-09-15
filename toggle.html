@@ -164,7 +164,7 @@
                             District1:'Select state First',
                             City1:'Select District First',
                             error:'',
-                            errorClassName:'',
+                            errorTypeName:'',
 
                         }
                             
@@ -276,21 +276,29 @@
                             this.setState({error:"State is "+ this.state.StateId + 
                                                  "District is " +this.state.DistrictId +
                                                  "City is "+ this.state.CityId,
-                                            errorClassName:'info'})
+                                            errorTypeName:'info'})
                         }else{
                             //alert("Empty Input");
                             this.setState({error:'You can not send Empty Inputs',
-                                            errorClassName:'warning'});
+                                            errorTypeName:'warning'});
                         }
                         
                     },
-                    showError:function(ErrorClassName,ErrorMasg){
-                        
+                    showError:function(ErrorType,ErrorMasg){
+                        var divClassName = '';
+                            switch (ErrorType) {
+                                case 'warning': divClassName = "alert alert-warning";
+                                break;
+                                case 'info'   : divClassName = "alert alert-info";
+                            
+                                default:
+                                    break;
+                            }
                             return(
-                                <div className="alert alert-" role="alert">
-                                    <div className={ErrorClassName} >
+                                <div className={divClassName} role="alert">
+                                   
                                         {ErrorMasg}
-                                    </div>
+                                    
                                 </div>
                             )
                         
@@ -305,7 +313,7 @@
                                 <div className="row">
                                     <div className="col-md-4 col-md-offset-4">
                                         
-                                            {this.state.error?this.showError(this.state.errorClassName,this.state.error):null}
+                                            {this.state.error?this.showError(this.state.errorTypeName,this.state.error):null}
                                         
                                         <form>
                                             <div className="form-group">
