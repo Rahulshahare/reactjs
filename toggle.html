@@ -199,9 +199,9 @@
                                     DistrictId:'',
                                     Icity:[],
                                     City1:'Select District First'});
-                       //alert("Select value is :"+ e.target.value);
+                       
                        var dataString = 'id='+ e.target.value;
-                       //alert(dataString);
+                       
                        $.ajax
                             ({
                             type: "POST",
@@ -210,18 +210,18 @@
                             cache: false,
                             success: function(html)
                             {
-                                //alert("html is"+html);
+                                
                                 if(html==''){
                                     this.setState({District1:'No district found'})
                                 }else{
                                     this.setState({District1:'Select District'})
                                 }
                                 this.setState({Idistrict:JSON.parse(html)});
-                               // this.setState({Idistrict:JSON.parse(html)});
+                               
                             
                             }.bind(this),
                             });
-                            //alert("jhkj"+this.state.Idistrict);
+                            
                     },
                     DistrictSelect:function(e){
                         //alert("Select value is :"+ e.target.value);
