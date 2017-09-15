@@ -36,3 +36,54 @@ print_r($json_data);
 //echo "var location =".json_encode((array)$row).";";
 //echo "</script>";
 ?>
+
+<?php
+//readDistrictByState.php
+if(count($_POST)){
+$id = $_POST['id'];
+
+include_once"../db/dbConfig.php";
+include_once"../files/class/class.location.state.php";
+
+$state = new location($dbh);
+$row = $state->RetriveDistrictOnChangeOfstate($id);
+    //print_r($row);
+    if($row){
+       $json_data = json_encode((array)$row);
+       print_r($json_data);
+
+    }else{
+       //echo"No district found";
+    }
+
+
+}else{
+   //echo"something went wrong";
+}
+?>
+
+<?php
+//readCityByDistrict.php
+if(count($_POST)){
+$id = $_POST['id'];
+
+include_once"../db/dbConfig.php";
+include_once"../files/class/class.location.state.php";
+
+$state = new location($dbh);
+$row = $state->RetriveCityOnChangeOfDistrict($id);
+    //print_r($row);
+    if($row){
+       $json_data = json_encode((array)$row);
+       print_r($json_data);
+
+    }else{
+       //echo"No district found";
+    }
+
+
+}else{
+   //echo"something went wrong";
+}
+?>
+
