@@ -278,12 +278,23 @@
                         }
                         
                     },
-                    showError:function(argument){
-                        return(
-                            <div className="alert alert-warning" role="alert">
-                                    {argument}
-                            </div>
-                        )
+                    showError:function(type,argument){
+                        if(type=='warning'){
+                            return(
+                                <div className="alert alert-warning" role="alert">
+                                        {argument}
+                                </div>
+                            )
+                        }
+                        if(type=='error'){
+                            return(
+                                <div className="alert alert-danger" role="alert">
+                                        {argument}
+                                </div>
+                            )
+
+                        }
+                        
                     },
                     
                     
@@ -294,7 +305,7 @@
                                 <div className="row">
                                     <div className="col-md-4 col-md-offset-4">
                                         
-                                            {this.state.error?this.showError(this.state.error):null}
+                                            {this.state.error?this.showError('error',this.state.error):null}
                                         
                                         <form>
                                             <div className="form-group">
