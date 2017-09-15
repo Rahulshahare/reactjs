@@ -160,8 +160,10 @@
                             Idistrict:[],
                             DistrictId:'',
                             Icity:[],
+                            CityId:'',
                             District1:'Select state First',
-                            City1:'Select District First'
+                            City1:'Select District First',
+                            error:'',
 
                         }
                             
@@ -236,7 +238,8 @@
                     DistrictSelect:function(e){
                         //alert("Select value is :"+ e.target.value);
                         this.setState({DistrictId: e.target.value,
-                                        City1:'Loading'
+                                        City1:'Loading',
+                                        Icity:[],
                                         });
 
                         var dataString = 'id='+ e.target.value;
@@ -262,9 +265,25 @@
                         });
                     },
                     CitySelect:function(e){
-                        alert("State is "+ this.state.StateId + 
+                        this.setState({CityId:e.target.value});
+                    },
+                    ShowOptionsList:function(){
+                        if(this.state.StateId && this.state.DistrictId && this.state.CityId){
+                            alert("State is "+ this.state.StateId + 
                               "District is " +this.state.DistrictId +
-                              "City is "+ e.target.value);
+                              "City is "+ this.state.CityId);
+                        }else{
+                            alert("Empty Input");
+                            this.setState({error:'You can not send Empty Inputs'});
+                        }
+                        
+                    },
+                    showError:function(argument){
+                        return(
+                            <div className="alert alert-warning" role="alert">
+                                    {argument}
+                            </div>
+                        )
                     },
                     
                     
@@ -274,6 +293,9 @@
                             <div className="container">
                                 <div className="row">
                                     <div className="col-md-4 col-md-offset-4">
+                                        
+                                            {this.state.error?this.showError(this.state.error):null}
+                                        
                                         <form>
                                             <div className="form-group">
                                                 <label for="exampleInputEmail1">State</label>
@@ -299,7 +321,7 @@
                                             </div>
                                             <div className="form-group">
                                                 <label for="exampleInputEmail1">City</label>
-                                                <select onChange={this.CitySelect}className="form-control">
+                                                <select onChange={this.CitySelect} className="form-control">
                                                 <option  selected="selected" value="">{this.state.City1}</option>
                                                 {
                                                 this.state.Icity.map(function(text,i){
@@ -308,7 +330,7 @@
                                                 }
                                                 </select>
                                             </div>
-                                            <button type="button" className="btn btn-primary btn-lg btn-block">Block level button</button>
+                                            <button onClick={this.ShowOptionsList} type="button" className="btn btn-primary btn-lg btn-block">Block level button</button>
                                         </form>
                                     
                                     </div>
