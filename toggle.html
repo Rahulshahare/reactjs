@@ -122,12 +122,43 @@
                 });
                 ReactDOM.render(<ProgressBar/>, document.getElementById('PBar'));
 
+                var Options = React.createClass({
+                    getInitialState:function(){
+                        return{
+                            InputValue:'',
+                        }
+                    },
+                    InitialOption:function(){
+                        return(<option value="" selected="selected">Select state first</option>)
+                    },
+
+                    FetchData:function(){
+                        this.state.InputValue.map(function(text,i){
+                                return(<option  key={i} value={text.id}>{text.location_name}</option>);
+                                  });
+                    },
+
+                    
+                    render:function(){
+                        this.setState({InputValue: this.props.optionValue});
+                        if(this.state.InputValue==''){
+                            return this.InitialOption();
+                        }else{
+                            return this.FetchData();
+                        }
+                    }
+                });
+
                 var FormOptions = React.createClass({
                     getInitialState:function(){
                         return{
                             Istate: [],
                             StateId:'',
                             Idistrict:[],
+                            DistrictId:'',
+                            Icity:[],
+                            District1:'Select state First',
+                            City1:'Select District First'
 
                         }
                             
@@ -143,9 +174,9 @@
                             success: function(html)
                                 {
                                     //$('.load-content').html(html);
-                                    alert(html);
+                                    //alert(html);
                                     this.setState({Istate:JSON.parse(html)});
-                                    console.log("length="+this.state.Istate.length);
+                                    //console.log("length="+this.state.Istate.length);
                                     /*this.setState({ServerResponce: JSON.parse(html)});
                                     console.log("set state is"+this.state.ServerResponce);
                                     console.log("length of array is "+ this.state.ServerResponce.length);
@@ -169,10 +200,15 @@
                         )
                     },
                     StateSelect:function(e){
-                        this.setState({StateId: e.target.value});
-                       alert("Select value is :"+ e.target.value);
+                        
+                        this.setState({StateId: e.target.value,
+                                    District1:'Loading',
+                                    Idistrict:[],
+                                    Icity:[],
+                                    City1:'Select District First'});
+                       //alert("Select value is :"+ e.target.value);
                        var dataString = 'id='+ e.target.value;
-                       alert(dataString);
+                       //alert(dataString);
                        $.ajax
                             ({
                             type: "POST",
@@ -181,42 +217,55 @@
                             cache: false,
                             success: function(html)
                             {
-                                alert(html);
-                                this.setState({Idistrict:(html)});
+                                //alert("html is"+html);
+                                if(html==''){
+                                    this.setState({District1:'No district found'})
+                                }else{
+                                    this.setState({District1:'Select District'})
+                                }
+                                this.setState({Idistrict:JSON.parse(html)});
+                               // this.setState({Idistrict:JSON.parse(html)});
                             
                             }.bind(this),
                             });
-                            alert("jhkj"+this.state.Idistrict);
+                            //alert("jhkj"+this.state.Idistrict);
                     },
-                    optionvalue:function(text,i){
-                                return(<option  key={i} value={text.id}>{text.location_name}</option>);
-                    },
-                    DistrictResult:function(){
-                        if(this.state.Idistrict==''){
-                            return(
-                            <option  selected= "selected" value="">Select State First</option>
-                        )
-                        }
-                        if(this.state.Idistrict=='No district found'){
-                            return(
-                            <option  selected= "selected" value="">No District Found</option>
-                        )
-                        }
-                        if(this.state.Idistrict){
-                            this.setState({Idistrict: JSON.parse(this.state.Idistrict)});
-                            
-                                var New = <option  selected="selected" value="">Select District</option>;
-                            
-                                        New += this.state.Idistrict.map(this.optionvalue);
-                                    
-                                return{
-                                    New
-                                }
-                            
-                        }
+                    DistrictSelect:function(e){
+                        //alert("Select value is :"+ e.target.value);
+                        this.setState({DistrictId: e.target.value,
+                                        City1:'Loading'
+                                        });
 
-                        
+                        var dataString = 'id='+ e.target.value;
+
+                        $.ajax({
+                            type: "POST",
+                            url: "http://localhost/oceangreen/admin/api/readCityByDistrict.php",
+                            data: dataString,
+                            cache: false,
+                            success: function(html)
+                            {
+                                //alert("html is"+html);
+                                if(html==''){
+                                    this.setState({City1:'No city found'})
+                                }else{
+                                    this.setState({City1:'Select City'})
+                                }
+                                this.setState({Icity:JSON.parse(html)});
+                               // this.setState({Idistrict:JSON.parse(html)});
+                            
+                            }.bind(this),
+
+                        });
                     },
+                    CitySelect:function(e){
+                        alert("State is "+ this.state.StateId + 
+                              "District is " +this.state.DistrictId +
+                              "City is "+ e.target.value);
+                    },
+                    
+                    
+                    
                     render:function(){
                         return(
                             <div className="container">
@@ -232,13 +281,23 @@
                                     </select>
                                     </div>
                                     <div className="col-md-4">
-                                    <select  className="form-control">
-                                    {this.DistrictResult()}
+                                    <select onChange={this.DistrictSelect} className="form-control">
+                                    <option  selected="selected" value="">{this.state.District1}</option>
+                                    {
+                                    this.state.Idistrict.map(function(text,i){
+                                        return(<option  key={i} value={text.id}>{text.location_name}</option>);
+                                            }) 
+                                    }
                                     </select>
                                     </div>
                                     <div className="col-md-4">
-                                    <select className="form-control">
-                                    {this.SelectBox()}
+                                    <select onChange={this.CitySelect}className="form-control">
+                                    <option  selected="selected" value="">{this.state.City1}</option>
+                                    {
+                                    this.state.Icity.map(function(text,i){
+                                        return(<option  key={i} value={text.id}>{text.location_name}</option>);
+                                            }) 
+                                    }
                                     </select>
                                     </div>
                                 </div>
