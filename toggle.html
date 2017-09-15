@@ -7,6 +7,7 @@
         <title>React Form</title>
         <link href="css/bootstrap.css" rel="stylesheet">
         <script src="js/jquery-2.2.4.min.js"></script>
+        <script src="js/bootstrap.min.js"></script>
         <script src="js/react.min.js"></script>
         <script src="js/react-dom.min.js"></script>
         <script src="js/react-with-addons.js"></script>
@@ -179,16 +180,8 @@
                             cache: false,
                             success: function(html)
                                 {
-                                    //$('.load-content').html(html);
-                                    //alert(html);
                                     this.setState({Istate:JSON.parse(html)});
-                                    //console.log("length="+this.state.Istate.length);
-                                    /*this.setState({ServerResponce: JSON.parse(html)});
-                                    console.log("set state is"+this.state.ServerResponce);
-                                    console.log("length of array is "+ this.state.ServerResponce.length);
-                                    alert(this.state.ServerResponce["Name"]);
-                                    alert(this.state.ServerResponce.Mobile);*/
-                                    
+                                   
                                 }.bind(this),
                         });
 
@@ -289,15 +282,18 @@
                     showError:function(ErrorType,ErrorMasg){
                         var divClassName = '';
                             switch (ErrorType) {
-                                case 'warning': divClassName = "alert alert-warning";
+                                case 'warning': divClassName = "alert alert-warning alert-dismissible";
                                 break;
-                                case 'info'   : divClassName = "alert alert-info";
+                                case 'info'   : divClassName = "alert alert-info alert-dismissible";
                             
                                 default:
                                     break;
                             }
                             return(
                                 <div className={divClassName} role="alert">
+                                        <button type="button" className="close" data-dismiss="alert" aria-label="Close">
+                                        <span aria-hidden="true">&times;</span>
+                                        </button>
                                    
                                         {ErrorMasg}
                                     
