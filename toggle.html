@@ -164,6 +164,7 @@
                             District1:'Select state First',
                             City1:'Select District First',
                             error:'',
+                            errorClassName:'';
 
                         }
                             
@@ -269,16 +270,20 @@
                     },
                     ShowOptionsList:function(){
                         if(this.state.StateId && this.state.DistrictId && this.state.CityId){
-                            alert("State is "+ this.state.StateId + 
+                            var Msg = "State is "+ this.state.StateId + 
                               "District is " +this.state.DistrictId +
-                              "City is "+ this.state.CityId);
+                              "City is "+ this.state.CityId;
+                            this.setState({error:"State is "+ this.state.StateId + 
+                                                 "District is " +this.state.DistrictId +
+                                                 "City is "+ this.state.CityId,
+                                            errorClassName:'info'})
                         }else{
-                            alert("Empty Input");
+                            //alert("Empty Input");
                             this.setState({error:'You can not send Empty Inputs'});
                         }
                         
                     },
-                    showError:function(type,argument){
+                    showError:function(ErrorClassName,argument){
                         if(type=='warning'){
                             return(
                                 <div className="alert alert-warning" role="alert">
@@ -293,6 +298,13 @@
                                 </div>
                             )
 
+                        }
+                        if(type=='info'){
+                            return(
+                                <div className="alert alert-info" role="alert">
+                                        {argument}
+                                </div>
+                            )
                         }
                         
                     },
@@ -341,7 +353,7 @@
                                                 }
                                                 </select>
                                             </div>
-                                            <button onClick={this.ShowOptionsList} type="button" className="btn btn-primary btn-lg btn-block">Block level button</button>
+                                            <button onClick={this.ShowOptionsList} type="button" className="btn btn-primary btn-lg btn-block">Submit</button>
                                         </form>
                                     
                                     </div>
