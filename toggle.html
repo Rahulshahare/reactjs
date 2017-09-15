@@ -210,6 +210,7 @@
                         this.setState({StateId: e.target.value,
                                     District1:'Loading',
                                     Idistrict:[],
+                                    DistrictId:'',
                                     Icity:[],
                                     City1:'Select District First'});
                        //alert("Select value is :"+ e.target.value);
@@ -241,6 +242,7 @@
                         this.setState({DistrictId: e.target.value,
                                         City1:'Loading',
                                         Icity:[],
+                                        CityId:'',
                                         });
 
                         var dataString = 'id='+ e.target.value;
