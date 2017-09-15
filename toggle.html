@@ -257,15 +257,15 @@
                     },
                     ShowOptionsList:function(){
                         if(this.state.StateId && this.state.DistrictId && this.state.CityId){
+                            
                             var Msg = "State is "+ this.state.StateId + 
                               "District is " +this.state.DistrictId +
                               "City is "+ this.state.CityId;
-                            this.setState({error:"State is "+ this.state.StateId + 
-                                                 "District is " +this.state.DistrictId +
-                                                 "City is "+ this.state.CityId,
+
+                            this.setState({error:Msg,
                                             errorTypeName:'info'})
                         }else{
-                            //alert("Empty Input");
+                            
                             this.setState({error:'You can not send Empty Inputs',
                                             errorTypeName:'warning'});
                         }
