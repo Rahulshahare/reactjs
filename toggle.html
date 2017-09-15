@@ -224,7 +224,6 @@
                             
                     },
                     DistrictSelect:function(e){
-                        //alert("Select value is :"+ e.target.value);
                         this.setState({DistrictId: e.target.value,
                                         City1:'Loading',
                                         Icity:[],
@@ -240,14 +239,14 @@
                             cache: false,
                             success: function(html)
                             {
-                                //alert("html is"+html);
+                                
                                 if(html==''){
                                     this.setState({City1:'No city found'})
                                 }else{
                                     this.setState({City1:'Select City'})
                                 }
                                 this.setState({Icity:JSON.parse(html)});
-                               // this.setState({Idistrict:JSON.parse(html)});
+                               
                             
                             }.bind(this),
 
