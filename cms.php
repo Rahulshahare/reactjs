@@ -47,12 +47,43 @@
             Delete:function(){
                 alert("Delete Click");
             },
-            Atr:function(id,active,name){
+            NormalData:function(id,active,name){
                 return(
                 <tr className={active==1?'info':'warning'} >
                     <th scopr="row">{id}</th>
                     <td>{name}</td>
                     <td>{active==1?'Active':'De-active'}</td>
+                    <td>
+                        <button onClick={this.Edit} type="button" className="btn btn-xs btn-warning">Edit</button>
+                        <button onClick={this.Delete} type="button" className="btn btn-xs btn-danger">Delete</button>
+                    </td>
+                </tr>
+                )
+            },
+            EditionData:function(){
+                return(
+                    <tr className={active==1?'info':'warning'} >
+                    <th scopr="row">{id}</th>
+                    <td><input type="email" class="form-control" value={name} placeholder="Enter email"/></td>
+                    <td>
+                        <select class="form-control">  
+                        {    
+                                if(active==1){
+                                    return(
+                                        <option value="1" selected="selected">Active</option>
+                                        <option value="0">De-active</option>
+                                    )
+                                }else{
+                                    return(
+                                        <option value="1">Active</option>
+                                        <option value="0" selected="selected">De-active</option>
+                                    )
+                                }
+                            
+                        }   
+                        </select>
+                    </td>
+                    <td>
                     <td>
                         <button onClick={this.Edit} type="button" className="btn btn-xs btn-warning">Edit</button>
                         <button onClick={this.Delete} type="button" className="btn btn-xs btn-danger">Delete</button>
@@ -78,11 +109,8 @@
                                         </thead>
                                         <tbody>
                                        {
-                                        this.state.Istate.map(function(text,i){
-                                            this.Atr(text.id,text.active,text.location_name)
-                                                        
-                                        })
-                                        
+                                           
+                                        this.EditionData(45,1,'name')
                                        }
                                                                 
                                                            
