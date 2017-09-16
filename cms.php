@@ -10,6 +10,11 @@
     <script src="js/react.min.js"></script>
     <script src="js/react-dom.min.js"></script>
     <script src="js/browser.min.js"></script>
+    <style type="text/css">
+        .btn{
+            margin-right:2px;
+        }
+    </style>
   </head>
     <body>
         <div id="CmsApp"></div>
@@ -19,6 +24,9 @@
             getInitialState:function(){
                 return{
                     Istate:[], 
+                    id:'',
+                    active:'',
+                    stateName:'',
                 }
             },
 
@@ -33,12 +41,24 @@
                                 }.bind(this),
                         });
             },
-            CheckActiveState:function(active){
-                if(active==1){
-                    return(<span className="label label-info">Active</span>);
-                }else{
-                    return(<span className="label label-warning">De-active</span>);
-                }
+            Edit:function(){
+                alert("Edit Click");
+            },
+            Delete:function(){
+                alert("Delete Click");
+            },
+            Atr:function(id,active,name){
+                return(
+                <tr className={active==1?'info':'warning'} >
+                    <th scopr="row">{id}</th>
+                    <td>{name}</td>
+                    <td>{active==1?'Active':'De-active'}</td>
+                    <td>
+                        <button onClick={this.Edit} type="button" className="btn btn-xs btn-warning">Edit</button>
+                        <button onClick={this.Delete} type="button" className="btn btn-xs btn-danger">Delete</button>
+                    </td>
+                </tr>
+                )
             },
             render:function(){
                 return(
@@ -57,18 +77,16 @@
                                             </tr>
                                         </thead>
                                         <tbody>
-                                        {
-                                                    this.state.Istate.map(function(text,i){
-                                                        return(
-                                                                <tr className={text.active==1?'info':'warning'} key={i}>
-                                                                <th scopr="row">{text.id}</th>
-                                                                <td>{text.location_name}</td>
-                                                                <td>{text.active==1?'Active':'De-active'}</td>
-                                                                <td>On go</td>
-                                                                </tr>
-                                                                );
-                                                })
-                                        }
+                                       {
+                                        this.state.Istate.map(function(text,i){
+                                            this.Atr(text.id,text.active,text.location_name)
+                                                        
+                                        })
+                                        
+                                       }
+                                                                
+                                                           
+                                        
                                             
                                         </tbody>
                                     </table>
