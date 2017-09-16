@@ -21,14 +21,30 @@
     </body>
     <script type="text/babel">
         var Cms = React.createClass({
+            
             getInitialState:function(){
-                return{
+                return({
                     Istate:[], 
                     id:'',
                     active:'',
                     stateName:'',
                     Edit:false,
-                }
+                })
+            },
+                
+
+           
+            componentDidMount(){
+                       $.ajax({
+                            url: "http://localhost/oceangreen/admin/api/readState.php",
+                            type : "GET",
+                            cache: false,
+                            success: function(html)
+                                {
+                                    this.setState({Istate:JSON.parse(html)});
+                                    alert(this.state.Istate);
+                                }.bind(this),
+                        });
             },
 
             
@@ -104,10 +120,14 @@
                                             </tr>
                                         </thead>
                                         <tbody>
-                                       {this.state.Edit
-                                        ?this.EditionData(this.props.id,this.props.active,this.props.Name)
-                                        :this.NormalData(this.props.id,this.props.active,this.props.Name)
+                                        {
+                                            this.state.Istate.map(function(text,i){
+                                                return(
+                                                    this.NormalData(text.id,text.active,text.location_name)
+                                                    );
+                                            })
                                         }
+                                       
                                                                 
                                                            
                                         
@@ -136,6 +156,7 @@
                             success: function(html)
                                 {
                                     this.setState({Istate:JSON.parse(html)});
+                                    alert(this.state.Istate);
                                 }.bind(this),
                         });
             },
@@ -143,7 +164,11 @@
             render:function(){
                 
                     this.state.Istate.map(function(text,i){
-                        return(<div><Cms  key={i} id={text.id} active={text.active} Name={text.location_name}/></div>);
+                        return(
+                            <div>
+                            <h1>{text.location_name}</h1>
+                            </div>
+                            );
                     })
             
             }
