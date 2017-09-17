@@ -20,6 +20,28 @@
         <div id="CmsApp"></div>
     </body>
     <script type="text/babel">
+    var TableData = React.createClass({
+        render:function(){
+            return(
+                <tbody>
+                {
+                    alert("hello"+this.props.Newstate);
+                    this.props.Newstate.map(function(text,i){
+                        return(
+                            
+                            <tr>
+                            <th>{text.id}</th>
+                            <td>{text.location_name}</td>
+                            <td>{text.active}</td>
+                            <td>Edit</td>
+                            </tr> 
+                        );
+                    })
+                }
+                </tbody>
+            )
+        }
+    }); 
         var Cms = React.createClass({
             
             getInitialState:function(){
@@ -42,7 +64,7 @@
                             success: function(html)
                                 {
                                     this.setState({Istate:JSON.parse(html)});
-                                    alert(this.state.Istate);
+                                    alert("first"+this.state.Istate);
                                 }.bind(this),
                         });
             },
@@ -84,6 +106,7 @@
                                         {   
                                             this.state.Istate.map(function(text,i){
                                                 return(
+                                                    
                                                     <tr>
                                                     <th>{text.id}</th>
                                                     <td>{text.location_name}</td>
@@ -104,7 +127,7 @@
         });
 
         
-        var TableData = React.createClass({
+        var TableData2 = React.createClass({
             NormalData:function(Slist,edit,delet){
                 Slist.map(function(text,i){
                     return(
