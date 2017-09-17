@@ -55,7 +55,7 @@
             
             getInitialState:function(){
                 return({
-                    Istate:[], 
+                    
                     id:'',
                     active:'',
                     stateName:'',
@@ -65,26 +65,21 @@
                 
 
            
-            componentDidMount(){
-                       $.ajax({
-                            url: "http://localhost/oceangreen/admin/api/readState.php",
-                            type : "GET",
-                            cache: false,
-                            success: function(html)
-                                {
-                                    this.setState({Istate:JSON.parse(html)});
-                                    //alert("first"+this.state.Istate);
-                                }.bind(this),
-                        });
-            },
-
             
+
+            StateNameChange:function(e){
+                this.setState({statename:e.target.value})
+            },
+            StatusChange:function(e){
+                this.setState({active:e.target.vale})
+            },
             Edit:function(){
                 alert("Edit Click");
                 this.setState({Edit:true})
             },
             Save:function(){
                 this.setState({Edit:false})
+                alert('Name'+this.state.statename+'is '+this.state.active);
             },
             Cancel:function(){
                 this.setState({Edit:false})
@@ -92,22 +87,64 @@
             Delete:function(){
                 alert("Delete Click");
             },
+            NormalData:function(id,Sname,active){
+                
+                    return(
+                        <tr className={active==1?'info':'warning'} >
+                        <th scopr="row">{id}</th>
+                        <td>{Sname}</td>
+                        <td>{active==1?'Active':'De-active'}</td>
+                        <td>
+                            <button onClick={this.Edit} type="button" className="btn btn-xs btn-warning">Edit</button>
+                            <button  type="button" className="btn btn-xs btn-danger">Delete</button>
+                        </td>
+                        </tr>
+                    )
+                
+            },
+            EditionData:function(id,Sname,active){
+                
+
+                return(
+                    <tr className={active==1?'info':'warning'} >
+                    <th scopr="row">{id}</th>
+                    <td><input onChange={this.StateNameChange} type="text" className="form-control" value={Sname} placeholder="Enter email"/></td>
+                    <td>
+                
+                        {active==1
+                        ?   <select onChange={this.StatusChange} className="form-control"> 
+                                <option value="1" selected="selected">Active</option>
+                                <option value="0">De-active</option>
+                            </select>
+                        :<select onChange={this.StatusChange} className="form-control"> 
+                            <option value="1" >Active</option>
+                            <option value="0" selected="selected">De-active</option>
+                            </select>
+                         
+                         }   
+                        
+                    </td>
+                    
+                    <td>
+                        <button onClick={this.Save} type="button" className="btn btn-xs btn-success">Save</button>
+                        <button  type="button" className="btn btn-xs btn-default">cancel</button>
+                    </td>
+                </tr>
+                )
+            
+            },
             
             
             
             render:function(){
-                var Children = this.state.Istate.map(function(text, i) {
-                                                    return (
-                                                        <TableData2 
-                                                        AppState={this.state.Edit}
-                                                        Edit={this.Edit} 
-                                                        Save={this.Save}
-                                                        key={text.id}
-                                                        Sname={text.location_name}
-                                                        active={text.active}
-                                                        />
-                                                    );
-                                                },this);
+                var Torun;
+                if(this.state.Edit){
+                    Torun =  this.EditionData(this.props.id,this.props.Sname,this.props.active);
+                }else{
+                    Torun = this.NormalData(this.props.id,this.props.Sname,this.props.active);
+                    
+                }
+               
                 return(
                     <div className="container">
                         <div className="row">
@@ -124,7 +161,7 @@
                                             </tr>
                                         </thead>
                                         <tbody>
-                                        {Children}
+                                        {Torun}
                                         </tbody>
                                       
                                     </table>
@@ -137,66 +174,38 @@
 
         
         var TableData2 = React.createClass({
-            NormalData:function(id,Sname,active,edit){
-                
-                    return(
-                        <tr className={active==1?'info':'warning'} >
-                        <th scopr="row">{id}</th>
-                        <td>{Sname}</td>
-                        <td>{active==1?'Active':'De-active'}</td>
-                        <td>
-                            <button onClick={edit} type="button" className="btn btn-xs btn-warning">Edit</button>
-                            <button  type="button" className="btn btn-xs btn-danger">Delete</button>
-                        </td>
-                        </tr>
-                    )
-                
+            getIntialState:function(){
+                return({
+                    Istate:[],
+                })
             },
-            EditionData:function(id,Sname,active,save,cancel){
-                
-
-                return(
-                    <tr className={active==1?'info':'warning'} >
-                    <th scopr="row">{id}</th>
-                    <td><input type="email" className="form-control" value={Sname} placeholder="Enter email"/></td>
-                    <td>
-                
-                        {active==1
-                        ?   <select className="form-control"> 
-                                <option value="1" selected="selected">Active</option>
-                                <option value="0">De-active</option>
-                            </select>
-                        :<select className="form-control"> 
-                            <option value="1" >Active</option>
-                            <option value="0" selected="selected">De-active</option>
-                            </select>
-                         
-                         }   
-                        
-                    </td>
-                    
-                    <td>
-                        <button onClick={save} type="button" className="btn btn-xs btn-success">Save</button>
-                        <button  type="button" className="btn btn-xs btn-default">cancel</button>
-                    </td>
-                </tr>
-                )
+            componentDidMount(){
+                       $.ajax({
+                            url: "http://localhost/oceangreen/admin/api/readState.php",
+                            type : "GET",
+                            cache: false,
+                            success: function(html)
+                                {
+                                    this.setState({Istate:JSON.parse(html)});
+                                    alert("first"+this.state.Istate);
+                                }.bind(this),
+                        });
+            },
             
-            },
+            
             render:function(){
                                                         
-                if(this.props.AppState){
-                    return this.EditionData(this.props.key,this.props.Sname,this.props.active,this.props.Save);
-                }else{
-                    return this.NormalData(this.props.key,this.props.Sname,this.props.active,this.props.Edit);
-                    
-                }
+               
+                    return (
+                        <Cms id={5} Sname={'MAhh'} active={0} />
+                    );
+                
                     
                
             }
         });       
 
-        ReactDOM.render(<Cms/>,document.getElementById('CmsApp'));
+        ReactDOM.render(<TableData2/>,document.getElementById('CmsApp'));
 
         
     </script>
