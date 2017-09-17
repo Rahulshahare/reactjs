@@ -156,7 +156,7 @@
                     render:function(){
                         return(
                             <select onChange={this.props.SelectFn} className="form-control">
-                                <option  selected="selected" value="">Select State</option>
+                                <option  selected="selected" value="">Select {this.props.OptionFor}</option>
                             {
                                     this.props.array.map(function(text,i){
                                          return(<option  key={i} value={text.id}>{text.location_name}</option>);
@@ -326,34 +326,20 @@
                                         <form>
                                             <div className="form-group">
                                                 <label for="exampleInputEmail1">State</label>
-                                                <OptionOfList array={this.state.Istate} SelectFn={this.StateSelect}/>
+                                                <OptionOfList array={this.state.Istate} SelectFn={this.StateSelect} OptionFor={'Select State'}/>
                                                 
                                             </div>
                                             <div className="form-group">
                                                 <label for="exampleInputEmail1">District</label>
-                                                <OptionOfList array={this.state.Idistrict} SelectFn={this.DistrictSelect}/>
 
-                                                <select onChange={this.DistrictSelect} className="form-control">
-                                                <option  selected="selected" value="">{this.state.District1}</option>
-                                                {
-                                                this.state.Idistrict.map(function(text,i){
-                                                    return(<option  key={i} value={text.id}>{text.location_name}</option>);
-                                                        }) 
-                                                }
-                                                </select>
+                                                <OptionOfList array={this.state.Idistrict} SelectFn={this.DistrictSelect} OptionFor={this.state.District1}/>
+
                                             </div>
                                             <div className="form-group">
                                                 <label for="exampleInputEmail1">City</label>
-                                                <OptionOfList array={this.state.Icity} SelectFn={this.CitySelect}/>
-                                                
-                                                <select onChange={this.CitySelect} className="form-control">
-                                                <option  selected="selected" value="">{this.state.City1}</option>
-                                                {
-                                                this.state.Icity.map(function(text,i){
-                                                    return(<option  key={i} value={text.id}>{text.location_name}</option>);
-                                                        }) 
-                                                }
-                                                </select>
+
+                                                <OptionOfList array={this.state.Icity} SelectFn={this.CitySelect} OptionFor={this.state.City1}/>
+
                                             </div>
                                             <button onClick={this.ShowOptionsList} type="button" className="btn btn-primary btn-lg btn-block">Submit</button>
                                         </form>
