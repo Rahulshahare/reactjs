@@ -21,11 +21,10 @@
     </body>
     <script type="text/babel">
     var TableData = React.createClass({
-
-        TrowData:function(text,i){
+        EditData:function(text,i){
                         return(
                             
-                            <tr>
+                            <tr className={text.active==1?'info':'warning'} key={i}>
                             <th>{text.id}</th>
                             <td>{text.location_name}</td>
                             <td>{text.active}</td>
@@ -33,12 +32,24 @@
                             </tr> 
                         );
                     },
+
+        NormalData:function(text,i,EditB){
+                        return(
+                            
+                            <tr className={text.active==1?'info':'warning'} key={i}>
+                            <th>{text.id}</th>
+                            <td>{text.location_name}</td>
+                            <td>{text.active}</td>
+                            <td onClick={EditB}>Edit</td>
+                            </tr> 
+                        );
+                    },
         render:function(){
             return(
                 <tbody>
-                {  this.props.EditState?alert("Conditional"):
+                {  this.props.EditState?this.props.Newstate.map(this.EditData):
                     
-                    this.props.Newstate.map(this.TrowData)
+                    this.props.Newstate.map(this.NormalData(this.props.EditFunction))
                 }
                 </tbody>
             )
@@ -105,7 +116,10 @@
                                             </tr>
                                         </thead>
                                         
-                                        {   <TableData EditState={this.state.Edit} Newstate={this.state.Istate}/>}
+                                        {   <TableData 
+                                            EditState={this.state.Edit} 
+                                            Newstate={this.state.Istate}
+                                            EditFunction={this.edit}/>}
                                       
                                     </table>
                             </div>
