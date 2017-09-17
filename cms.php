@@ -81,14 +81,17 @@
                                             </tr>
                                         </thead>
                                         <tbody>
-                                        {   <TableData 
-                                            Edit={this.state.Edit} 
-                                            array={this.state.Istate}
-                                            Sedit={this.Edit}
-                                            Ssave={this.save}
-                                            Sdelete={this.Delete}
-                                            Scancel={this.cancel}
-                                            />
+                                        {   
+                                            this.state.Istate.map(function(text,i){
+                                                return(
+                                                    <tr>
+                                                    <th>{text.id}</th>
+                                                    <td>{text.location_name}</td>
+                                                    <td>{text.active}</td>
+                                                    <td>Edit</td>
+                                                    </tr> 
+                                                );
+                                            })
                                         }
                                        
                                         </tbody>
@@ -150,15 +153,16 @@
             },
             render:function(){
                 
-                    this.props.array.map(function(text,i){
-                       return(
-                           <tr>
-                           <th>{text.id}</th>
-                           <td>{text.location_name}</td>
-                           <td>{text.active}</td>
-                           <td>Edit</td>
-                           </tr>                       );
-                    })
+                this.props.Istate.map(function(text,i){
+                    return(
+                        <tr>
+                        <th>{text.id}</th>
+                        <td>{text.location_name}</td>
+                        <td>{text.active}</td>
+                        <td>Edit</td>
+                        </tr> 
+                    );
+                })
                     
                
             }
