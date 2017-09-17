@@ -38,7 +38,7 @@
                         <td>{text.location_name}</td>
                         <td>{text.active==1?'Active':'Deactive'}</td>
                         <td >
-                            <button onClick={this.Click} type="button" className="btn btn-xs btn-warning">Edit</button>
+                            <button onClick={this.props.EditFunction} type="button" className="btn btn-xs btn-warning">Edit</button>
                             <button  type="button" className="btn btn-xs btn-danger">Delete</button>
                         </td>
                         </tr> 
@@ -112,7 +112,19 @@
                                             </tr>
                                         </thead>
                                         
-                                        {   <TableData 
+                                        {   var Children = this.state.Istate.map(function(text, i) {
+                                                    return (
+                                                        <TableData2 
+                                                        AppState={this.state.Edit}
+                                                        Edit={this.Edit} 
+                                                        Save={this.Save}
+                                                        key={text.id}
+                                                        Sname={text.location_name}
+                                                        active={text.active}
+                                                        />
+                                                    );
+                                                },this);
+                                            <TableData 
                                             EditState={this.state.Edit} 
                                             Newstate={this.state.Istate}
                                             EditFunction={this.Edit}/>
@@ -128,31 +140,31 @@
 
         
         var TableData2 = React.createClass({
-            NormalData:function(Slist,edit,delet){
-                Slist.map(function(text,i){
+            NormalData:function(id,Sname,active,edit){
+                
                     return(
-                        <tr className={text.active==1?'info':'warning'} >
-                        <th scopr="row">{text.id}</th>
-                        <td>{text.location_name}</td>
-                        <td>{text.active==1?'Active':'De-active'}</td>
+                        <tr className={active==1?'info':'warning'} >
+                        <th scopr="row">{id}</th>
+                        <td>{Sname}</td>
+                        <td>{active==1?'Active':'De-active'}</td>
                         <td>
                             <button onClick={edit} type="button" className="btn btn-xs btn-warning">Edit</button>
-                            <button onClick={delet} type="button" className="btn btn-xs btn-danger">Delete</button>
+                            <button  type="button" className="btn btn-xs btn-danger">Delete</button>
                         </td>
                         </tr>
                     )
-                })
+                
             },
-            EditionData:function(Slist,save,cancel){
-                Slist.map(function(text,i){
+            EditionData:function(id,Sname,active,save,cancel){
+                
 
                 return(
-                    <tr className={text.active==1?'info':'warning'} >
-                    <th scopr="row">{text.id}</th>
-                    <td><input type="email" className="form-control" value={text.location_name} placeholder="Enter email"/></td>
+                    <tr className={active==1?'info':'warning'} >
+                    <th scopr="row">{id}</th>
+                    <td><input type="email" className="form-control" value={location_name} placeholder="Enter email"/></td>
                     <td>
                 
-                        {text.active==1
+                        {active==1
                         ?   <select className="form-control"> 
                                 <option value="1" selected="selected">Active</option>
                                 <option value="0">De-active</option>
@@ -168,24 +180,20 @@
                     
                     <td>
                         <button onClick={save} type="button" className="btn btn-xs btn-success">Save</button>
-                        <button onClick={cancel} type="button" className="btn btn-xs btn-default">cancel</button>
+                        <button  type="button" className="btn btn-xs btn-default">cancel</button>
                     </td>
                 </tr>
                 )
-            })
+            
             },
             render:function(){
-                
-                this.props.Istate.map(function(text,i){
-                    return(
-                        <tr>
-                        <th>{text.id}</th>
-                        <td>{text.location_name}</td>
-                        <td>{text.active}</td>
-                        <td>Edit</td>
-                        </tr> 
-                    );
-                })
+                                                        
+                if(this.props.AppState){
+                    return EditionData(this.props.key,this.props.Sname,this.props.active,this.props.Save);
+                }else{
+                    return NormalData(this.props.key,this.props.Sname,this.props.active,this.props.Edit);
+                    return ();
+                }
                     
                
             }
