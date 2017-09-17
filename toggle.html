@@ -331,6 +331,8 @@
                                             </div>
                                             <div className="form-group">
                                                 <label for="exampleInputEmail1">District</label>
+                                                <OptionOfList array={this.state.Idistrict} SelectFn={this.DistrictSelect}/>
+
                                                 <select onChange={this.DistrictSelect} className="form-control">
                                                 <option  selected="selected" value="">{this.state.District1}</option>
                                                 {
@@ -342,6 +344,8 @@
                                             </div>
                                             <div className="form-group">
                                                 <label for="exampleInputEmail1">City</label>
+                                                <OptionOfList array={this.state.Icity} SelectFn={this.CitySelect}/>
+                                                
                                                 <select onChange={this.CitySelect} className="form-control">
                                                 <option  selected="selected" value="">{this.state.City1}</option>
                                                 {
