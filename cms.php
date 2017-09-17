@@ -21,35 +21,31 @@
     </body>
     <script type="text/babel">
     var TableData = React.createClass({
-        EditData:function(text,i){
-                        return(
-                            
-                            <tr className={text.active==1?'info':'warning'} key={i}>
-                            <th>{text.id}</th>
-                            <td>{text.location_name}</td>
-                            <td>{text.active}</td>
-                            <td>Edit</td>
-                            </tr> 
-                        );
-                    },
-
-        NormalData:function(text,i,EditB){
-                        return(
-                            
-                            <tr className={text.active==1?'info':'warning'} key={i}>
-                            <th>{text.id}</th>
-                            <td>{text.location_name}</td>
-                            <td>{text.active}</td>
-                            <td onClick={EditB}>Edit</td>
-                            </tr> 
-                        );
-                    },
+        
+        Click:function(){
+            //alert("hello");
+            this.props.EditFunction();
+        },
+        
         render:function(){
             return(
                 <tbody>
-                {  this.props.EditState?this.props.Newstate.map(this.EditData):
+                {  
+                    this.props.Newstate.map(function(text,i){
+                    return(
+                        <tr key={i}>
+                        <th>{text.id}</th>
+                        <td>{text.location_name}</td>
+                        <td>{text.active==1?'Active':'Deactive'}</td>
+                        <td >
+                            <button onClick={this.Click} type="button" className="btn btn-xs btn-warning">Edit</button>
+                            <button  type="button" className="btn btn-xs btn-danger">Delete</button>
+                        </td>
+                        </tr> 
+                    );
+                },this)
                     
-                    this.props.Newstate.map(this.NormalData(this.props.EditFunction))
+                   
                 }
                 </tbody>
             )
@@ -63,7 +59,7 @@
                     id:'',
                     active:'',
                     stateName:'',
-                    Edit:true,
+                    Edit:false,
                 })
             },
                 
@@ -85,7 +81,7 @@
             
             Edit:function(){
                 alert("Edit Click");
-                this.setState({Edit:true})
+                //this.setState({Edit:true})
             },
             Save:function(){
                 this.setState({Edit:false})
@@ -119,7 +115,8 @@
                                         {   <TableData 
                                             EditState={this.state.Edit} 
                                             Newstate={this.state.Istate}
-                                            EditFunction={this.edit}/>}
+                                            EditFunction={this.Edit}/>
+                                        }
                                       
                                     </table>
                             </div>
