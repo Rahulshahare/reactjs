@@ -327,14 +327,7 @@
                                             <div className="form-group">
                                                 <label for="exampleInputEmail1">State</label>
                                                 <OptionOfList array={this.state.Istate} SelectFn={this.StateSelect}/>
-                                                <select onChange={this.StateSelect} className="form-control">
-                                                <option  selected="selected" value="">Select State</option>
-                                                {
-                                                    this.state.Istate.map(function(text,i){
-                                                        return(<option  key={i} value={text.id}>{text.location_name}</option>);
-                                                })
-                                                }
-                                                </select>
+                                                
                                             </div>
                                             <div className="form-group">
                                                 <label for="exampleInputEmail1">District</label>
