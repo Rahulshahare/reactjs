@@ -102,22 +102,9 @@
                                                 <th>Action</th>
                                             </tr>
                                         </thead>
-                                        <tbody>
-                                        {   
-                                            this.state.Istate.map(function(text,i){
-                                                return(
-                                                    
-                                                    <tr>
-                                                    <th>{text.id}</th>
-                                                    <td>{text.location_name}</td>
-                                                    <td>{text.active}</td>
-                                                    <td>Edit</td>
-                                                    </tr> 
-                                                );
-                                            })
-                                        }
-                                       
-                                        </tbody>
+                                        
+                                        {   <TableData Newstate={this.state.Istate}/>}
+                                      
                                     </table>
                             </div>
                         </div>
