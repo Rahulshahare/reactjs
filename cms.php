@@ -122,9 +122,11 @@
                                         <tbody>
                                         {
                                             this.state.Istate.map(function(text,i){
-                                                return(
-                                                    this.NormalData(text.id,text.active,text.location_name)
-                                                    );
+                                                
+                                                    return this.NormalData(text.id,text.active,text.location_name);
+
+                                                
+                                               
                                             })
                                         }
                                        
@@ -175,7 +177,7 @@
         });
         
 
-        ReactDOM.render(<PlayingWithData/>,document.getElementById('CmsApp'));
+        ReactDOM.render(<Cms/>,document.getElementById('CmsApp'));
 
         
     </script>
