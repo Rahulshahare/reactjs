@@ -61,48 +61,9 @@
             Delete:function(){
                 alert("Delete Click");
             },
-            NormalData:function(id,active,name){
-                return(
-                <tr className={active==1?'info':'warning'} >
-                    <th scopr="row">{id}</th>
-                    <td>{name}</td>
-                    <td>{active==1?'Active':'De-active'}</td>
-                    <td>
-                        <button onClick={this.Edit} type="button" className="btn btn-xs btn-warning">Edit</button>
-                        <button onClick={this.Delete} type="button" className="btn btn-xs btn-danger">Delete</button>
-                    </td>
-                </tr>
-                )
-            },
             
-            EditionData:function(id,active,name){
-                return(
-                    <tr className={active==1?'info':'warning'} >
-                    <th scopr="row">{id}</th>
-                    <td><input type="email" className="form-control" value={name} placeholder="Enter email"/></td>
-                    <td>
-                
-                        {active==1
-                        ?   <select className="form-control"> 
-                                <option value="1" selected="selected">Active</option>
-                                <option value="0">De-active</option>
-                            </select>
-                        :<select className="form-control"> 
-                            <option value="1" >Active</option>
-                            <option value="0" selected="selected">De-active</option>
-                            </select>
-                         
-                         }   
-                        
-                    </td>
-                    
-                    <td>
-                        <button onClick={this.Save} type="button" className="btn btn-xs btn-success">Save</button>
-                        <button onClick={this.Cancel} type="button" className="btn btn-xs btn-default">cancel</button>
-                    </td>
-                </tr>
-                )
-            },
+            
+            
             render:function(){
                 return(
                     <div className="container">
@@ -120,20 +81,16 @@
                                             </tr>
                                         </thead>
                                         <tbody>
-                                        {
-                                            this.state.Istate.map(function(text,i){
-                                                
-                                                    return this.NormalData(text.id,text.active,text.location_name);
-
-                                                
-                                               
-                                            })
+                                        {   <TableData 
+                                            Edit={this.state.Edit} 
+                                            array={this.state.Istate}
+                                            Sedit={this.Edit}
+                                            Ssave={this.save}
+                                            Sdelete={this.Delete}
+                                            Scancel={this.cancel}
+                                            />
                                         }
                                        
-                                                                
-                                                           
-                                        
-                                            
                                         </tbody>
                                     </table>
                             </div>
@@ -144,38 +101,68 @@
         });
 
         
-        var PlayingWithData = React.createClass({
-            getInitialState:function(){
-                return{
-                    Istate:[]
-                }
+        var TableData = React.createClass({
+            NormalData:function(Slist,edit,delet){
+                Slist.map(function(text,i){
+                    return(
+                        <tr className={text.active==1?'info':'warning'} >
+                        <th scopr="row">{text.id}</th>
+                        <td>{text.location_name}</td>
+                        <td>{text.active==1?'Active':'De-active'}</td>
+                        <td>
+                            <button onClick={edit} type="button" className="btn btn-xs btn-warning">Edit</button>
+                            <button onClick={delet} type="button" className="btn btn-xs btn-danger">Delete</button>
+                        </td>
+                        </tr>
+                    )
+                })
             },
-            componentDidMount(){
-                       $.ajax({
-                            url: "http://localhost/oceangreen/admin/api/readState.php",
-                            type : "GET",
-                            cache: false,
-                            success: function(html)
-                                {
-                                    this.setState({Istate:JSON.parse(html)});
-                                    alert(this.state.Istate);
-                                }.bind(this),
-                        });
-            },
+            EditionData:function(Slist,save,cancel){
+                Slist.map(function(text,i){
 
+                return(
+                    <tr className={text.active==1?'info':'warning'} >
+                    <th scopr="row">{text.id}</th>
+                    <td><input type="email" className="form-control" value={text.location_name} placeholder="Enter email"/></td>
+                    <td>
+                
+                        {text.active==1
+                        ?   <select className="form-control"> 
+                                <option value="1" selected="selected">Active</option>
+                                <option value="0">De-active</option>
+                            </select>
+                        :<select className="form-control"> 
+                            <option value="1" >Active</option>
+                            <option value="0" selected="selected">De-active</option>
+                            </select>
+                         
+                         }   
+                        
+                    </td>
+                    
+                    <td>
+                        <button onClick={save} type="button" className="btn btn-xs btn-success">Save</button>
+                        <button onClick={cancel} type="button" className="btn btn-xs btn-default">cancel</button>
+                    </td>
+                </tr>
+                )
+            })
+            },
             render:function(){
                 
-                    this.state.Istate.map(function(text,i){
-                        return(
-                            <div>
-                            <h1>{text.location_name}</h1>
-                            </div>
-                            );
+                    this.props.array.map(function(text,i){
+                       return(
+                           <tr>
+                           <th>{text.id}</th>
+                           <td>{text.location_name}</td>
+                           <td>{text.active}</td>
+                           <td>Edit</td>
+                           </tr>                       );
                     })
-            
+                    
+               
             }
-        });
-        
+        });       
 
         ReactDOM.render(<Cms/>,document.getElementById('CmsApp'));
 
