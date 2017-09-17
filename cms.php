@@ -21,12 +21,8 @@
     </body>
     <script type="text/babel">
     var TableData = React.createClass({
-        render:function(){
-            return(
-                <tbody>
-                {
-                    alert("hello"+this.props.Newstate);
-                    this.props.Newstate.map(function(text,i){
+
+        TrowData:function(text,i){
                         return(
                             
                             <tr>
@@ -36,7 +32,13 @@
                             <td>Edit</td>
                             </tr> 
                         );
-                    })
+                    },
+        render:function(){
+            return(
+                <tbody>
+                {  this.props.EditState?alert("Conditional"):
+                    
+                    this.props.Newstate.map(this.TrowData)
                 }
                 </tbody>
             )
@@ -50,7 +52,7 @@
                     id:'',
                     active:'',
                     stateName:'',
-                    Edit:false,
+                    Edit:true,
                 })
             },
                 
@@ -64,7 +66,7 @@
                             success: function(html)
                                 {
                                     this.setState({Istate:JSON.parse(html)});
-                                    alert("first"+this.state.Istate);
+                                    //alert("first"+this.state.Istate);
                                 }.bind(this),
                         });
             },
@@ -103,7 +105,7 @@
                                             </tr>
                                         </thead>
                                         
-                                        {   <TableData Newstate={this.state.Istate}/>}
+                                        {   <TableData EditState={this.state.Edit} Newstate={this.state.Istate}/>}
                                       
                                     </table>
                             </div>
