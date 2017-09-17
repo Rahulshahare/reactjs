@@ -81,7 +81,7 @@
             
             Edit:function(){
                 alert("Edit Click");
-                //this.setState({Edit:true})
+                this.setState({Edit:true})
             },
             Save:function(){
                 this.setState({Edit:false})
@@ -96,6 +96,18 @@
             
             
             render:function(){
+                var Children = this.state.Istate.map(function(text, i) {
+                                                    return (
+                                                        <TableData2 
+                                                        AppState={this.state.Edit}
+                                                        Edit={this.Edit} 
+                                                        Save={this.Save}
+                                                        key={text.id}
+                                                        Sname={text.location_name}
+                                                        active={text.active}
+                                                        />
+                                                    );
+                                                },this);
                 return(
                     <div className="container">
                         <div className="row">
@@ -111,24 +123,9 @@
                                                 <th>Action</th>
                                             </tr>
                                         </thead>
-                                        
-                                        {   var Children = this.state.Istate.map(function(text, i) {
-                                                    return (
-                                                        <TableData2 
-                                                        AppState={this.state.Edit}
-                                                        Edit={this.Edit} 
-                                                        Save={this.Save}
-                                                        key={text.id}
-                                                        Sname={text.location_name}
-                                                        active={text.active}
-                                                        />
-                                                    );
-                                                },this);
-                                            <TableData 
-                                            EditState={this.state.Edit} 
-                                            Newstate={this.state.Istate}
-                                            EditFunction={this.Edit}/>
-                                        }
+                                        <tbody>
+                                        {Children}
+                                        </tbody>
                                       
                                     </table>
                             </div>
@@ -161,7 +158,7 @@
                 return(
                     <tr className={active==1?'info':'warning'} >
                     <th scopr="row">{id}</th>
-                    <td><input type="email" className="form-control" value={location_name} placeholder="Enter email"/></td>
+                    <td><input type="email" className="form-control" value={Sname} placeholder="Enter email"/></td>
                     <td>
                 
                         {active==1
@@ -189,10 +186,10 @@
             render:function(){
                                                         
                 if(this.props.AppState){
-                    return EditionData(this.props.key,this.props.Sname,this.props.active,this.props.Save);
+                    return this.EditionData(this.props.key,this.props.Sname,this.props.active,this.props.Save);
                 }else{
-                    return NormalData(this.props.key,this.props.Sname,this.props.active,this.props.Edit);
-                    return ();
+                    return this.NormalData(this.props.key,this.props.Sname,this.props.active,this.props.Edit);
+                    
                 }
                     
                
