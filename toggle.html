@@ -156,7 +156,7 @@
                     render:function(){
                         return(
                             <select onChange={this.props.SelectFn} className="form-control">
-                                <option  selected="selected" value="">Select {this.props.OptionFor}</option>
+                                <option  selected="selected" value="">{this.props.OptionFor}</option>
                             {
                                     this.props.array.map(function(text,i){
                                          return(<option  key={i} value={text.id}>{text.location_name}</option>);
