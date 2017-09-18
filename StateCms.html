@@ -1,0 +1,83 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <title>CMS System</title>
+    <link href="css/bootstrap.css" rel="stylesheet">
+    <script src="js/jquery-2.2.4.min.js"></script>
+    <script src="js/react.js"></script>
+    <script src="js/react-dom.min.js"></script>
+    <script src="js/browser.min.js"></script>
+    <style type="text/css">
+        .btn{
+            margin-right:2px;
+        }
+    </style>
+  </head>
+    <body>
+        <div id="CmsApp"></div>
+        <script src="stateCms/ReadState.js"></script>
+        <script type="text/babel">
+        var ReadState = React.createClass({
+            getInitialState:function(){
+                return({
+                    States:[],
+                })
+            },
+            componentDidMount(){
+                $.ajax({
+                     url: "http://localhost/oceangreen/admin/api/readState.php",
+                     type : "GET",
+                     cache: false,
+                     success: function(html)
+                         {
+                             this.setState({States:JSON.parse(html)});
+                             alert("first"+this.state.States);
+                         }.bind(this),
+                 });
+            },
+
+            render:function(){
+                return(<h1>Hello</h1>)
+            },
+
+
+    });
+            var StartPage = React.createClass({
+                getInitialState:function(){
+                    return({
+                        AppMode:'Read',
+                        StateId:'',
+                    })
+                },
+
+                ChangeAppMode:function(text,StateId){
+                    this.setState({AppMode:text})
+                    if(StateId){
+                        this.setState({StateId:StateId})
+                    }else{
+                        this.setState({StateId:'',})
+                    }
+                },
+                render:function(){
+                    var ToRender = <ReadState ChangeAppMode={this.ChangeAppMode}/>;
+                    switch (this.state.AppMode) {
+                        case 'Create': ToRender = <CreateState ChangeAppMode={this.ChangeAppMode}/>;
+                            break;
+                        case 'Edit'  : ToRender = <EditState ChangeAppMode={this.ChangeAppMode} StateId={this.state.StateId}/>;
+                            break;
+                        case 'Delete': ToRender = <DeleteState ChangeAppMode={this.ChangeAppMode } StateId={this.state.StateId}/>;
+                        default:
+                            break;
+                    }
+                    return(
+                        {ToRender}
+                    )
+                }
+            });
+            ReactDOM.render(<StartPage/>,document.getElementById('CmsApp'));
+        </script>
+    </body>
+</html>
