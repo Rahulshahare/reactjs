@@ -137,6 +137,7 @@
             
             
             render:function(){
+                
                 var Torun;
                 if(this.state.Edit){
                     Torun =  this.EditionData(this.props.id,this.props.Sname,this.props.active);
@@ -191,21 +192,27 @@
                                 }.bind(this),
                         });
             },
+
+            DataFunction:function(){
+                    return (
+                        <Cms id={2} Sname={'maharastra'} active={1} />
+                    );
+                },
             
             
             render:function(){
-                                                        
-               
-                    return (
-                        <Cms id={5} Sname={'MAhh'} active={0} />
-                    );
-                
-                    
-               
+                     return(
+                         <div>
+                         {this.DataFunction()}
+                         </div>
+                     )                                                       
             }
         });       
 
-        ReactDOM.render(<TableData2/>,document.getElementById('CmsApp'));
+        ReactDOM.render(
+            <div>
+            <TableData2/>
+            </div>,document.getElementById('CmsApp'));
 
         
     </script>
