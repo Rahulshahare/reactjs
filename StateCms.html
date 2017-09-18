@@ -18,8 +18,7 @@
   </head>
     <body>
         <div id="CmsApp"></div>
-        <script src="stateCms/Navigation.js"></script>
-        <script src="stateCms/ReadState.js"></script>
+        
         <script type="text/babel">
         var Nevigation = React.createClass({
             render:function(){
@@ -43,6 +42,7 @@
                                 <td>{text.active==1?'Active':'De-active'}</td>
                                 <td>
                                     <button onClick={() => this.props.ChangeAppMode('Edit',text.id)} className="btn btn-xs btn-warning">Edit</button>
+                                    <button onClick={() => this.props.ChangeAppMode('Delete',text.id)} className="btn btn-xs btn-danger">Delete</button>
                                 </td>
                             </tr>
                         )
@@ -89,7 +89,10 @@
                 render:function(){
                     return(
                         <div className="panel panel-primary">
-                            <div className="panel-heading">SHowing States</div>
+                            <div className="panel-heading">
+                                Showing States
+                                <button type="button" className="btn btn-info btn-xs pull-right">Add New State</button>
+                                </div>
                             <div className="panel-body">
                                 <ShowAllState AllState={this.state.States} ChangeAppMode={this.props.ChangeAppMode}/>
                             </div>
@@ -99,6 +102,8 @@
 
 
             });
+
+            
 
         
             var StartPage = React.createClass({
@@ -110,14 +115,14 @@
                 },
 
                 ChangeAppMode:function(text,StateId){
-                    alert("function is click");
+                    
                     this.setState({AppMode:text})
                     if(StateId){
                         this.setState({StateId:StateId})
                     }else{
                         this.setState({StateId:'',})
                     }
-                    
+                    alert("AppMode is "+this.state.AppMode+" StateId is"+this.state.StateId);
                 },
                 render:function(){
                     var ToRender = <ReadState ChangeAppMode={this.ChangeAppMode}/>;
