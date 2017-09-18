@@ -18,33 +18,89 @@
   </head>
     <body>
         <div id="CmsApp"></div>
+        <script src="stateCms/Navigation.js"></script>
         <script src="stateCms/ReadState.js"></script>
         <script type="text/babel">
-        var ReadState = React.createClass({
-            getInitialState:function(){
-                return({
-                    States:[],
-                })
-            },
-            componentDidMount(){
-                $.ajax({
-                     url: "http://localhost/oceangreen/admin/api/readState.php",
-                     type : "GET",
-                     cache: false,
-                     success: function(html)
-                         {
-                             this.setState({States:JSON.parse(html)});
-                             alert("first"+this.state.States);
-                         }.bind(this),
-                 });
-            },
-
+        var Nevigation = React.createClass({
             render:function(){
-                return(<h1>Hello</h1>)
-            },
+                return(
+                    <nav className="navbar navbar-default">
+                        <div className="container-fluid">    
+                            <a className="navbar-brand newFont" href="#">Instagram</a>
+                        </div>
+                    </nav>
+                );
+            }
+        });
+            var ShowAllState = React.createClass({
+                
+                render:function(){
+                    var AllState = this.props.AllState.map(function(text,i){
+                        return(
+                            <tr key={i} index={i}>
+                                <th>{text.id}</th>
+                                <td>{text.location_name}</td>
+                                <td>{text.active==1?'Active':'De-active'}</td>
+                                <td>
+                                    <button onClick={() => this.props.ChangeAppMode('Edit',text.id)} className="btn btn-xs btn-warning">Edit</button>
+                                </td>
+                            </tr>
+                        )
+                    }.bind(this));
+                    return(
+                        !AllState.length
+                        ? <div className='alert alert-danger'>No State Found</div>
+                        :
+                        <table className="table table-bordered">
+                            <thead>
+                                <tr>
+                                    <th>Id</th>
+                                    <th>State Name</th>
+                                    <th>Status</th>
+                                    <th>Action</th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                             {AllState}
+                            </tbody>
+                        </table>
+                    )
+                }
+            });
+            var ReadState = React.createClass({
+                getInitialState:function(){
+                    return({
+                        States:[],
+                    })
+                },
+                componentDidMount(){
+                    $.ajax({
+                        url: "http://localhost/oceangreen/admin/api/readState.php",
+                        type : "GET",
+                        cache: false,
+                        success: function(html)
+                            {
+                                this.setState({States:JSON.parse(html)});
+                                alert("first"+this.state.States);
+                            }.bind(this),
+                    });
+                },
+
+                render:function(){
+                    return(
+                        <div className="panel panel-primary">
+                            <div className="panel-heading">SHowing States</div>
+                            <div className="panel-body">
+                                <ShowAllState AllState={this.state.States} ChangeAppMode={this.props.ChangeAppMode}/>
+                            </div>
+                        </div>
+                    );
+                },
 
 
-    });
+            });
+
+        
             var StartPage = React.createClass({
                 getInitialState:function(){
                     return({
@@ -54,12 +110,14 @@
                 },
 
                 ChangeAppMode:function(text,StateId){
+                    alert("function is click");
                     this.setState({AppMode:text})
                     if(StateId){
                         this.setState({StateId:StateId})
                     }else{
                         this.setState({StateId:'',})
                     }
+                    
                 },
                 render:function(){
                     var ToRender = <ReadState ChangeAppMode={this.ChangeAppMode}/>;
@@ -72,9 +130,19 @@
                         default:
                             break;
                     }
-                    return(
-                        {ToRender}
+                    return (
+                        <div>
+                                {<Nevigation/>}
+                            <div className="container">
+                                <div className="row">
+                                    <div className="col-md-8 col-md-offset-2">
+                                        {ToRender}
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
                     )
+                        
                 }
             });
             ReactDOM.render(<StartPage/>,document.getElementById('CmsApp'));
