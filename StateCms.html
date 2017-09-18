@@ -32,8 +32,32 @@
             }
         });
             var ShowAllState = React.createClass({
+
+                getInitialState:function(){
+                    return({
+                        Delete:'Delete',
+                        btn1:'btn btn-xs btn-warning',
+                        btn2:'btn btn-xs btn-danger hide',
+                        btn3:'btn btn-xs btn-info hide',
+                    })
+                },
+                OnDeleteClick:function(){
+                    this.setState({
+                        btn1:'btn btn-xs btn-warning hide',
+                        btn2:'btn btn-xs btn-danger ',
+                        btn3:'btn btn-xs btn-info ',
+                    })
+                },
+                OnCancelClick:function(){
+                    this.setState({
+                        btn1:'btn btn-xs btn-warning',
+                        btn2:'btn btn-xs btn-danger hide',
+                        btn3:'btn btn-xs btn-info hide',
+                    })
+                },
                 
                 render:function(){
+                    
                     var AllState = this.props.AllState.map(function(text,i){
                         return(
                             <tr key={i} index={i}>
@@ -42,7 +66,10 @@
                                 <td>{text.active==1?'Active':'De-active'}</td>
                                 <td>
                                     <button onClick={() => this.props.ChangeAppMode('Edit',text.id)} className="btn btn-xs btn-warning">Edit</button>
-                                    <button onClick={() => this.props.ChangeAppMode('Delete',text.id)} className="btn btn-xs btn-danger">Delete</button>
+                                    <button onClick={this.OnDeleteClick} className={this.state.btn1}>Delete</button>
+                                    <button className={this.state.btn2}>Are You Sure</button>
+                                    <button onClick={() => this.props.ChangeAppMode('Delete',text.id)} className={this.state.btn2}>Yes</button>
+                                    <button onClick={this.OnCancelClick} className={this.state.btn3}>No</button>
                                 </td>
                             </tr>
                         )
@@ -125,10 +152,11 @@
                         return false;
                     }
 
-                    //alert("Statename is "+this.state.StateName + " and status is" +this.state.Status);
-                    e.preventDefault();
+                    //alert("Statename is "+this.state.StateName );
+                   
                     //Ajax call
-                    var dataString = 'StateName='+ this.state.StateName+'&Weight=3';
+                    var dataString = 'StateName='+ this.state.StateName;
+                    //alert(dataString);
                        
                        $.ajax
                             ({
@@ -138,12 +166,16 @@
                             cache: false,
                             success: function(html)
                             {
-                                
+                                //alert(html);
                                 if(html=='Success'){
-                                    this.setState({Success: this.state.StateName+' is Added Successfully'})
+                                    this.setState({Success: this.state.StateName+' is Added Successfully',
+                                                    Error:'',
+                                                    StateName:''})
+                                                
                                 }
                                 if(html=='Available'){
-                                    this.setState({Error:this.state.StateName+' is already Available'})
+                                    this.setState({Error:this.state.StateName+' is already Available',
+                                                    Success:'',})
                                 }
                                 if(html=='SystemDead'){
                                     this.setState({Error:'Something Went Wrong'})
@@ -175,14 +207,7 @@
                                                 <label for="Statename">State Name</label>
                                                 <input onChange={this.StateNameChange}type="text" className="form-control" id="StateName" placeholder="State Name"/>
                                             </div>
-                                            <div className="form-group">
-                                                <label for="Statename">Status</label>
-                                                <select onChange={this.StatusChange}className="form-control" id="status">
-                                                    <option value="" selected="selected">Select Status</option>
-                                                    <option value="1">Active</option>
-                                                    <option value="0">De-active</option>
-                                                </select>
-                                            </div>
+                                            
                                             <div className="form-group">
                                                     <button onClick={this.Save}type="button" className="btn btn-primary btn-sm">Create New State</button>
                                                     <button onClick={()=>this.props.ChangeAppMode('Read',null)} type="button" className="btn btn-default btn-sm">Cancel</button>
