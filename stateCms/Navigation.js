@@ -1,4 +1,4 @@
-var Nevigation = React.createClass({
+window.Nevigation = React.createClass({
     render:function(){
         return(
             <nav className="navbar navbar-default">
