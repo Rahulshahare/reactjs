@@ -178,6 +178,19 @@
             getIntialState:function(){
                 return({
                     Istate:[],
+
+                    Data:[
+                        {
+                            id : 2,
+                            location_name : 'Pkd',
+                            active : 1
+                        },
+                        {
+                            id :3,
+                            location_name : 'tumtam',
+                            active : 0
+                        }
+                    ]
                 })
             },
             componentDidMount(){
@@ -186,7 +199,7 @@
                             type : "GET",
                             cache: false,
                             success: function(html)
-                                {
+                                {   //alert(html);
                                     this.setState({Istate:JSON.parse(html)});
                                     alert("first"+this.state.Istate);
                                 }.bind(this),
@@ -201,11 +214,11 @@
             
             
             render:function(){
-                     return(
-                         <div>
-                         {this.DataFunction()}
-                         </div>
-                     )                                                       
+                
+                 this.state.Istate.map(function(text,i){
+                        return <Cms id={text.id} Sname={text.location_name} active={text.active} />
+                }.bind(this))
+                                                                      
             }
         });       
 
