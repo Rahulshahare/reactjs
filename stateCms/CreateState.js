@@ -57,6 +57,13 @@ window.CreateState = React.createClass({
                 }.bind(this),
                 });
     },
+    Reset:function(){
+        this.setState({
+            StateName:'',
+            Error:'',
+            Success:'',
+        })
+    },  
     render:function(){
         return(
             <div className="panel panel-primary">
@@ -76,12 +83,13 @@ window.CreateState = React.createClass({
                         <form>
                                 <div className="form-group">
                                     <label for="Statename">State Name</label>
-                                    <input onChange={this.StateNameChange}type="text" className="form-control" id="StateName" placeholder="State Name"/>
+                                    <input onChange={this.StateNameChange}type="text" value={this.state.StateName} className="form-control" id="StateName" placeholder="State Name"/>
                                 </div>
                                 
                                 <div className="form-group">
                                         <button onClick={this.Save}type="button" className="btn btn-primary btn-sm">Create New State</button>
-                                        <button onClick={()=>this.props.ChangeAppMode('Read',null)} type="button" className="btn btn-default btn-sm">Cancel</button>
+                                        <button onClick={()=>this.props.ChangeAppMode('Read',null)} type="button" className="btn btn-warning btn-sm">Cancel</button>
+                                        <button onClick={this.Reset} type="button" className="btn btn-default btn-sm">Reset</button>
                                 </div>
                         </form>
                     </div>
