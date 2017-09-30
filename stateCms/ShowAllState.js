@@ -5,7 +5,7 @@ window.ShowAllState = React.createClass({
                         
                         var AllState = this.props.AllState.map(function(text,i){
                             return(
-                                <tr key={i} index={i}>
+                                <tr key={i} index={i} className={text.active==1?"info":"warning"}>
                                     <th>{text.id}</th>
                                     <td>{text.location_name}</td>
                                     <td>{text.active==1?'Active':'De-active'}</td>
