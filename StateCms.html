@@ -27,6 +27,8 @@
         <script type="text/babel" src="StateCms/createState.js"></script>
         <script type="text/babel" src="StateCms/EditState.js"></script>
         <script type="text/babel" src="StateCms/DeleteState.js"></script>
+        <script type="text/babel" src="StateCms/Login.js"></script>
+        
         <script type="text/babel">
         
             
@@ -45,19 +47,26 @@
                     )
                 }
             });
+            
         
             var StartPage = React.createClass({
                 getInitialState:function(){
                     return({
                         AppMode:'Read',
                         StateId:'',
-                        LoggedIn:false,
+                        LoggedIn:'No',
                     })
                 },
 
                 ChangeAppMode:function(text,StateId){
                     
                     this.setState({AppMode:text})
+                    if(this.state.AppMode=='UserPass'){
+                        this.setState({
+                            LoggedIn:'Yes',
+                            AppMode:'Read'
+                        })
+                    }
                     if(StateId){
                         this.setState({StateId:StateId})
                     }else{
@@ -70,6 +79,11 @@
                 },
                 Districts:function(){
                     this.ChangeAppMode('ReadDistrict',null);
+                },
+                logout:function(){
+                    this.setState({
+                        LoggedIn:'No',
+                    })
                 },
                 render:function(){
                     var ToRender;
@@ -87,9 +101,9 @@
                         default:
                             break;
                     }
-                    if(this.state.LoggedIn===false){
-                        ToRender = <LoginBox ChangeAppMode={this.ChangeAppMode}/>
-                    }
+                    if(this.state.LoggedIn!=='Yes'){
+                        return <LoginBox ChangeAppMode={this.ChangeAppMode}/>
+                    }else{
                     return (
                         <div>
                                 {<Nevigation/>}
@@ -106,7 +120,7 @@
                                                             <a href="#" onClick={this.Districts}><li className="list-group-item">Districts</li></a>
                                                             <li className="list-group-item">Morbi leo risus</li>
                                                             <li className="list-group-item">Porta ac consectetur ac</li>
-                                                            <li className="list-group-item">Vestibulum at eros</li>
+                                                            <a href="#" onClick={this.logout}><li className="list-group-item">LogOut</li></a>
                                                         </ul>
                                                 </div>
                                             </div>
@@ -119,6 +133,7 @@
                             </div>
                         </div>
                     )
+                }
                         
                 }
             });
