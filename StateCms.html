@@ -7,17 +7,12 @@
     <title>CMS System</title>
     <link href="css/bootstrap.css" rel="stylesheet">
     <script src="js/jquery-2.2.4.min.js"></script>
+    <script src="js/bootstrap.min.js"></script>
     <script src="js/jquery.dataTables.min.js"></script>
     <script src="js/react.js"></script>
     <script src="js/react-dom.min.js"></script>
     <script src="js/browser.min.js"></script>
-    <script type="text/javascript">
-        $(document).ready(function(){
-           $('.dashbordTable').DataTable({
-           "order": [[ 0, "asc" ]]
-            }); 
-        });
-   </script>
+    
     <style type="text/css">
         .btn{
             margin-right:2px;
@@ -35,13 +30,28 @@
         <script type="text/babel">
         
             
-
+            var ReadDistrict = React.createClass({
+                render:function(){
+                    return(
+                        <div className="panel panel-primary">
+                            <div className="panel-heading">
+                                Showing States
+                                <button onClick={()=> this.props.ChangeAppMode('read',null)} type="button" className="btn btn-info btn-xs pull-right">Add New State</button>                    
+                                </div>
+                            <div className="panel-body">
+                                <h1>Hello</h1>
+                            </div>
+                        </div>
+                    )
+                }
+            });
         
             var StartPage = React.createClass({
                 getInitialState:function(){
                     return({
                         AppMode:'Read',
                         StateId:'',
+                        LoggedIn:false,
                     })
                 },
 
@@ -55,23 +65,54 @@
                     }
                     //alert("AppMode is "+this.state.AppMode+" StateId is"+this.state.StateId);
                 },
+                States:function(){
+                    this.ChangeAppMode('Read',null);
+                },
+                Districts:function(){
+                    this.ChangeAppMode('ReadDistrict',null);
+                },
                 render:function(){
-                    var ToRender = <ReadState ChangeAppMode={this.ChangeAppMode}/>;
+                    var ToRender;
+                    
                     switch (this.state.AppMode) {
+                        case 'Read' : ToRender = <ReadState ChangeAppMode={this.ChangeAppMode}/>;
+                        break;
                         case 'Create': ToRender = <CreateState ChangeAppMode={this.ChangeAppMode}/>;
                             break;
                         case 'Edit'  : ToRender = <EditState ChangeAppMode={this.ChangeAppMode} StateId={this.state.StateId}/>;
                             break;
                         case 'Delete': ToRender = <DeleteState ChangeAppMode={this.ChangeAppMode } StateId={this.state.StateId}/>;
+                        break;
+                        case 'ReadDistrict' : ToRender = <ReadDistrict ChangeAppMode={this.ChangeAppMode}/>
                         default:
                             break;
+                    }
+                    if(this.state.LoggedIn===false){
+                        ToRender = <LoginBox ChangeAppMode={this.ChangeAppMode}/>
                     }
                     return (
                         <div>
                                 {<Nevigation/>}
                             <div className="container">
                                 <div className="row">
-                                    <div className="col-md-8 col-md-offset-2">
+                                    <div className="col-md-3 hidden-xs">
+                                            <div className="panel panel-primary">
+                                                <div className="panel-heading">
+                                                   <a data-toggle="collapse" href="#collapseExample" aria-expanded="false"> Menu</a>
+                                                </div>
+                                                <div className="panel-body" id="collapseExample">
+                                                        <ul className="list-group">
+                                                            <a href="#" onClick={this.States}><li className="list-group-item">States</li></a>
+                                                            <a href="#" onClick={this.Districts}><li className="list-group-item">Districts</li></a>
+                                                            <li className="list-group-item">Morbi leo risus</li>
+                                                            <li className="list-group-item">Porta ac consectetur ac</li>
+                                                            <li className="list-group-item">Vestibulum at eros</li>
+                                                        </ul>
+                                                </div>
+                                            </div>
+                                            
+                                    </div>
+                                    <div className="col-md-9 ">
                                         {ToRender}
                                     </div>
                                 </div>
@@ -83,6 +124,12 @@
             });
             ReactDOM.render(<StartPage/>,document.getElementById('CmsApp'));
         </script>
-        
+        <script type="text/javascript">
+            $(document).ready(function(){
+               $('.dashbordTable').DataTable({
+               "order": [[ 0, "asc" ]]
+                }); 
+            });
+       </script>
     </body>
 </html>
