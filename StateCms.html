@@ -7,9 +7,17 @@
     <title>CMS System</title>
     <link href="css/bootstrap.css" rel="stylesheet">
     <script src="js/jquery-2.2.4.min.js"></script>
+    <script src="js/jquery.dataTables.min.js"></script>
     <script src="js/react.js"></script>
     <script src="js/react-dom.min.js"></script>
     <script src="js/browser.min.js"></script>
+    <script type="text/javascript">
+        $(document).ready(function(){
+           $('.dashbordTable').DataTable({
+           "order": [[ 0, "asc" ]]
+            }); 
+        });
+   </script>
     <style type="text/css">
         .btn{
             margin-right:2px;
@@ -75,5 +83,6 @@
             });
             ReactDOM.render(<StartPage/>,document.getElementById('CmsApp'));
         </script>
+        
     </body>
 </html>

@@ -21,7 +21,7 @@ window.ShowAllState = React.createClass({
                             !AllState.length
                             ? <div className='alert alert-danger'>No State Found</div>
                             :
-                            <table className="table table-bordered">
+                            <table id="dashbordTable" className="table table-bordered dashbordTable">
                                 <thead>
                                     <tr>
                                         <th>Id</th>

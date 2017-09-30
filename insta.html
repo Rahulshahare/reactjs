@@ -313,7 +313,7 @@
        var TextChange =  React.createClass({
 
            getInitialState:function(){
-            return{TextValue:'type here'}
+            return({TextValue:'type here'})
            },
            handleChange(e) {
                 this.setState({TextValue: e.target.value});

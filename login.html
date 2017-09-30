@@ -28,6 +28,11 @@
         .navbar {
             border-radius: 0px;
         }
+        p.Error {
+            background: #F44336;
+            color: #fff;
+            text-align: center;
+        }
         </style>
     </head>
     <body>
@@ -70,6 +75,9 @@
                 getInitialState:function(){
                     return({
                         Email:'',
+                        Error:'',
+                        Disabled:'disabled',
+                        Validate:false,
                     })
                 },
                 login:function(){
@@ -82,21 +90,48 @@
                     this.setState({
                         Email:e.target.value,
                     })
+                    if(this.state.Email===''){
+                        this.setState({
+                                Error:'',
+                               
+                            })
+                    }
+                    var regex = /^[0-9a-zA-Z]+([0-9a-zA-Z]*[-._+])*[0-9a-zA-Z]+@[0-9a-zA-Z]+([-.][0-9a-zA-Z]+)*([0-9a-zA-Z]*[.])[a-zA-Z]{2,6}$/;
+
+                        if (regex.test(this.state.Email) == false) 
+                        {
+                        
+                            this.setState({
+                                Error:'Invalid Email',
+                                Disabled:'disabled'
+                            })
+                        
+                        }else{
+                            this.setState({
+                                Error:'',
+                                Disabled:''
+                            })
+                        }
                 },
                 ProcessForgot:function(){
-                    alert(this.state.Email)
+                    alert(this.state.Email);
+                    if(this.state.Email=='rahulshahare@gmail.com'){
+                        this.setState({
+                            Validate:true,
+                        })
+                    }
                 },
-
-                render:function(){
+                BeforeValidate:function(){
                     return(
                         <div className="well">
                                 <form>
                                     <div className="form-group">
                                         <label for="Email">Email address</label>
                                         <input onChange={this.ChangeEmail}type="email" className="form-control" id="Email" placeholder="Enter email" />
+                                        <p className="Error">{this.state.Error}</p>
                                     </div>
                                     <div className="form-group">
-                                        <button onClick={this.ProcessForgot}type="button" className="btn btn-primary btn-lg btn-block">Recover Password</button>
+                                        <button onClick={this.ProcessForgot}type="button" className="btn btn-primary btn-lg btn-block" disabled={this.state.Disabled}>Recover Password</button>
                                     </div>
                                     <p>
                                         <a href="#" onClick={this.login}>Login</a> | 
@@ -106,6 +141,29 @@
                                 </form>
                         </div>
                     )
+                },
+
+                OnValidate:function(){
+                    return(
+                        <div className="well">
+                            <h4 className="success text-center">
+                                <div className="alert alert-success">
+                                  Kindly check your Email for further password recovery process
+                                </div>
+                            </h4>
+                            <div className="form-group">
+                                        <button onClick={this.login}type="button" className="btn btn-primary btn-lg btn-block">Login Now</button>
+                                    </div>
+                        </div>
+                    )
+                },
+
+                render:function(){
+                    if(this.state.Validate){
+                        return this.OnValidate();
+                    }else{
+                        return this.BeforeValidate();
+                    }
                 }
             });
             var Signup = React.createClass({

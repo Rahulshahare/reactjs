@@ -66,12 +66,22 @@
                 },
                 FormDataShow:function(){
                     
-                    
+                    if(this.state.Name=='' || 
+                       this.state.Email=='' || 
+                       this.state.DOB=='' || 
+                       this.state.Number==''){
+                           return(
+                            alert("You can not send empty inputs")
+                           )
+                        
+                    }
                     console.log('Email is :'+this.state.Email);
                     console.log('DOB is :'+this.state.DOB);
                     console.log('Numner is :'+this.state.Number);
                     if(this.state.Number.length > 10 || this.state.Number.length < 10){
-                        alert("Mobile number is Incorrect")
+                        return(
+                            alert("Mobile number is Incorrect")
+                        )
                     }
                      // data in the form
                      var dataString = 'Name='+ this.state.Name
@@ -96,13 +106,18 @@
                             success: function(html)
                                 {
                                     //$('.load-content').html(html);
-                                    alert(JSON.parse(html));
+                                    //alert(JSON.parse(html));
                                     this.setState({ServerResponce: JSON.parse(html)});
                                     console.log("set state is"+this.state.ServerResponce);
                                     console.log("length of array is "+ this.state.ServerResponce.length);
-                                    alert(this.state.ServerResponce["Name"]);
-                                    alert(this.state.ServerResponce.Mobile);
+                                    //alert(this.state.ServerResponce["Name"]);
+                                    //alert(this.state.ServerResponce.Mobile);
                                    // var iterator = this.state.ServerResponce.values();
+                                   if(this.state.ServerResponce!=='' && this.state.ServerResponce!=='Error'){
+                                       this.setState({
+                                           NAME:'',
+                                       })
+                                   }
 
                                     
                                     
@@ -140,14 +155,15 @@
                                                 <div className='alert alert-danger'>
                                                     Unable to update product. Please try again.
                                                 </div>
-                                            : <div className='alert alert-danger'>
+                                            : <div className='alert alert-success'>
                                                 {
                                                     <div>
-                                                        <h2>Name: {this.state.ServerResponce.Name}</h2>
-                                                        <h2>Email: {this.state.ServerResponce["Email"]}</h2>
-                                                        <h2>Mobile: {this.state.ServerResponce.Mobile}</h2>
-                                                        <h2>Date of birth: {this.state.ServerResponce.dob}</h2>
+                                                        <h4>Name: {this.state.ServerResponce.Name}</h4>
+                                                        <h4>Email: {this.state.ServerResponce["Email"]}</h4>
+                                                        <h4>Mobile: {this.state.ServerResponce.Mobile}</h4>
+                                                        <h4>Date of birth: {this.state.ServerResponce.dob}</h4>
                                                     </div>
+                                                    
                                                 }
                                                   
                                                 </div>
