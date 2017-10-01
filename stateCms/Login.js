@@ -21,6 +21,14 @@ window.LoginBox = React.createClass({
                 alert("Empty Email or Password")
             )
         }
+
+        var regex = /^[0-9a-zA-Z]+([0-9a-zA-Z]*[-._+])*[0-9a-zA-Z]+@[0-9a-zA-Z]+([-.][0-9a-zA-Z]+)*([0-9a-zA-Z]*[.])[a-zA-Z]{2,6}$/;
+        
+        if (regex.test(this.state.Email) == false){
+            return(
+                alert("Invalid Email")
+            )
+        }
         if(this.state.Email=='rahulshahare@gmail.com' && this.state.Password=='9021455150rahul'){
             this.props.ChangeAppMode('UserPass',null)
         }else{
