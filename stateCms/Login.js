@@ -16,6 +16,9 @@ window.LoginBox = React.createClass({
        })
     },
     OnSubmit:function(){
+        if(this.state.Email=='' || this.state.Password==''){
+            alert("You cant leave #blank fields");
+        }
         if(this.state.Email=='rahulshahare@gmail.com' && this.state.Password=='9021455150rahul'){
             this.props.ChangeAppMode('UserPass',null)
         }else{
