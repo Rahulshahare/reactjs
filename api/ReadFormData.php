@@ -20,6 +20,9 @@ if(count($_POST)>0){
     ];
     
    echo json_encode((array)$value);
+    /*In react aap this array is accesible using map function.
+    if this echo result is storing in variabe result. then 
+    result.Name will be used to access Name*/
 
 }else{
     echo"Error";
