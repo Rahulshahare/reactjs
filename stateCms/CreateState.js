@@ -18,7 +18,8 @@ window.CreateState = React.createClass({
         if(this.state.StateName ){
             this.setState({Error:''});
         }else{
-            this.setState({Error:'You must enter a #state Name'});
+            this.setState({Error:'You must enter a #state Name',
+                            Success:''});
             return false;
         }
 
