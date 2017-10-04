@@ -6,8 +6,9 @@ window.ReadState = React.createClass({
                 })
             },
             componentDidMount(){
+                
                 $.ajax({
-                    url: "http://localhost/oceangreen/admin/api/readState.php",
+                    url: "http://localhost/oceangreen/admin/api/readState.php?Key=Authority",
                     type : "GET",
                     cache: false,
                     success: function(html)
