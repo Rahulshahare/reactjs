@@ -53,9 +53,19 @@ OnStatusChange:function(e){
         Status: e.target.value,
     })
 },
+Updating:function(){
+    if(this.state.StateName==''){
+        this.setState({
+            Error:'State Name is Empty',
+        })
+    }else{
+        this.UpdateState();
+    }
+},
 UpdateState:function(){
     //alert("State Name : "+this.state.StateName+
          // "Status is:"+this.state.Status);
+         
          this.setState({
              Success:'',
              Error:'',
@@ -131,8 +141,8 @@ UpdateState:function(){
                                 </div>
                                 
                                 <div className="form-group">
-                                        <button onClick={this.UpdateState}type="button" className="btn btn-primary btn-sm">Update {this.state.StateName}</button>
-                                        <button onClick={()=>this.props.ChangeAppMode('Read',null)} type="button" className="btn btn-warning btn-sm">Cancel</button>
+                                        <button onClick={this.Updating}type="button" className="btn btn-primary btn-sm">Update {this.state.StateName}</button>
+                                        <button onClick={()=>this.props.ChangeAppMode('Read',null)} type="button" className="btn btn-warning btn-sm">Back to State</button>
                                 </div>
                         </form>
                     </div>
