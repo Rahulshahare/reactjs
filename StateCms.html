@@ -52,9 +52,9 @@
             var StartPage = React.createClass({
                 getInitialState:function(){
                     return({
-                        AppMode:'Read',
+                        AppMode:'',
                         StateId:'',
-                        LoggedIn:'No',
+                        LoggedIn:'Yes', /*Yes,No*/
                     })
                 },
 
@@ -83,6 +83,7 @@
                 logout:function(){
                     this.setState({
                         LoggedIn:'No',
+                        AppMode:'',
                     })
                 },
                 render:function(){
