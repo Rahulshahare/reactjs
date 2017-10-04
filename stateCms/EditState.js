@@ -53,24 +53,18 @@ OnStatusChange:function(e){
         Status: e.target.value,
     })
 },
-/*Updatingmm:function(){
+Updating:function(){
     if(this.state.StateName==''){
         this.setState({
-            Error:'State Name is Empty',
+            Error:'State Name is Empty.',
         })
     }else{
         this.UpdateState();
     }
-},*/
-Updating:function(){
+},
+UpdateState:function(){
     //alert("State Name : "+this.state.StateName+
          // "Status is:"+this.state.Status);
-         if(this.state.StateName==''){
-            this.setState({
-                Error:'State Name is Empty',
-            })
-            return false
-        }
          this.setState({
              Success:'',
              Error:'',
