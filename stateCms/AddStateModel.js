@@ -5,8 +5,11 @@ window.AddStateModel = React.createClass({
             Status:'',
             Error:'',
             Success:'',
+            show:'',
+            
         })
     },
+    
     StateNameChange:function(e){
         this.setState({StateName:e.target.value,
             Error:'',
@@ -64,13 +67,20 @@ window.AddStateModel = React.createClass({
             StateName:'',
             Error:'',
             Success:'',
+            
+            
         })
+        this.props.toggle()
     },
     
-    render:function(){
     
+    render:function(){
+        if(!this.props.ShowModel){
+            return null;
+        }
+       
     return(
-        <div className="modal " data-backdrop="false" id="myModal" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
+        <div className="modal show"  id="myModal" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="false">
         <div className="modal-dialog modal-sm">
             <div className="modal-content">
             <div className="modal-header">

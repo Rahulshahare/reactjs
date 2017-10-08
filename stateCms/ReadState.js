@@ -3,7 +3,7 @@ window.ReadState = React.createClass({
                 return({
                     States:[],
                     ButtonState:false,
-                    show:"ok",
+                    isOpen:false,
                 })
             },
             componentDidMount(){
@@ -26,6 +26,12 @@ window.ReadState = React.createClass({
                 alert("hello");
                 this.GetData()
             },
+            toggle:function(){
+               // alert(this.state.isOpen);
+                this.setState({
+                    isOpen:!this.state.isOpen,
+                })
+            },
            
             
 
@@ -35,16 +41,20 @@ window.ReadState = React.createClass({
                     <div className="panel panel-primary">
                         <div className="panel-heading">
                             Showing States
-                            <button data-toggle="modal" data-target="#myModal"  type="button" className="btn btn-info btn-xs pull-right">Add New State</button>                    
+                            <button onClick={this.toggle}  type="button" className="btn btn-info btn-xs pull-right">Add New State</button>                    
                             </div>
                         <div className="panel-body">
                             <ShowAllState AllState={this.state.States} ChangeAppMode={this.props.ChangeAppMode}/>
                         </div>
                     </div>
-                    {<AddStateModel 
-                        
-                        ChangeAppMode={this.props.ChangeAppMode}
-                        Refresh={this.GetData}/>}
+                    {
+                        <AddStateModel 
+                            ChangeAppMode={this.props.ChangeAppMode}
+                            Refresh={this.GetData}
+                            ShowModel={this.state.isOpen}
+                            toggle={this.toggle}
+                        />
+                    }
                     </div>
                 );
             },
