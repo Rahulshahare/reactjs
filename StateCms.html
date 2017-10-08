@@ -28,6 +28,7 @@
         <script type="text/babel" src="StateCms/EditState.js"></script>
         <script type="text/babel" src="StateCms/DeleteState.js"></script>
         <script type="text/babel" src="StateCms/Login.js"></script>
+        <script type="text/babel" src="StateCms/AddStateModel.js"></script>
         
         <script type="text/babel">
         
@@ -98,8 +99,9 @@
                             break;
                         case 'Delete': ToRender = <DeleteState ChangeAppMode={this.ChangeAppMode } StateId={this.state.StateId}/>;
                         break;
-                        case 'ReadDistrict' : ToRender = <ReadDistrict ChangeAppMode={this.ChangeAppMode}/>
-                        default:
+                        case 'ReadDistrict' : ToRender = <ReadDistrict ChangeAppMode={this.ChangeAppMode}/>;
+                        break;
+                        default: 
                             break;
                     }
                     if(this.state.LoggedIn!=='Yes'){
