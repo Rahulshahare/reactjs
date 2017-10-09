@@ -6,6 +6,8 @@ window.AddStateModel = React.createClass({
             Error:'',
             Success:'',
             show:'',
+            BtnState:'',
+            BtnName:'Add State',
             
         })
     },
@@ -13,13 +15,17 @@ window.AddStateModel = React.createClass({
     StateNameChange:function(e){
         this.setState({StateName:e.target.value,
             Error:'',
-            Success:'',})
+            Success:'',
+           })
     },
     
     Save:function(){
        
         if(this.state.StateName ){
-            this.setState({Error:''});
+            this.setState({Error:'',
+                            BtnState:'disabled',
+                            BtnName:'Adding State',
+                        });
         }else{
             this.setState({Error:'You must enter a #state Name',
                             Success:''});
@@ -45,13 +51,17 @@ window.AddStateModel = React.createClass({
                         this.setState({Success: this.state.StateName+' is Added Successfully',
                                         Error:'',
                                         StateName:'',
-                                        StateName:''})
+                                        StateName:'',
+                                        BtnState:'',
+                                        BtnName:'Add State',})
                                         this.props.Refresh();
                                     
                     }
                     if(html=='Available'){
                         this.setState({Error:this.state.StateName+' is already Available',
-                                        Success:'',})
+                                        Success:'',
+                                        BtnState:'',
+                                        BtnName:'Add State',})
                     }
                     if(html=='SystemDead'){
                         this.setState({Error:'Something Went Wrong'})
@@ -62,15 +72,20 @@ window.AddStateModel = React.createClass({
                 }.bind(this),
                 });
     },
+    Close:function(text){
+        this.setState({
+            StateName:'',
+            Error:'',
+            Success:'',
+        })
+        this.props.toggle()
+    },
     Reset:function(){
         this.setState({
             StateName:'',
             Error:'',
             Success:'',
-            
-            
         })
-        this.props.toggle()
     },
     
     
@@ -80,35 +95,55 @@ window.AddStateModel = React.createClass({
         }
        
     return(
-        <div className="modal show"  id="myModal" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="false">
+        <div className="modal draggable show"  id="myModal" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="false">
         <div className="modal-dialog modal-sm">
             <div className="modal-content">
             <div className="modal-header">
-                <button onClick={this.Reset} type="button" className="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
-                <h6 className="modal-title" id="myModalLabel">Add New State</h6>
+                <button onClick={this.Close} type="button" className="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+                <span className="modal-title" id="myModalLabel">Add New State</span>
             </div>
             <div className="modal-body">
                     
                         {this.state.Error
-                            ?<div className='alert alert-danger'>{this.state.Error}</div>
+                            ?
+                            <div className="alert alert-danger alert-dismissible" role="alert">
+                                <button onClick={this.Reset} type="button" className="close"  aria-label="Close"><span aria-hidden="true">&times;</span></button>
+                                {this.state.Error}
+                            </div>
                             :null
                         }
                         {this.state.Success
-                            ?<div className='alert alert-success'>{this.state.Success}</div>
+                            ?
+                            <div className="alert alert-success alert-dismissible" role="alert">
+                                <button onClick={this.Reset} type="button" className="close"  aria-label="Close"><span aria-hidden="true">&times;</span></button>
+                                {this.state.Success}
+                            </div>
                             :null
                         }
                         <form>
-                                
-                                    <label for="Statename">State Name</label>
-                                    <input onChange={this.StateNameChange}type="text" value={this.state.StateName} className="form-control" id="StateName" placeholder="State Name"/>
-                                
-                                
+                                    <input 
+                                        onChange={this.StateNameChange}
+                                        type="text" 
+                                        value={this.state.StateName} 
+                                        className="form-control" 
+                                        autocomplete="off" 
+                                        autoFocus="true"
+                                        required="required"
+                                        placeholder="Enter State Name"
+                                    />
                         </form>
                     
             </div>
             <div className="modal-footer">
-                <button onClick={this.Save} type="button" className="btn btn-primary">Create New State</button>
-                <button onClick={this.Reset} type="button" className="btn btn-default" data-dismiss="modal">Close</button>
+                <button 
+                    onClick={this.Save} 
+                    type="button" 
+                    className="btn btn-primary btn-xs" 
+                    disabled={this.state.BtnState}
+                    >
+                    {this.state.BtnName}
+                    </button>
+                <button onClick={this.Close} type="button" className="btn btn-default btn-xs" data-dismiss="modal">Cancel</button>
             </div>
             </div>
         </div>
