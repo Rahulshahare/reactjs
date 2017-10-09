@@ -2,8 +2,11 @@ window.ReadState = React.createClass({
             getInitialState:function(){
                 return({
                     States:[],
-                    ButtonState:false,
-                    isOpen:false,
+                    isOpenAdd:false,
+                    StateId:'',
+                    StateName:'',
+                    isOpenDelete:false,
+                    
                 })
             },
             componentDidMount(){
@@ -27,14 +30,25 @@ window.ReadState = React.createClass({
                 this.GetData()
             },
             toggle:function(){
-               // alert(this.state.isOpen);
+               // alert(this.state.isOpenAdd);
                 this.setState({
-                    isOpen:!this.state.isOpen,
+                    isOpenAdd:!this.state.isOpenAdd,
+                })
+            },
+            Deleting:function(id,Name){
+                //alert("iam working"+ id);
+                this.setState({
+                    StateId:id,
+                    StateName:Name,
+                    isOpenDelete:!this.state.isOpenDelete,
+                })
+            },
+            toggleDeleteModal:function(){
+                this.setState({
+                    isOpenDelete:!this.state.isOpenDelete
                 })
             },
            
-            
-
             render:function(){
                 return(
                     <div>
@@ -44,15 +58,28 @@ window.ReadState = React.createClass({
                             <button onClick={this.toggle}  type="button" className="btn btn-info btn-xs pull-right">Add New State</button>                    
                             </div>
                         <div className="panel-body">
-                            <ShowAllState AllState={this.state.States} ChangeAppMode={this.props.ChangeAppMode}/>
+                            <ShowAllState 
+                                AllState={this.state.States}  
+                                ChangeAppMode={this.props.ChangeAppMode}
+                                Deleting={this.Deleting}
+                            />
                         </div>
                     </div>
                     {
                         <AddStateModel 
                             ChangeAppMode={this.props.ChangeAppMode}
                             Refresh={this.GetData}
-                            ShowModel={this.state.isOpen}
+                            ShowModel={this.state.isOpenAdd}
                             toggle={this.toggle}
+                        />
+                    }
+                    {
+                        <DeleteStateModel
+                            ShowModel={this.state.isOpenDelete}
+                            StateName={this.state.StateName}
+                            StateId={this.state.StateId}
+                            Hidemodal={this.toggleDeleteModal}
+                            Refresh={this.GetData}
                         />
                     }
                     </div>
