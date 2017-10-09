@@ -49,7 +49,7 @@ window.DeleteStateModel = React.createClass({
         return(
             <div>
                 <div className="modal-body">
-                <p><strong>Are you sure want to delete {this.props.StateName} State?</strong></p>
+                <p>Are you sure want to delete <strong>{this.props.StateName}</strong> State?</p>
                 </div>
                 <div className="modal-footer">
                 <button type="button" onClick={this.DeleteStateNow} className="btn btn-danger btn-xs" disabled={this.state.BtnState}>{this.state.BtnName}</button>
@@ -62,7 +62,7 @@ window.DeleteStateModel = React.createClass({
         return(
                 <div>
                     <div className="modal-body">
-                    <p><strong>{this.props.StateName} is Deleted Successfully.</strong></p>
+                    <p><strong>{this.props.StateName}</strong> is Deleted Successfully.</p>
                     </div>
                     <div className="modal-footer">
                     <button type="button" onClick={this.Close} className="btn btn-primary btn-xs">Done</button>
@@ -74,7 +74,7 @@ window.DeleteStateModel = React.createClass({
         return(
             <div>
                 <div className="modal-body">
-                <p><strong>You can't Delete {this.props.StateName} State as it haves Districts in it.</strong></p>
+                <p>You can't Delete <strong>{this.props.StateName}</strong> State as it haves Districts in it.</p>
                 </div>
                 <div className="modal-footer">
                 <button type="button" onClick={this.Close} className="btn btn-primary btn-xs">Ok</button>
