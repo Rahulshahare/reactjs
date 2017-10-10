@@ -52,8 +52,8 @@ window.DeleteStateModel = React.createClass({
                 <p>Are you sure want to delete <strong>{this.props.StateName}</strong> State?</p>
                 </div>
                 <div className="modal-footer">
-                <button type="button" onClick={this.DeleteStateNow} className="btn btn-danger btn-xs" disabled={this.state.BtnState}>{this.state.BtnName}</button>
-                <button type="button" onClick={this.Close} className="btn btn-default btn-xs">Cancel</button>
+                    <CommomButton BtnType={"danger"} onClick={this.DeleteStateNow} BtnState={this.state.BtnState} BtnName={this.state.BtnName}/>
+                    <CommomButton BtnType={"default"} onClick={this.Close} BtnState={null} BtnName={"Cancel"}/>
                 </div>
             </div>
         )
@@ -65,7 +65,7 @@ window.DeleteStateModel = React.createClass({
                     <p><strong>{this.props.StateName}</strong> is Deleted Successfully.</p>
                     </div>
                     <div className="modal-footer">
-                    <button type="button" onClick={this.Close} className="btn btn-primary btn-xs">Done</button>
+                    <CommomButton BtnType={"primary"} onClick={this.Close} BtnState={null} BtnName={"Done"}/>
                     </div>
                 </div>
             )
@@ -77,7 +77,7 @@ window.DeleteStateModel = React.createClass({
                 <p>You can't Delete <strong>{this.props.StateName}</strong> State as it haves Districts in it.</p>
                 </div>
                 <div className="modal-footer">
-                <button type="button" onClick={this.Close} className="btn btn-primary btn-xs">Ok</button>
+                    <CommomButton BtnType={"primary"} onClick={this.Close} BtnName={"ok"}/>
                 </div>
             </div>
         )
@@ -89,7 +89,7 @@ window.DeleteStateModel = React.createClass({
                 <p><strong>Internal Server Error Occured.</strong></p>
                 </div>
                 <div className="modal-footer">
-                <button type="button" onClick={this.Close} className="btn btn-primary btn-xs">Ok</button>
+                    <CommomButton BtnType={"primary"} onClick={this.Close} BtnState={null} BtnName={"ok"}/>
                 </div>
             </div>
         )

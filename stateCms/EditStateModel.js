@@ -61,6 +61,8 @@ window.EditStateModal = React.createClass({
             StateId:'',
             Status:'',
             Count:'',
+            Success:'',
+            Error:'',
         })
         this.props.Hidemodal();
     },
@@ -108,17 +110,11 @@ window.EditStateModal = React.createClass({
                         </div>
                         <div className="modal-body">
                             {this.state.Error
-                                ?<div className="alert alert-danger alert-dismissible" role="alert">
-                                    <button onClick={this.Reset} type="button" className="close"  aria-label="Close"><span aria-hidden="true">&times;</span></button>
-                                    {this.state.Error}
-                                </div>
+                                ? <AlertBox  AlertType={"danger"} AlertText={this.state.Error} AlertDismiss={this.Reset}/>
                                 :null
                             }
                             {this.state.Success
-                                ?<div className="alert alert-success alert-dismissible" role="alert">
-                                    <button onClick={this.Reset} type="button" className="close"  aria-label="Close"><span aria-hidden="true">&times;</span></button>
-                                    {this.state.Success}
-                                </div>
+                                ? <AlertBox  AlertType={"success"} AlertText={this.state.Success} AlertDismiss={this.Reset}/>
                                 :null
                             }
                             <form>

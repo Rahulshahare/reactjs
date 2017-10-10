@@ -103,19 +103,11 @@ window.AddStateModel = React.createClass({
             <div className="modal-body">
                     
                         {this.state.Error
-                            ?
-                            <div className="alert alert-danger alert-dismissible" role="alert">
-                                <button onClick={this.Reset} type="button" className="close"  aria-label="Close"><span aria-hidden="true">&times;</span></button>
-                                {this.state.Error}
-                            </div>
+                            ? <AlertBox  AlertType={"danger"} AlertText={this.state.Error} AlertDismiss={this.Reset}/>
                             :null
                         }
                         {this.state.Success
-                            ?
-                            <div className="alert alert-success alert-dismissible" role="alert">
-                                <button onClick={this.Reset} type="button" className="close"  aria-label="Close"><span aria-hidden="true">&times;</span></button>
-                                {this.state.Success}
-                            </div>
+                            ? <AlertBox  AlertType={"success"} AlertText={this.state.Success} AlertDismiss={this.Reset}/>
                             :null
                         }
                         <form>
@@ -133,15 +125,9 @@ window.AddStateModel = React.createClass({
                     
             </div>
             <div className="modal-footer">
-                <button 
-                    onClick={this.Save} 
-                    type="button" 
-                    className="btn btn-primary btn-xs" 
-                    disabled={this.state.BtnState}
-                    >
-                    {this.state.BtnName}
-                    </button>
-                <button onClick={this.Close} type="button" className="btn btn-default btn-xs" data-dismiss="modal">Cancel</button>
+                    <CommomButton BtnType={"primary"} onClick={this.Save} BtnState={this.state.BtnState} BtnName={this.state.BtnName}/>
+
+                    <CommomButton BtnType={"default"} onClick={this.Close} BtnState={null} BtnName={"Cancel"}/> 
             </div>
             </div>
         </div>
