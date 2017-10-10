@@ -5,7 +5,9 @@ window.ReadState = React.createClass({
                     isOpenAdd:false,
                     StateId:'',
                     StateName:'',
+                    Status:'',
                     isOpenDelete:false,
+                    isOpenEdit:false,
                     
                 })
             },
@@ -48,6 +50,22 @@ window.ReadState = React.createClass({
                     isOpenDelete:!this.state.isOpenDelete
                 })
             },
+            Editing:function(id,Name,status){
+                //alert(id+Name+status);
+                
+                this.setState({
+                    StateId:id,
+                    StateName:Name,
+                    Status:status,
+                    isOpenEdit:!this.state.isOpenEdit,
+                })
+                
+            },
+            toggleEditModal:function(){
+                this.setState({
+                    isOpenEdit:!this.state.isOpenEdit
+                })
+            },
            
             render:function(){
                 return(
@@ -62,6 +80,7 @@ window.ReadState = React.createClass({
                                 AllState={this.state.States}  
                                 ChangeAppMode={this.props.ChangeAppMode}
                                 Deleting={this.Deleting}
+                                Editing={this.Editing}
                             />
                         </div>
                     </div>
@@ -79,6 +98,16 @@ window.ReadState = React.createClass({
                             StateName={this.state.StateName}
                             StateId={this.state.StateId}
                             Hidemodal={this.toggleDeleteModal}
+                            Refresh={this.GetData}
+                        />
+                    }
+                    {
+                        <EditStateModal
+                            ShowModel={this.state.isOpenEdit}
+                            StateName={this.state.StateName}
+                            StateId={this.state.StateId}
+                            Status={this.state.Status}
+                            Hidemodal={this.toggleEditModal}
                             Refresh={this.GetData}
                         />
                     }

@@ -10,7 +10,7 @@ window.ShowAllState = React.createClass({
                                     <td>{text.location_name}</td>
                                     <td>{text.active==1?'Active':'De-active'}</td>
                                     <td>
-                                        <button onClick={() => this.props.ChangeAppMode('Edit',text.id)} className="btn btn-xs btn-warning">Edit</button>
+                                        <button onClick={() => this.props.Editing(text.id,text.location_name,text.active)} className="btn btn-xs btn-warning">Edit</button>
                                         <button onClick={() => this.props.Deleting(text.id,text.location_name)} className="btn btn-xs btn-danger">Delete</button>
                                     </td>
                                 </tr>
