@@ -45,34 +45,32 @@ window.AddStateModel = React.createClass({
                 data: dataString,
                 cache: false,
                 success: function(html)
-                {
-                    //alert(html);
-                    if(html=='Success'){
-                        this.setState({Success: this.state.StateName+' is Added Successfully',
-                                        Error:'',
-                                        StateName:'',
-                                        StateName:'',
-                                        BtnState:'',
-                                        BtnName:'Add State',})
-                                        this.props.Refresh();
-                                    
-                    }
-                    if(html=='Available'){
-                        this.setState({Error:this.state.StateName+' is already Available',
-                                        Success:'',
-                                        BtnState:'',
-                                        BtnName:'Add State',})
-                    }
-                    if(html=='SystemDead'){
-                        this.setState({Error:'Something Went Wrong'})
-                    }
-                    
-                   
-                
-                }.bind(this),
+                    {
+                        //alert(html);
+                        if(html=='Success'){
+                            this.setState({Success: this.state.StateName+' is Added Successfully',
+                                            Error:'',
+                                            StateName:'',
+                                            StateName:'',
+                                            BtnState:'',
+                                            BtnName:'Add State',})
+                                            this.props.Refresh();
+                                        
+                        }
+                        if(html=='Available'){
+                            this.setState({Error:this.state.StateName+' is already Available',
+                                            Success:'',
+                                            BtnState:'',
+                                            BtnName:'Add State',})
+                        }
+                        if(html=='SystemDead'){
+                            this.setState({Error:'Something Went Wrong'})
+                        }
+                        
+                    }.bind(this),
                 });
     },
-    Close:function(text){
+    Close:function(){
         this.setState({
             StateName:'',
             Error:'',
@@ -82,9 +80,9 @@ window.AddStateModel = React.createClass({
     },
     Reset:function(){
         this.setState({
-            StateName:'',
             Error:'',
             Success:'',
+            StateName:'',
         })
     },
     

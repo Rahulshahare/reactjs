@@ -33,7 +33,7 @@ window.EditStateModal = React.createClass({
                                 BtnName:'Save',
                                 Success:'',
                                 Error:'',
-                                Count:this.state.count+1,
+                                Count:(this.state.Count + 1),
                             })
 
                             this.props.Refresh();
@@ -60,6 +60,7 @@ window.EditStateModal = React.createClass({
             StateName:'',
             StateId:'',
             Status:'',
+            Count:'',
         })
         this.props.Hidemodal();
     },
@@ -88,8 +89,6 @@ window.EditStateModal = React.createClass({
     },
     Reset:function(){
         this.setState({
-            BtnStatus:'disabled',
-            BtnName:'Save',
             Success:'',
             Error:'',
         })
