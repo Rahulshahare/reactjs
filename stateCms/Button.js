@@ -3,6 +3,7 @@ window.CommomButton = React.createClass({
         return({
             BtnState:null,
             Align:null,
+            onClick:null,
         })
     },
     render:function(){
