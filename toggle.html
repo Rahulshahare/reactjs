@@ -190,11 +190,11 @@
                     componentDidMount(){
 
                        $.ajax({
-                            url: "http://localhost/oceangreen/admin/api/readState.php",
+                            url: "http://localhost/oceangreen/admin/api/readState.php?Key=Authority",
                             type : "GET",
                             cache: false,
                             success: function(html)
-                                {
+                                { alert(html);
                                     this.setState({Istate:JSON.parse(html)});
                                    
                                 }.bind(this),
