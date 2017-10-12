@@ -6,16 +6,18 @@ window.AddStateModel = React.createClass({
             Error:'',
             Success:'',
             show:'',
-            BtnState:'',
+            BtnState:'disabled',
             BtnName:'Add State',
             
         })
     },
     
     StateNameChange:function(e){
-        this.setState({StateName:e.target.value,
+        this.setState({ 
+            StateName:e.target.value,
             Error:'',
             Success:'',
+            BtnState:'',
            })
     },
     
@@ -52,7 +54,7 @@ window.AddStateModel = React.createClass({
                                             Error:'',
                                             StateName:'',
                                             StateName:'',
-                                            BtnState:'',
+                                            BtnState:'disabled',
                                             BtnName:'Add State',})
                                             this.props.Refresh();
                                         
