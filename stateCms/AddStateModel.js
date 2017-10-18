@@ -19,6 +19,11 @@ window.AddStateModel = React.createClass({
             Success:'',
             BtnState:'',
            })
+           if(this.state.StateName==''){
+            return({ 
+                BtnState:'disabled',
+               })
+           }
     },
     
     Save:function(){
@@ -35,6 +40,7 @@ window.AddStateModel = React.createClass({
         }
 
         //alert("Statename is "+this.state.StateName );
+
        
         //Ajax call
         var dataString = 'StateName='+ this.state.StateName;
@@ -77,6 +83,7 @@ window.AddStateModel = React.createClass({
             StateName:'',
             Error:'',
             Success:'',
+            
         })
         this.props.toggle()
     },
@@ -85,6 +92,7 @@ window.AddStateModel = React.createClass({
             Error:'',
             Success:'',
             StateName:'',
+            BtnState:'disabled',
         })
     },
     
