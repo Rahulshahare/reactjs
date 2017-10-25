@@ -19,6 +19,7 @@ window.EditStateModal = React.createClass({
             BtnStatus:'disabled',
             BtnName:'Saving',
         })
+        //alert(dataString);
             $.ajax({
                 url: "http://localhost/oceangreen/admin/api/UpdateState.php",
                 type : "POST",
@@ -26,7 +27,7 @@ window.EditStateModal = React.createClass({
                 cache: false,
                 success: function(html)
                     {
-                        //alert(html);
+                            //alert(this.props.index);
                         if(html){
                             this.setState({
                                 BtnStatus:'disabled',
@@ -36,12 +37,15 @@ window.EditStateModal = React.createClass({
                                 Count:(this.state.Count + 1),
                             })
 
-                            this.props.Refresh();
+                            //this.props.Refresh();
                         }
                         if(html=='Success'){
                             this.setState({
                                 Success: this.state.StateName +' is Edited',
                             })
+
+                            this.props.EditingYes(this.props.StateId,this.state.StateName,this.props.index);
+                            
                         }
                         
                         if(html=='SomethingWentWrong'){
@@ -123,12 +127,13 @@ window.EditStateModal = React.createClass({
                                             defaultValue={this.props.StateName} className="form-control" 
                                             placeholder="Enter State Name" />
                                 </div>
-                                <div className="form-group">
-                                    <select onChange={this.OnStatusChange} defaultValue={this.props.Status} className="form-control">
+                                {/*<div className="form-group">
+                                    <select onChange={this.OnStatusChange} defaultValue={this.props.Status} className="form-control" disabled="disabled">
                                         <option value="1">Active</option>
                                         <option value="0">Deactive</option>
                                     </select>
-                                </div>
+                                </div>*/
+                                }
                             </form>
                         </div>
                         <div className="modal-footer">
