@@ -75,6 +75,13 @@
         .panel-primary {
             border-color: rgba(0, 0, 0, 0.09);
         }
+        .alert {
+            padding: 7px;
+        }
+        .alert-dismissable, .alert-dismissible {
+            padding-right: 35px;
+        }
+        
                 
     </style>
   </head>
@@ -92,6 +99,7 @@
         <script type="text/babel" src="StateCms/Button.js"></script>
         <script type="text/babel" src="StateCms/ReadDistrict.js"></script>
         <script type="text/babel" src="StateCms/ShowAllDistrict.js"></script>
+        <script type="text/babel" src="StateCms/ModalAdddistrict.js"></script>
         
         <script type="text/babel">
         
@@ -103,18 +111,19 @@
                     return({
                         AppMode:'',
                         StateId:'',
-                        LoggedIn:'Yes', /*Yes,No*/
+                        LoggedIn:'No', /*Yes,No*/
                     })
                 },
 
                 ChangeAppMode:function(text,StateId){
                     
-                    this.setState({AppMode:text})
-                    if(this.state.AppMode=='UserPass'){
+                    //this.setState({AppMode:text})
+                    if(text=='UserPass'){
                         this.setState({
                             LoggedIn:'Yes',
                             AppMode:'Read'
                         })
+                        document.title = text;
                     }
                     if(StateId){
                         this.setState({StateId:StateId})
@@ -198,7 +207,16 @@
                $('#dashbordTable').DataTable({
                "order": [[ 0, "asc" ]]
                 }); 
+
+                
             });
+
+            $(function () {
+                    $('[data-toggle="tooltip"]').tooltip()
+            })
        </script>
+
+
+
     </body>
 </html>
