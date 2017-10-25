@@ -22,10 +22,10 @@ window.DeleteStateModel = React.createClass({
         //alert(dataString);
         this.setState({
             BtnName:'Deleting',
-            BtnState:'disabled',
+            BtnState:'',
         })
         
-            $.ajax({
+           $.ajax({
                 url: "http://localhost/oceangreen/admin/api/DeleteState.php",
                 type : "POST",
                 data:dataString,
@@ -39,7 +39,8 @@ window.DeleteStateModel = React.createClass({
                                     BtnState:'',
                     })
                     if(html=='Deleted'){
-                        this.props.Refresh();
+                       // this.props.Refresh();
+                       this.props.DeletingState(this.props.StateId,this.props.StateName,this.props.index)
                     }
                                         
                 }.bind(this),
