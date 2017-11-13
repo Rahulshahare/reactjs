@@ -99,7 +99,8 @@ window.ReadDistrict = React.createClass({
         var query = e.target.value;
         var arr = this.state.Districts;
         arr.forEach(function(element) {
-            console.log(element['id']);
+            console.log('id ='+element['id']);
+            console.log('Name ='+element['location_name']);
         });
         
         /*function filterItems(query) {
