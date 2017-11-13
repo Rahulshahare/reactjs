@@ -3,6 +3,11 @@ window.ReadDistrict = React.createClass({
         return({
             Districts:[],
             isOpenAdd:false,
+            SlicedDistricts:[],
+            CurrentPage:1,
+            PreState:'disabled',
+            NextState:'disabled',
+            TotalPage:'',
         })
     },
     componentDidMount(){
@@ -15,38 +20,162 @@ window.ReadDistrict = React.createClass({
             cache: false,
             success: function(html)
                 {
+                        //alert(html);
                     this.setState({Districts:JSON.parse(html)});
                     //alert("first"+this.state.Districts);
+                    this.Pagination();
                 }.bind(this),
         });
     },
-    toggleAddModel:function(){
+    IdByAsc:function(){
         var arr = this.state.Districts;
-        var L =arr[1]['id'];
-        var NewArr;
-        var obj = {
-            length: 0,
-        
-            addElem: function addElem(elem) {
-                // obj.length is automatically incremented 
-                // every time an element is added.
-                [].push.call(this, elem);
-            }
-        };
-        
-       
-        console.log(obj.length);
+        var sort = arr.sort(function (a, b) {
+            return a.id - b.id;
+          });
+          var sliced = sort.slice(0, 5); 
 
-        for (var index = 0; index < 4; index++) {
-            obj.addElem(arr[index]);
+          this.setState({
+            SlicedDistricts:sliced,
+            CurrentPage:1
+        })
+    },
+    IdByDesc:function(){
+        var arr = this.state.Districts;
+        var sort = arr.sort(function (a, b) {
+            return b.id - a.id;
+          });
+          var sliced = sort.slice(0, 5); 
+
+          this.setState({
+            SlicedDistricts:sliced,
+            CurrentPage:1
+        })
+    },
+    NameByAsc:function(){
+        var arr = this.state.Districts;
+        var sort = arr.sort(function (a, b) {
+                var nameA = a.location_name.toUpperCase(); // ignore upper and lowercase
+                var nameB = b.location_name.toUpperCase(); // ignore upper and lowercase
+                if (nameA < nameB) {
+                return -1;
+                }
+                if (nameA > nameB) {
+                return 1;
+                }
             
+                // names must be equal
+                return 0;
+          });
+          var sliced = sort.slice(0, 5); 
+
+          this.setState({
+            SlicedDistricts:sliced,
+            CurrentPage:1
+        })
+    },
+    NameByDesc:function(){
+        var arr = this.state.Districts;
+        var sort = arr.sort(function (a, b) {
+            var nameA = a.location_name.toUpperCase(); // ignore upper and lowercase
+            var nameB = b.location_name.toUpperCase(); // ignore upper and lowercase
+            if (nameA > nameB) {
+            return -1;
+            }
+            if (nameA < nameB) {
+            return 1;
+            }
+        
+            // names must be equal
+            return 0;
+          });
+          var sliced = sort.slice(0, 5); 
+
+          this.setState({
+            SlicedDistricts:sliced,
+            CurrentPage:1
+        })
+    },
+    Pagination:function(){
+        var arr = this.state.Districts;
+        var total = arr.length;
+        var perpage=5;
+        var pages = Math.ceil(total/perpage); 
+            this.setState({
+                TotalPage:pages,
+            })
+        //console.log(sort);
+            if(pages>1){
+                this.setState({
+                    NextState:'',
+                })
+            }
+
+            if(this.state.CurrentPage==1){
+                var sliced = arr.slice(0, 5);   
+            }
+
+           this.setState({
+            SlicedDistricts:sliced,
+        })
+
+    },
+    Previous:function(){
+        this.StateFunction(),
+        this.setState({
+            CurrentPage:this.state.CurrentPage-1,
+            NextState:'',
+        })
+
+        
+    },
+    Next:function(){
+        this.StateFunction();
+        this.setState({
+            CurrentPage:this.state.CurrentPage+1,
+            PreState:'',
+        })
+
+        
+    },
+    Slicing:function(){
+        var arr = this.state.Districts;
+            if(this.state.CurrentPage==1){
+                var sliced = arr.slice(0, 5);
+            }
+            if(this.state.CurrentPage==2){
+                var sliced = arr.slice(5, 10);
+            }
             
+            this.setState({
+                SlicedDistricts:sliced,
+            })
+         
+    },
+    StateFunction:function(){
+
+        this.Slicing();
+        if(this.state.CurrentPage===1){
+            this.setState({
+                PreState:'disabled',
+            })
         }
 
-        alert(L);
-        console.log(obj);
+        if(this.state.CurrentPage===this.state.TotalPage){
+            this.setState({
+                NextState:'disabled',
+            })
+        }
+    },
+    toggleAddModel:function(){
+        var arr = this.state.Districts;
+        var sliced = arr.slice(5, 10);
+        
+
+        //alert(L);
+        
         this.setState({
-            isOpenAdd:!this.state.isOpenAdd
+            isOpenAdd:!this.state.isOpenAdd,
+            CurrentPage:this.state.CurrentPage+1,
         })
     },
     render:function(){
@@ -63,12 +192,33 @@ window.ReadDistrict = React.createClass({
                         />
                         </div>
                     <div className="panel-body">
+                        <div className="text-right">
+                            <div className="btn-group">
+                                <button type="button" className="btn btn-default btn-xs dropdown-toggle"  data-toggle="dropdown" aria-expanded="false">Sort</button>
+                                   
+                                <ul className="dropdown-menu dropdown-menu-right" role="menu">
+                                    <li><a onClick={this.IdByAsc}>Id by Asc</a></li>
+                                    <li><a onClick={this.IdByDesc}>Id by Desc</a></li>
+                                    <li className="divider"></li>
+                                    <li><a onClick={this.NameByAsc}>Name by Asc</a></li>
+                                    <li><a onClick={this.NameByDesc}>Name by Desc</a></li>
+                                    <li className="divider"></li>
+                                    <li><a href="#">Separated link</a></li>
+                                </ul>
+                            </div>
+                        </div>
                         <ShowAllDistrict 
-                            AllDistrict={this.state.Districts}  
+                            AllDistrict={this.state.SlicedDistricts}  
                             ChangeAppMode={this.props.ChangeAppMode}
                             Deleting={this.Deleting}
                             Editing={this.Editing}
                         />
+                        <div className="text-center">
+                            <button type="button" onClick={this.Previous} className="btn btn-info btn-xs" disabled={this.state.PreState}><span className="glyphicon glyphicon-chevron-left"></span></button>
+                            <button type="button" className="btn btn-primary btn-xs">{this.state.CurrentPage}</button>
+                            <button type="button" onClick={this.Next}  className="btn btn-info btn-xs" disabled={this.state.NextState}><span className="glyphicon glyphicon-chevron-right"></span></button>
+                        
+                        </div>
                     </div>
                 </div>
                 <ModalAddDistrict
