@@ -95,6 +95,21 @@ window.ReadDistrict = React.createClass({
             CurrentPage:1
         })
     },
+    Search:function(e){
+        var query = e.target.value;
+        var arr = this.state.Districts;
+        arr.forEach(function(element) {
+            console.log(element['id']);
+        });
+        
+        /*function filterItems(query) {
+            return arr.filter(function(el) {
+                return el.toLowerCase().indexOf(query.toLowerCase()) > -1;
+            })
+          }
+          
+          console.log(filterItems(query)); */
+    },
     Pagination:function(){
         var arr = this.state.Districts;
         var total = arr.length;
@@ -193,6 +208,7 @@ window.ReadDistrict = React.createClass({
                         </div>
                     <div className="panel-body">
                         <div className="text-right">
+                            <input onChange={this.Search} type="text" class="form-control"  placeholder="Search here"/>
                             <div className="btn-group">
                                 <button type="button" className="btn btn-default btn-xs dropdown-toggle"  data-toggle="dropdown" aria-expanded="false">Sort</button>
                                    
