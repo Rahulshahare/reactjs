@@ -8,6 +8,7 @@ window.ReadState = React.createClass({
                     Status:'',
                     isOpenDelete:false,
                     isOpenEdit:false,
+                    index:'',
                     
                 })
             },
@@ -37,34 +38,77 @@ window.ReadState = React.createClass({
                     isOpenAdd:!this.state.isOpenAdd,
                 })
             },
-            Deleting:function(id,Name){
+            Deleting:function(id,Name,i){
+                
                 //alert("iam working"+ id);
                 this.setState({
                     StateId:id,
                     StateName:Name,
                     isOpenDelete:!this.state.isOpenDelete,
+                    index:i
                 })
+            },
+            DeletingState:function(id,Name,i){
+                var arr = this.state.States;
+                arr.splice(i,1);
+                this.setState({States: arr});
             },
             toggleDeleteModal:function(){
                 this.setState({
                     isOpenDelete:!this.state.isOpenDelete
                 })
             },
-            Editing:function(id,Name,status){
+            Editing:function(id,Name,status,i){
                 //alert(id+Name+status);
                 
                 this.setState({
                     StateId:id,
                     StateName:Name,
                     Status:status,
+                    index:i,
                     isOpenEdit:!this.state.isOpenEdit,
                 })
                 
+            },
+            EditingYes:function(id,text,i){
+                var arr = this.state.States;
+                arr[i]['location_name'] = text;
+                this.setState({States: arr});
+                //alert("its a local array"+arr['id']==45);
+                function findCherries(fruit) { 
+                    return fruit.id === id;
+                }
+                
+                var NewData = (arr.find(findCherries)); 
+               // alert(NewData['location_name']);
+
             },
             toggleEditModal:function(){
                 this.setState({
                     isOpenEdit:!this.state.isOpenEdit
                 })
+            },
+            Save:function(id,text,status,i){
+                var arr = this.state.States;
+                arr[i]['location_name'] = text;
+                arr[i]['active']=status;
+                this.setState({States: arr});
+                //alert(JSON.stringify(arr));
+                var dataString = 'StateId='+ id+'&statName='+text+'&status='+status;
+                
+                    $.ajax({
+                        url: "http://localhost/oceangreen/admin/api/UpdateState.php",
+                        type : "POST",
+                        data:dataString,
+                        cache: false,
+                        success: function(html)
+                            {
+                                    //alert(html);
+                                
+                
+                            }.bind(this),
+                    });
+
             },
            
             render:function(){
@@ -86,6 +130,7 @@ window.ReadState = React.createClass({
                                     ChangeAppMode={this.props.ChangeAppMode}
                                     Deleting={this.Deleting}
                                     Editing={this.Editing}
+                                    Save={this.Save}
                                 />
                             </div>
                         </div>
@@ -95,6 +140,7 @@ window.ReadState = React.createClass({
                                 Refresh={this.GetData}
                                 ShowModel={this.state.isOpenAdd}
                                 toggle={this.toggle}
+                                
                             />
                         }
                         {
@@ -102,8 +148,11 @@ window.ReadState = React.createClass({
                                 ShowModel={this.state.isOpenDelete}
                                 StateName={this.state.StateName}
                                 StateId={this.state.StateId}
+                                index={this.state.index}
+                                DeletingState={this.DeletingState}
                                 Hidemodal={this.toggleDeleteModal}
                                 Refresh={this.GetData}
+                                States={this.state.States}
                             />
                         }
                         {
@@ -112,6 +161,8 @@ window.ReadState = React.createClass({
                                 StateName={this.state.StateName}
                                 StateId={this.state.StateId}
                                 Status={this.state.Status}
+                                index={this.state.index}
+                                EditingYes={this.EditingYes}
                                 Hidemodal={this.toggleEditModal}
                                 Refresh={this.GetData}
                             />
