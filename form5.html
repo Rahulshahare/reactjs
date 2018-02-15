@@ -1,0 +1,82 @@
+<!DOCTYPE html>
+<html lang="en">
+    <head>
+        <meta charset="utf-8">
+        <meta http-equiv="X-UA-Compatible" content="IE=edge">
+        <meta name="viewport" content="width=device-width, initial-scale=1">
+        <title>Login Here</title>
+        <link href="css/bootstrap.css" rel="stylesheet">
+        <script src="js/jquery-2.2.4.min.js"></script>
+        <script src="js/react.js"></script>
+        <script src="js/react-dom.min.js"></script>
+        <script src="js/browser.min.js"></script>
+        <style type="text/css">
+            @media print{
+                #header, #Footer{
+                    display: none !important;
+                }
+
+                .col-sm-2 {
+                    width: 16.66666667%;
+                    float: left;
+                }
+                .col-sm-10 {
+                    width: 83.33333333%;
+                    float: right;
+                }
+
+                .form-horizontal .form-group {
+                    margin-right: -15px;
+                    margin-left: -15px;
+                }
+            }
+        </style>
+    </head>
+    <body>
+        <div id="form"></div>
+
+        <script type="text/babel">
+        var FirstForm = React.createClass({
+            getInitialState:function(){
+                return({
+                    
+                })
+            },
+            render:function(){
+                return(
+                    <form className="form-horizontal">
+                        <div className="form-group">
+                            <label for="inputEmail3" className="col-sm-2 col-md-2 control-label">IN THE COURT OF :</label>
+                            <div className="col-sm-10 col-md-10">
+                                <input type="email" className="form-control" id="inputEmail3" placeholder="Email"/>
+                            </div>
+                        </div>
+                    </form>
+                )
+            }
+        }),
+        var Form = React.createClass({
+            getInitialState:function(){
+                return({
+                    InCourt:'',
+                })
+            },
+
+            render:function(){
+                return(
+                    <div className="container">
+                        <div className="text-center">
+                            <h4>FINAL REPORT FORM</h4>
+                            (UNDER THE SECTION 173 Cr. P. C.)
+                        </div>
+                        <div>
+                            
+                        </div>
+                    </div>
+                )
+            }
+        });
+            ReactDOM.render(<Form/>,document.getElementById('form'))
+        </script>
+    </body>
+</html>

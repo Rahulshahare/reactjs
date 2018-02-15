@@ -1,0 +1,40 @@
+<!DOCTYPE html>
+<html lang="en">
+    <head>
+        <meta charset="utf-8">
+        <meta http-equiv="X-UA-Compatible" content="IE=edge">
+        <meta name="viewport" content="width=device-width, initial-scale=1">
+        <title>Login Here</title>
+        <link href="css/bootstrap.css" rel="stylesheet">
+        <script src="js/jquery-2.2.4.min.js"></script>
+       
+    </head>
+    <body>
+<script type="text/javascript">
+    function ChangeUrl(page, url) {
+        if (typeof (history.pushState) != "undefined") {
+            var obj = { Page: page, Url: url };
+            history.pushState(obj, obj.Page, obj.Url);
+        } else {
+            alert("Browser does not support HTML5.");
+        }
+    }
+    $(function () {
+        $("#button1").click(function () {
+            ChangeUrl('Page1', 'Page1.htm');
+        });
+        $("#button2").click(function () {
+            ChangeUrl('Page2', 'Page2.htm');
+        });
+        $("#button3").click(function () {
+            ChangeUrl('Page3', 'Page3.htm');
+        });
+    });
+</script>
+<h1>Changing the URL of page via Javascript</h1>
+<input type="button" value="Page1" class="btn btn-primary" id="button1" />
+<input type="button" value="Page2" class="btn btn-primary" id="button2" />
+<input type="button" class="btn btn-primary" value="Page3" id="button3" />
+       
+</body>
+</html>

@@ -8,6 +8,7 @@ window.ShowAllDistrict = React.createClass({
                                 <tr key={i} index={i} className={text.active==1?"info":"warning"}>
                                     <th>{text.id}</th>
                                     <td>{text.location_name}</td>
+                                    <td>{text.weight}</td>
                                     <td>{text.active==1?'Active':'De-active'}</td>
                                     <td>
                                         <CommomButton 
@@ -34,6 +35,7 @@ window.ShowAllDistrict = React.createClass({
                                     <tr>
                                         <th>Id</th>
                                         <th>District Name</th>
+                                        <th>State Name</th>
                                         <th>Status</th>
                                         <th>Action</th>
                                     </tr>

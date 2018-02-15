@@ -4,6 +4,7 @@ window.CommomButton = React.createClass({
             BtnState:null,
             Align:null,
             onClick:null,
+            title:null,
         })
     },
     render:function(){
@@ -40,9 +41,7 @@ window.CommomButton = React.createClass({
                 onClick={this.props.onClick} 
                 className={BtnClass}
                 disabled={this.props.BtnState}
-                data-toggle="tooltip" 
-                data-placement="top" 
-                title="Tooltip on top"
+                title={this.props.title}
             >
             {this.props.BtnName}
             </button>            
@@ -50,5 +49,5 @@ window.CommomButton = React.createClass({
     }
 });
 /*
-<CommomButton BtnType={} onClick={} BtnState={} BtnName={} Align={}/>
+<CommomButton BtnType={} onClick={} BtnState={} BtnName={} Align={} title={}/>
 */

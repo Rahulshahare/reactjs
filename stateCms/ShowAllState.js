@@ -12,15 +12,27 @@ window.ShowAllState = React.createClass({
                                     <td>
                                         <CommomButton 
                                             BtnType={"warning"} 
-                                            onClick={() => this.props.Editing(text.id,text.location_name,text.active)}  
+                                            onClick={() => this.props.Editing(text.id,text.location_name,text.active,i)}  
                                             BtnName={"Edit"}
                                         />
 
                                         <CommomButton 
                                             BtnType={"danger"} 
-                                            onClick={() => this.props.Deleting(text.id,text.location_name)} 
+                                            onClick={() => this.props.Deleting(text.id,text.location_name,i)} 
                                             BtnName={"Delete"}
                                         />
+                                        {text.active==1
+                                        ?<CommomButton 
+                                            BtnType={"danger"} 
+                                            onClick={() => this.props.Save(text.id,text.location_name,0,i)} 
+                                            BtnName={"Deactive"}
+                                        />
+                                        :<CommomButton 
+                                            BtnType={"primary"} 
+                                            onClick={() => this.props.Save(text.id,text.location_name,1,i)} 
+                                            BtnName={"active"}
+                                        />
+                                        }
                                     </td>
                                 </tr>
                             )

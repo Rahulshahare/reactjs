@@ -1,5 +1,120 @@
-windows.ModalAddDistrict = React.createClass({
+window.ModalAddDistrict = React.createClass({
+    getInitialState:function(){
+        return({
+            States:[],
+            BtnName:'Add District',
+            BtnState:'disabled',
+            StateId:'',
+            DistrictName:'',
+            Error:'',
+            Success:''
+        })
+    },
+    componentDidMount:function(){
+        $.ajax({
+            url: "http://localhost/oceangreen/admin/api/readState.php?Key=Authority",
+            type : "GET",
+            cache: false,
+            success: function(html)
+                {
+                    this.setState({States:JSON.parse(html)});
+                    //alert("first"+this.state.Districts);
+                }.bind(this),
+        });
+    },  
+    Statechange:function(e){
+        this.setState({
+            StateId:e.target.value
+        })
+        //alert(this.state.StateId)
+    },
+    DistrictNameChange:function(e){
+        this.setState({
+            DistrictName:e.target.value,
+            BtnState:'',
+        })
+    },
+    Save:function(){
+        
+         if(this.state.DistrictName && this.state.StateId){
+             this.setState({Error:'',
+                             BtnState:'disabled',
+                             BtnName:'Adding District',
+                         });
+         }else{
+             this.setState({Error:'You must enter a #District Name',
+                             Success:''});
+             return false;
+         }
+
+        
+ 
+         //alert("Statename is "+this.state.StateName );
+        
+         //Ajax call
+         var dataString = 'DistrictName='+ this.state.DistrictName+'&StateId='+this.state.StateId;
+         //alert(dataString);
+            
+            $.ajax
+                 ({
+                 type: "POST",
+                 url: "http://localhost/oceangreen/admin/api/AddNewDistrict.php",
+                 data: dataString,
+                 cache: false,
+                 success: function(html)
+                     {
+                         //alert(html);
+                         if(html=='Success'){
+                             this.setState({Success: this.state.DistrictName+' is Added Successfully',
+                                             Error:'',
+                                             DistrictName:'',
+                                             StateId:'',
+                                             BtnState:'disabled',
+                                             BtnName:'Add District',})
+                                             this.props.Refresh();
+                                         
+                         }
+                         if(html=='Available'){
+                             this.setState({Error:this.state.DistrictName+' is already Available',
+                                             Success:'',
+                                             BtnState:'',
+                                             BtnName:'Add District',})
+                         }
+                         if(html=='SystemDead'){
+                             this.setState({Error:'Something Went Wrong'})
+                         }
+                         
+                     }.bind(this),
+                 });
+     },
+    Close:function(){
+        this.setState({
+            Error:'',
+            Success:'',
+            DistrictName:'',
+            StateId:'',
+            BtnState:'disabled',
+        })
+        this.props.Close()
+    },
+    Reset:function(){
+        this.setState({
+            Error:'',
+            Success:'',
+            DistrictName:'',
+            StateId:'',
+            BtnState:'disabled',
+        })
+    },
+    
+    
     render:function(){
+        if(!this.props.ShowModal){
+            return null;
+        }
+            var StateNames = this.state.States.map(function(text,i){
+                return(<option key={i} value={text.id}>{text.location_name}</option>)
+            })
         return(
             <div className="modal draggable show"  id="myModal" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="false">
                 <div className="modal-dialog modal-sm">
@@ -18,17 +133,25 @@ windows.ModalAddDistrict = React.createClass({
                                 ? <AlertBox  AlertType={"success"} AlertText={this.state.Success} AlertDismiss={this.Reset}/>
                                 :null
                             }
-                            <form>
+                            <form>    
+                                    <div className="form-group">
+                                        <select onChange={this.Statechange} DefaultValue={this.state.StateId} className="form-control" >
+                                            <option value="">Select State</option>
+                                            {StateNames}
+                                        </select>
+                                    </div>
+                                    <div className="form-group">
                                         <input 
-                                            onChange={this.StateNameChange}
+                                            onChange={this.DistrictNameChange}
                                             type="text" 
-                                            value={this.state.StateName} 
+                                            value={this.state.DistrictName} 
                                             className="form-control" 
                                             autocomplete="off" 
                                             autoFocus="true"
                                             required="required"
                                             placeholder="Enter State Name"
                                         />
+                                    </div>
                             </form>
                         
                         </div>

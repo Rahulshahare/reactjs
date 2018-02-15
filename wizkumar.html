@@ -1,0 +1,94 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <title>CMS System</title>
+    <link href="css/bootstrap.css" rel="stylesheet">
+    <script src="js/jquery-2.2.4.min.js"></script>
+    <script src="js/react.js"></script>
+    <script src="js/react-dom.min.js"></script>
+    <script src="js/browser.min.js"></script>
+    <style>
+    
+    </style>
+</head>
+<body>
+    <div id="wiz"></div>
+
+    <script type="text/babel">
+    var Show = React.createClass({
+        getInitialState:function(){
+            return({
+                Photos:[
+                        'https://hflxja.by3301.livefilestore.com/y4m2ykC4Re1vMHx77L-SNbBW2ZLUTE4pPsV5yCHtOvk0V0ZULKsdUuYYRm_vwFJIcUyKf6q_xOIpV7i0Da9i70A0mtJ3y5nmYHqf4JQWmjOPlDexs4_SO1sNjm-VYBeC2uWmz6VcPxl3Ivd7Yd8ymFv-OztLMMlonk-tCO_bdGUXZeRuatp2nGkdvvMWv6EdcaVD0IT9GcNQ_3rzDbbHQYgxA?width=540&height=960&cropmode=none',
+                        'https://hfl0ja.by3301.livefilestore.com/y4m-sHAt5dfJHuoQQscvt3Hw6zcNTngsxXYaIMq5_zyhNbMhGQ4lsr8Jkphs72A-2qylBMaNbRnQBtu7ez0mMmWPRBAG8nnhnkMkX9g2altUlQk19D7ZFwdqVT1L9i_ziIQdcGq7rj5zJx-MX5DsELnGumqGDo1G0j6WGpdfgINEaU1REwt6GqBc32D8dav--81LuMu490m1YASF_41svGaNQ?width=371&height=660&cropmode=none',
+                        'https://hfl1ja.by3301.livefilestore.com/y4mjli0dqNIk45rjTXsa4SHAAY6OOM7z3MvhuquX7esaIqKImrtqyr-p6fmITq9N-O8SvvQL1_09zgLqor6YCnaskqUisXV6zvq14cS8pZGolxl3uT2rmFEkVL-gThitdUzprKNtdc462YzywuCmWTzYVyfh1e-TmqHCPfEu2fNZ9JnzE-yKB1QHloFDXtKk4jPVs5rzkXxJ9Chg3EE4LGZXw?width=371&height=660&cropmode=none',
+                        'https://hflzja.by3301.livefilestore.com/y4mfANVTkkL2kHWOV7ItDsTrv1ZMr4mPADZddwNWgG50T86tfykglah8HuADGlqUlaT0_3Gx_-cTwBb51OF6QTm6d-pA81YkdOCV0uLg-KSFVqIP_Wc_H_OZx3x8A64fpv1h2EQXmuFuS3uawcUOlNf_CS11r2e9iVfgOcdbSwW-s6cC1xcG_kGZndGhhBV3I4ZKxEJAxow9ltnMVGjqotUGw?width=371&height=660&cropmode=none',
+
+                    ],
+                counter:0,
+                PreState:'',
+                NextState:'',
+            })
+        },
+        Next:function(){
+            this.setState({
+                    PreState:''
+                })
+            var arr = this.state.Photos;
+            var length = arr.length -1;
+            console.log(length);
+            if(this.state.counter>=length){
+                this.setState({
+                    NextState:'disabled'
+                })
+                return false;
+            }
+            this.setState({
+                counter:this.state.counter+1
+            })
+        },
+        Previous:function(){
+            this.setState({
+                NextState:''
+                })
+
+            if(this.state.counter==0){
+                this.setState({
+                    PreState:'disabled'
+                })
+                return false;
+            }
+            this.setState({
+                counter:this.state.counter-1
+            })
+        },
+        render:function(){
+            var arr = this.state.Photos;
+            return(
+                <div className="container">
+                    <div className="row Position">
+                        <div className="col-md-3 text-right">
+                            <button onClick={this.Previous} type="button" className="btn btn-primary" disabled={this.state.PreState}>Previous</button>
+                        </div>
+                        <div className="col-md-6 text-center">
+                        <img src={arr[this.state.counter] }/>
+                        
+                        </div>
+                        <div className="col-md-3 text-left">
+                            <button onClick={this.Next} type="button" className="btn btn-primary" disabled={this.state.NextState}>Next</button>
+                        </div>
+                    </div>
+                </div>
+            )
+        }
+    });
+    
+    ReactDOM.render(<Show/>,document.getElementById('wiz'));
+    </script>
+</body>
+</html>
+
+    

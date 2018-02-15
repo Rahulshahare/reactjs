@@ -81,6 +81,9 @@
         .alert-dismissable, .alert-dismissible {
             padding-right: 35px;
         }
+        .table{
+            margin-top: 7px;
+        }
         
                 
     </style>
@@ -111,19 +114,20 @@
                     return({
                         AppMode:'',
                         StateId:'',
-                        LoggedIn:'No', /*Yes,No*/
+                        LoggedIn:'Yes', /*Yes,No*/
                     })
                 },
 
                 ChangeAppMode:function(text,StateId){
                     
-                    //this.setState({AppMode:text})
+                    this.setState({AppMode:text})
                     if(text=='UserPass'){
                         this.setState({
                             LoggedIn:'Yes',
                             AppMode:'Read'
                         })
-                        document.title = text;
+                        //document.title = text;
+                        //Document title can be change by above line
                     }
                     if(StateId){
                         this.setState({StateId:StateId})

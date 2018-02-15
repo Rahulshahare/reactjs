@@ -98,11 +98,14 @@ window.ReadDistrict = React.createClass({
     Search:function(e){
         var query = e.target.value;
         var arr = this.state.Districts;
-        arr.forEach(function(element) {
-            console.log('id ='+element['id']);
-            console.log('Name ='+element['location_name']);
-        });
         
+        
+        
+        function findCherries(fruit) { 
+            return fruit.location_name === query;
+        }
+        
+        console.log(arr.find(findCherries)); 
         /*function filterItems(query) {
             return arr.filter(function(el) {
                 return el.toLowerCase().indexOf(query.toLowerCase()) > -1;
